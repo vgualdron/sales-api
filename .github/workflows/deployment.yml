@@ -1,0 +1,30 @@
+name: 🚀 Deploy website
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️ 🚚 Get latest code
+        uses: actions/checkout@v2
+        with:
+          persist-credential: false
+      - name: Sync files 📂 Server hostinger.com
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER_NAME }}
+          username: ${{ secrets.FTP_USER_NAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          dangerous-clean-slate: false
+          log-level: verbose
+          protocol: ftps
+          timeout: 120000
+          local-dir: ./
+          exclude: |
+            **/vendor/**
+            **/.env*
+            **/.git*
+            **/.git*/**
