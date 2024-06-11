@@ -40,7 +40,7 @@
                     return response()->json([
                         'message' => [
                             [
-                                'text' => 'No hay patios para mostrar',
+                                'text' => 'No hay registros para mostrar',
                                 'detail' => 'Aún no se ha registrado ningun patio'
                             ]
                         ]
@@ -52,6 +52,45 @@
                         [
                             'text' => 'Se ha presentado un error al cargar los patios',
                             'detail' => 'intente recargando la página'
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+        
+        function listByZone(string $zone, int $displayAll){
+            try {
+                $sql = $this->yard->from('yards as y')
+                    ->select('y.id', 'y.name', 'y.code', 'y.active', 'z.name as zone', 'y.active as active')
+                    ->join('zones as z', 'y.zone', 'z.id')
+                    ->where('y.zone', $zone)
+                    ->when($displayAll === 0, function ($query) {
+                        return $query->where(function ($query) {
+                            $query->where('y.active', 1);
+                        });
+                    })
+                    ->get();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'No hay registros para mostrar',
+                                'detail' => 'Aún no se ha registrado ningun registro'
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los registros',
+                            'detail' => $e->getMessage()
                         ]
                     ]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);

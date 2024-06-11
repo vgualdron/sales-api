@@ -30,9 +30,12 @@
                                 'u.document_number as documentNumber',
                                 'u.name as name',
                                 'u.phone as phone',
-                                DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin patio asignado") as yard')
+                                DB::Raw('IF(u.active = 1, "ACTIVO", "NO ACTIVO") as status'),
+                                DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin sector asignado") as yard'),
+                                DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad asignada") as zone')
                             )
                             ->leftJoin('yards as y', 'u.yard', 'y.id')
+                            ->leftJoin('zones as z', 'y.zone', 'z.id')
                             ->when($displayAll === 0, function ($q) {
                                 return $q->where('u.active', 1);
                             })
@@ -47,7 +50,7 @@
                         'message' => [
                             [
                                 'text' => 'No hay usuarios para mostrar',
-                                'detail' => 'Aun no ha registrado ninguna zona'
+                                'detail' => 'Aun no ha registrado ningun registro'
                             ]
                         ]
                     ], Response::HTTP_NOT_FOUND);
@@ -57,7 +60,50 @@
                     'message' => [
                         [
                             'text' => 'Se ha presentado un error al cargar los usuarios',
-                            'detail' => 'intente recargando la página'
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+        
+        function listByRoleName(int $displayAll, string $name, int $city){
+            try {
+                $sql = $this->user->from('users as u')
+                            ->select(
+                                'u.id',
+                                'u.document_number as documentNumber',
+                                'u.name as name',
+                                'u.phone as phone',
+                                'r.name as role',
+                                DB::Raw('IF(u.active = 1, "ACTIVO", "NO ACTIVO") as status'),
+                                DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin sector asignado") as yard'),
+                                DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad asignada") as zone')
+                            )
+                            ->leftJoin('yards as y', 'u.yard', 'y.id')
+                            ->leftJoin('zones as z', 'y.zone', 'z.id')
+                            ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
+                            ->join('roles as r', 'mhr.role_id', 'r.id')
+                            ->where('r.name', 'LIKE', '%' . $name . '%')
+                            ->where('u.active', $displayAll)
+                            ->where('z.id', $city)
+                            ->get();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'data' => []
+                    ], Response::HTTP_OK);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar',
+                            'detail' => $e->getMessage()
                         ]
                     ]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -18,6 +18,10 @@ class YardController extends Controller
     function list(string $yard, string $displayAll){
         return $this->service->list($yard, $displayAll);
     }
+    
+    function listByZone(string $zone, string $displayAll){
+        return $this->service->listByZone($zone, $displayAll);
+    }
 
     function create(){
         return $this->service->create($this->request->all());

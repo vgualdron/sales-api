@@ -4,6 +4,7 @@
     interface UserServiceInterface
     {
         function list(int $displayAll);
+        function listByRoleName(int $displayAll, string $name, int $city);
         function get(int $id);
         function create(array $user);
         function update(array $user, int $id);

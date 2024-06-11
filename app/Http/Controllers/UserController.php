@@ -18,6 +18,10 @@ class UserController extends Controller
     function list(int $displayAll){
         return $this->service->list($displayAll);
     }
+    
+    function listByRoleName(int $displayAll, string $name, int $city){
+        return $this->service->listByRoleName($displayAll, $name, $city);
+    }
 
     function create(){
         return $this->service->create($this->request->all());

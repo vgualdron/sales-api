@@ -4,6 +4,7 @@
     interface YardServiceInterface
     {
         function list(string $yard, int $displayAll);
+        function listByZone(string $zone, int $displayAll);
         function create(array $zone);
         function update(array $zone, int $id);
         function delete(int $id); 

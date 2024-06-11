@@ -6,6 +6,7 @@
     use App\Models\{
         OauthClient,
         User,
+        Yard,
         OauthAccessToken,
     };
     use Illuminate\Support\Facades\Artisan;
@@ -14,11 +15,13 @@
 
         private $oauthClient;
         private $oauthAccessToken;
-        private $user;  
+        private $user;
+        private $yard;
 
         function __construct(){            
             $this->oauthClient = new OauthClient;
             $this->user = new User;
+            $this->yard = new Yard;
             $this->oauthAccessToken = new OauthAccessToken;
         }    
 
@@ -49,9 +52,11 @@
 
         function login(string $documentNumber, string $password){
             try {
+                Artisan::call('cache:clear');
                 Artisan::call('config:clear');
                 Artisan::call('optimize:clear');
                 $user = $this->user::where('document_number', $documentNumber)->first();
+                $yard = $this->yard::where('id', $user->yard)->first();
                 if (!empty($user)) {
                     if ($user->active === 1) {
                         if(Auth::attempt(['document_number' => $documentNumber, 'password' => $password])){
@@ -87,6 +92,7 @@
                                 ->join('groups as g', 'p.group_id', 'g.id')
                                 ->where('u.id', $user->id)
                                 ->orderBy('g.order_number', 'ASC')
+                                ->orderBy('p.order', 'ASC')
                                 ->get();
                                 $roles = $user->getRoleNames();
                                 $dataPermissions = [];
@@ -117,6 +123,7 @@
                                     'document' => $user->document_number,
                                     'yard' => $user->change_yard.'-'.$user->yard,
                                     'currentYard' => $user->yard,
+                                    'city' => $yard->zone,
                                     'user' => $user->id
                                 );
                                 return response()->json([
