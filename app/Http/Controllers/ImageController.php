@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $userSesion = $request->user();
         $idUserSesion = $userSesion->id;
@@ -54,7 +54,7 @@ class ImageController extends Controller
 
     }
 
-    public function destroy(Request $request, $id)
+    public function delete(Request $request, $id)
     {
         try {
             $item = Image::find($id);
