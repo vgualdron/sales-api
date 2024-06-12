@@ -11,6 +11,7 @@ use App\Http\Controllers\{
                         UserController,
                         NovelController,
                         DiaryController,
+                        ImageController,
                     };
 
 /*
@@ -91,4 +92,9 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/diary"], function () {
     Route::put('/update-status/{id}', [DiaryController::class, 'updateStatus'])->name('diary.changeStatus');
     Route::delete('/delete/{id}', [DiaryController::class, 'delete'])->name('diary.delete');
     Route::get('/get/{id}', [DiaryController::class, 'get'])->name('diary.get');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/image"], function () {
+    Route::post('/create', [ImageController::class, 'create'])->name('image.create');
+    Route::delete('/delete/{id}', [ImageController::class, 'delete'])->name('image.delete');
 });
