@@ -17,6 +17,7 @@ class ImageController extends Controller
         // $idUserSesion = $userSesion->id;
         // $productId = $request->product_id;
         // Obtener los datos de la imagen
+        print_r($request);
         $image_avatar_b64 = $request->image;
         $img = $this->getB64Image($image_avatar_b64);
         // Obtener la extensión de la Imagen
