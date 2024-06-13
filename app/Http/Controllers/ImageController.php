@@ -29,7 +29,7 @@ class ImageController extends Controller
             // la función "put" el nombre de la imagen y los datos de la imagen como 
             // segundo parametro
 
-            Storage::disk('public')->put($img_name, $img);
+           //  Storage::disk('public')->put($img_name, $img);
             
             /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
             $img->insert(public_path('images/brand/logo-rectangle.png'), 'bottom-right', 10, 10);
