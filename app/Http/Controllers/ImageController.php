@@ -13,23 +13,23 @@ class ImageController extends Controller
 {
     public function create(Request $request)
     {
-        // $userSesion = $request->user();
-        // $idUserSesion = $userSesion->id;
-        // $productId = $request->product_id;
-        // Obtener los datos de la imagen
-        print_r($request->image);
-        $image_avatar_b64 = $request->image;
-        $img = $this->getB64Image($image_avatar_b64);
-        // Obtener la extensión de la Imagen
-        $img_extension = $this->getB64Extension($image_avatar_b64);
-        // Crear un nombre aleatorio para la imagen
-        $img_name = strtotime("now") . '.' . $img_extension;
-        // echo $image_name;
-        // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
-        // la función "put" el nombre de la imagen y los datos de la imagen como 
-        // segundo parametro
-
         try {
+            // $userSesion = $request->user();
+            // $idUserSesion = $userSesion->id;
+            // $productId = $request->product_id;
+            // Obtener los datos de la imagen
+            echo("qdw");
+            $image_avatar_b64 = $request->image;
+            $img = $this->getB64Image($image_avatar_b64);
+            // Obtener la extensión de la Imagen
+            $img_extension = $this->getB64Extension($image_avatar_b64);
+            // Crear un nombre aleatorio para la imagen
+            $img_name = strtotime("now") . '.' . $img_extension;
+            // echo $image_name;
+            // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
+            // la función "put" el nombre de la imagen y los datos de la imagen como 
+            // segundo parametro
+
             Storage::disk('public')->put($img_name, $img);
             
             /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
