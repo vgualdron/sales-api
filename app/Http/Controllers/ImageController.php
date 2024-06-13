@@ -23,13 +23,13 @@ class ImageController extends Controller
             // Obtener la extensión de la Imagen
             $img_extension = $this->getB64Extension($image_avatar_b64);
             // Crear un nombre aleatorio para la imagen
-            // $img_name = strtotime("now") . '.' . $img_extension;
+            $img_name = strtotime("now") . '.' . $img_extension;
             // echo $image_name;
             // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
             // la función "put" el nombre de la imagen y los datos de la imagen como 
             // segundo parametro
 
-           // Storage::disk('public')->put($img_name, $img);
+            Storage::disk('public')->put($img_name, $img);
             
             /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
             $img->insert(public_path('images/brand/logo-rectangle.png'), 'bottom-right', 10, 10);
@@ -90,6 +90,7 @@ class ImageController extends Controller
         preg_match("/^data:image\/(.*);base64/i",$base64_image, $img_extension);   
         // Dependiendo si se pide la extensión completa o no retornar el arreglo con
         // los datos de la extensión en la posición 0 - 1
+        print_r($img_extension);
         return ($full) ?  $img_extension[0] : $img_extension[1];  
     }
 }
