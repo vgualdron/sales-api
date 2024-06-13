@@ -21,7 +21,8 @@ class ImageController extends Controller
             $image_avatar_b64 = $request->image;
             $img = $this->getB64Image($image_avatar_b64);
             // Obtener la extensión de la Imagen
-            $img_extension = $this->getB64Extension($image_avatar_b64);
+            // $img_extension = $this->getB64Extension($image_avatar_b64);
+            $img_extension = "jpg";
             // Crear un nombre aleatorio para la imagen
             $img_name = strtotime("now") . '.' . $img_extension;
             // echo $image_name;
@@ -87,7 +88,7 @@ class ImageController extends Controller
     protected function getB64Extension($base64_image, $full=null){  
         // Obtener mediante una expresión regular la extensión imagen y guardarla
         // en la variable "img_extension"        
-        preg_match("/^data:image\/(.*);base64/i",$base64_image, $img_extension);   
+        preg_match("/^data:image\/(.*);base64/i", $base64_image, $img_extension);   
         // Dependiendo si se pide la extensión completa o no retornar el arreglo con
         // los datos de la extensión en la posición 0 - 1
         print_r($img_extension);
