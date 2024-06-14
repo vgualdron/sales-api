@@ -60,7 +60,7 @@ class ImageController extends Controller
                     'detail' => 'Succeed'
                 ]
             ]
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        ], Response::HTTP_OK);
 
     }
 
