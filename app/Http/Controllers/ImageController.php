@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // use App\Models\Image;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -43,15 +44,23 @@ class ImageController extends Controller
 
         } catch (Exception $e) {
             return response()->json([
-                'data' => [],
-                'message'=>$e->getMessage()
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
-            'data' => 'OK',
-            'message' => 'Succeed'
-        ], JsonResponse::HTTP_OK);
+            'message' => [
+                [
+                    'text' => 'OK',
+                    'detail' => 'Succeed'
+                ]
+            ]
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
 
     }
 
