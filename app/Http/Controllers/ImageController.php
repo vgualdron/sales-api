@@ -21,7 +21,6 @@ class ImageController extends Controller
             // Obtener los datos de la imagen
             $file = $request->file;
             $extension = $request->extension;
-            $f = $this->getB64Image($file);
           
             // Crear un nombre aleatorio para la imagen
             $file_name = strtotime("now") . '.' . $extension;
@@ -30,7 +29,7 @@ class ImageController extends Controller
             // la función "put" el nombre de la imagen y los datos de la imagen como 
             // segundo parametro
 
-            Storage::disk('public')->put($file_name, $f);
+            Storage::disk('public')->put($file_name, $file);
             
             /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
             $img->insert(public_path('images/brand/logo-rectangle.png'), 'bottom-right', 10, 10);
@@ -82,7 +81,6 @@ class ImageController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    
     protected function getB64Image($base64_image)
     {  
          // Obtener el String base-64 de los datos         
