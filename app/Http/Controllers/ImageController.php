@@ -26,6 +26,7 @@ class ImageController extends Controller
           
             // Crear un nombre aleatorio para la imagen
             $name = strtotime("now") . '.' . $extension;
+            $url = "https://micomercio.com.co/api-prestamos/storage/app/public/images/".$name;
             // echo $image_name;
             // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
             // la función "put" el nombre de la imagen y los datos de la imagen como 
@@ -57,7 +58,7 @@ class ImageController extends Controller
             'message' => [
                 [
                     'text' => 'Succeed',
-                    'detail' => "https://micomercio.com.co/api-prestamos/storage/app/public/images/".$url
+                    'detail' => $url
                 ]
             ]
         ], Response::HTTP_OK);
