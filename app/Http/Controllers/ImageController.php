@@ -19,19 +19,18 @@ class ImageController extends Controller
             // $idUserSesion = $userSesion->id;
             // $productId = $request->product_id;
             // Obtener los datos de la imagen
-            $image_avatar_b64 = $request->image;
-            $img = $this->getB64Image($image_avatar_b64);
-            // Obtener la extensión de la Imagen
-            $img_extension = $this->getB64Extension($image_avatar_b64);
-            $img_extension = "png";
+            $file = $request->file;
+            $extension = $request->extension;
+            $f = $this->getB64Image($file);
+          
             // Crear un nombre aleatorio para la imagen
-            $img_name = strtotime("now") . '.' . $img_extension;
+            $file_name = strtotime("now") . '.' . $extension;
             // echo $image_name;
             // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
             // la función "put" el nombre de la imagen y los datos de la imagen como 
             // segundo parametro
 
-            Storage::disk('public')->put($img_name, $img);
+            Storage::disk('public')->put($file_name, $f);
             
             /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
             $img->insert(public_path('images/brand/logo-rectangle.png'), 'bottom-right', 10, 10);
@@ -92,15 +91,5 @@ class ImageController extends Controller
          $image = base64_decode($image_service_str);   
          // Retornamos el string decodificado
          return $image; 
-    }
-    
-    protected function getB64Extension($base64_image, $full=null){  
-        // Obtener mediante una expresión regular la extensión imagen y guardarla
-        // en la variable "img_extension"        
-        preg_match("/^data:image\/(.*);base64/i", $base64_image, $img_extension);   
-        // Dependiendo si se pide la extensión completa o no retornar el arreglo con
-        // los datos de la extensión en la posición 0 - 1
-        print_r($img_extension);
-        return ($full) ?  $img_extension[0] : $img_extension[1];  
     }
 }
