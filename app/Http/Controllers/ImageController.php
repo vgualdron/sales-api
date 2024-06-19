@@ -14,6 +14,7 @@ class ImageController extends Controller
 {
     public function create(Request $request)
     {
+        $url = "";
         try {
             // $userSesion = $request->user();
             // $idUserSesion = $userSesion->id;
@@ -24,13 +25,13 @@ class ImageController extends Controller
             $f = $this->getB64Image($file);
           
             // Crear un nombre aleatorio para la imagen
-            $file_name = strtotime("now") . '.' . $extension;
+            $url = strtotime("now") . '.' . $extension;
             // echo $image_name;
             // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
             // la función "put" el nombre de la imagen y los datos de la imagen como 
             // segundo parametro
 
-            Storage::disk('public')->put($file_name, $f);
+            Storage::disk('public')->put($url, $f);
             
             /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
             $img->insert(public_path('images/brand/logo-rectangle.png'), 'bottom-right', 10, 10);
@@ -55,8 +56,8 @@ class ImageController extends Controller
         return response()->json([
             'message' => [
                 [
-                    'text' => 'OK',
-                    'detail' => 'Succeed'
+                    'text' => 'Succeed',
+                    'detail' => $url
                 ]
             ]
         ], Response::HTTP_OK);
