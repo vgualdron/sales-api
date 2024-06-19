@@ -25,13 +25,13 @@ class ImageController extends Controller
             $f = $this->getB64Image($file);
           
             // Crear un nombre aleatorio para la imagen
-            $url = strtotime("now") . '.' . $extension;
+            $name = strtotime("now") . '.' . $extension;
             // echo $image_name;
             // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
             // la función "put" el nombre de la imagen y los datos de la imagen como 
             // segundo parametro
 
-            Storage::disk('public')->put($url, $f);
+            Storage::disk('public')->put($name, $f);
             
             /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
             $img->insert(public_path('images/brand/logo-rectangle.png'), 'bottom-right', 10, 10);
@@ -57,7 +57,7 @@ class ImageController extends Controller
             'message' => [
                 [
                     'text' => 'Succeed',
-                    'detail' => $url
+                    'detail' => "https://micomercio.com.co/api-prestamos/storage/app/public/images/".$url
                 ]
             ]
         ], Response::HTTP_OK);
