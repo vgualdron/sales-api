@@ -78,6 +78,8 @@
                             'd.new_id',
                             'n.name as new_name',
                             'n.address as new_address',
+                            'n.district as new_district',
+                            'n.occupation as new_occupation',
                             'n.phone as new_phone',
                             'd.status',
                             'd.observation',
