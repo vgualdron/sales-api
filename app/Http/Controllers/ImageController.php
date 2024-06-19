@@ -22,7 +22,7 @@ class ImageController extends Controller
             $image_avatar_b64 = $request->image;
             $img = $this->getB64Image($image_avatar_b64);
             // Obtener la extensión de la Imagen
-            // $img_extension = $this->getB64Extension($image_avatar_b64);
+            $img_extension = $this->getB64Extension($image_avatar_b64);
             $img_extension = "png";
             // Crear un nombre aleatorio para la imagen
             $img_name = strtotime("now") . '.' . $img_extension;
