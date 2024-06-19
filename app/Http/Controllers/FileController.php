@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// use App\Models\File;
+use App\Models\File;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -20,28 +20,30 @@ class FileController extends Controller
             // $idUserSesion = $userSesion->id;
             // $productId = $request->product_id;
             // Obtener los datos de la imagen
+            $name = $request->name;
+            $modelName = $request->model_name;
+            $modelId = $request->model_id;
+            $type = $request->type;
             $file = $request->file;
             $extension = $request->extension;
             $f = base64_decode($file);
           
             // Crear un nombre aleatorio para la imagen
-            $name = strtotime("now") . '.' . $extension;
-            $url = "https://micomercio.com.co/api-prestamos/storage/app/public/images/".$name;
-            // echo $image_name;
-            // Usando el Storage guardar en el disco creado anteriormente y pasandole a 
-            // la función "put" el nombre de la imagen y los datos de la imagen como 
-            // segundo parametro
+            $nameComplete = $name . '.' . $extension;
+            $storage = "public/$modelName/$modelId/$type/";
+            $url = "https://micomercio.com.co/api-prestamos/storage/app/$storage/$nameComplete";
 
-            Storage::disk('public')->put($name, $f);
+            Storage::disk($storage)->put($nameComplete, $f);
             
-            /* $imgBrand = Image::make(public_path('images/products/'.$image_name));
-            $img->insert(public_path('images/brand/logo-rectangle.png'), 'bottom-right', 10, 10);
-            $img->save(public_path('images/main-new.png')); */
-            /* $item = Image::create([
-                'name' => $img_name,
-                'product_id' => $productId,
-                'order' => $request->order,
-            ]); */
+         
+            $item = File::create([
+                'name' => $name,
+                'model_name' => $modelName,
+                'model_id' => $modelId,
+                'type' => $type,
+                'extension' => $extension,
+                'url' => $url,
+            ]);
 
         } catch (Exception $e) {
             return response()->json([
