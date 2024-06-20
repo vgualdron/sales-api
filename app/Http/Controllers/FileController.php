@@ -26,15 +26,15 @@ class FileController extends Controller
             $type = $request->type;
             $file = $request->file;
             $extension = $request->extension;
+            $storage = $request->storage;
+
             $f = base64_decode($file);
           
             // Crear un nombre aleatorio para la imagen
             $nameComplete = $name . '.' . $extension;
-            $storage = "public";
             $url = "https://micomercio.com.co/api-prestamos/storage/app/$storage/$modelName/$modelId/$type/$nameComplete";
 
             Storage::disk($storage)->put($nameComplete, $f);
-            
          
             $item = File::create([
                 'name' => $name,
