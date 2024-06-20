@@ -34,7 +34,7 @@ class FileController extends Controller
             $nameComplete = $name . '.' . $extension;
 
             Storage::disk($storage)->makeDirectory($modelId);
-            $url = Storage::disk($storage)->put("$modelId/$nameComplete", $f);
+            $url = Storage::disk($storage)->putFile("$modelId/$nameComplete", $f);
          
             $item = File::create([
                 'name' => $name,
