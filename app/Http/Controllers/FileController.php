@@ -44,7 +44,7 @@ class FileController extends Controller
                 'extension' => $extension,
                 'url' => $url,
                 'registered_by' => $idUserSesion,
-                'registered_date' => date(),
+                'registered_date' => date('Y-m-d H:i:s'),
             ]);
 
         } catch (Exception $e) {

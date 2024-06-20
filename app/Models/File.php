@@ -23,5 +23,9 @@ class File extends Model
         'type',
         'extension',
         'observation',
+        'registered_by',
+        'registered_date',
+        'reviewed_by',
+        'reviewed_date',
     ];
 }
