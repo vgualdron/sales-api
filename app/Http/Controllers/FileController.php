@@ -30,8 +30,8 @@ class FileController extends Controller
           
             // Crear un nombre aleatorio para la imagen
             $nameComplete = $name . '.' . $extension;
-            $storage = "public/$modelName/$modelId/$type/";
-            $url = "https://micomercio.com.co/api-prestamos/storage/app/$storage/$nameComplete";
+            $storage = "public";
+            $url = "https://micomercio.com.co/api-prestamos/storage/app/$storage/$modelName/$modelId/$type/$nameComplete";
 
             Storage::disk($storage)->put($nameComplete, $f);
             
