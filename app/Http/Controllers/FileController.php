@@ -16,10 +16,8 @@ class FileController extends Controller
     {
         $url = "";
         try {
-            // $userSesion = $request->user();
-            // $idUserSesion = $userSesion->id;
-            // $productId = $request->product_id;
-            // Obtener los datos de la imagen
+            $userSesion = $request->user();
+            $idUserSesion = $userSesion->id;
             $name = $request->name;
             $modelName = $request->model_name;
             $modelId = $request->model_id;
@@ -32,9 +30,11 @@ class FileController extends Controller
           
             // Crear un nombre aleatorio para la imagen
             $nameComplete = $name . '.' . $extension;
+            $path = "$modelId/$type/$nameComplete";
+            $url = $path;
 
             Storage::disk($storage)->makeDirectory($modelId);
-            $url = Storage::disk($storage)->putFile("$modelId/$nameComplete", $f);
+            $status = Storage::disk($storage)->put($path, $f);
          
             $item = File::create([
                 'name' => $name,
@@ -43,6 +43,8 @@ class FileController extends Controller
                 'type' => $type,
                 'extension' => $extension,
                 'url' => $url,
+                'registered_by' => $idUserSesion,
+                'registered_date' => date(),
             ]);
 
         } catch (Exception $e) {
@@ -59,8 +61,8 @@ class FileController extends Controller
         return response()->json([
             'message' => [
                 [
-                    'text' => 'Succeed',
-                    'detail' => $url
+                    'text' => $url,
+                    'detail' => $status
                 ]
             ]
         ], Response::HTTP_OK);
