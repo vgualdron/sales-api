@@ -31,7 +31,7 @@ class FileController extends Controller
             // Crear un nombre aleatorio para la imagen
             $nameComplete = $name . '.' . $extension;
             $path = "$modelId/$type/$nameComplete";
-            $url = $path;
+            $url = "/storage/app/public/$storage/$path";
 
             Storage::disk($storage)->makeDirectory($modelId);
             $status = Storage::disk($storage)->put($path, $f);
