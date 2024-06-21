@@ -29,7 +29,8 @@ class FileController extends Controller
             $f = base64_decode($file);
           
             // Crear un nombre aleatorio para la imagen
-            $nameComplete = $name . '.' . $extension;
+            $time = strtotime("now");
+            $nameComplete = $name."-".$time.".".$extension;
             $path = "$modelId/$type/$nameComplete";
             $url = "/storage/app/public/$storage/$path";
 
