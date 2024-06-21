@@ -19,8 +19,8 @@ class FileController extends Controller
             $userSesion = $request->user();
             $idUserSesion = $userSesion->id;
             $name = $request->name;
-            $modelName = $request->model_name;
-            $modelId = $request->model_id;
+            $modelName = $request->modelName;
+            $modelId = $request->modelId;
             $type = $request->type;
             $file = $request->file;
             $extension = $request->extension;
