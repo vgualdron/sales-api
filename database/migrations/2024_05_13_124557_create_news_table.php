@@ -25,8 +25,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_send')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
             $table->integer('attempts')->default(0);
-            $table->foreign('sector')->references('id')->on('yards');
-            $table->foreign('user_send')->references('id')->on('users');
             $table->string('family_reference_document_number', 50)->collation('utf8_general_ci')->nullable();
             $table->string('family_reference_name', 50)->collation('utf8_general_ci')->nullable();
             $table->string('family_reference_address', 50)->collation('utf8_general_ci')->nullable();
@@ -48,7 +46,10 @@ return new class extends Migration
             $table->string('period', 30)->collation('utf8_general_ci')->nullable();
             $table->string('lent_by', 100)->collation('utf8_general_ci')->nullable();
             $table->string('approved_by', 100)->collation('utf8_general_ci')->nullable();
+            $table->timestamp('approved_date')->nullable();
             $table->string('made_by', 100)->collation('utf8_general_ci')->nullable();
+            $table->foreign('sector')->references('id')->on('yards');
+            $table->foreign('user_send')->references('id')->on('users');
             $table->timestamps();
         });
     }
