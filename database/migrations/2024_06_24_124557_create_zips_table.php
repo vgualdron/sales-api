@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('zips', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
+            $table->string('name', 100)->collation('utf8_general_ci');
             $table->unsignedBigInteger('registered_by');
             $table->timestamp('registered_date');
             $table->timestamps();
