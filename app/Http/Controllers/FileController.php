@@ -31,7 +31,7 @@ class FileController extends Controller
             // Crear un nombre aleatorio para la imagen
             $time = strtotime("now");
             $nameComplete = $name."-".$time.".".$extension;
-            $path = "$modelId/$type/$nameComplete";
+            $path = "$modelId/$nameComplete";
             $url = "/storage/app/public/$storage/$path";
 
             Storage::disk($storage)->makeDirectory($modelId);
