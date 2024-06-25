@@ -91,12 +91,13 @@
             }
         }
 
-        public function downloadZip($path)
-        {
+        public function downloadZip($path) {
             // Directorio que quieres escanear
             $directory = storage_path("$path/news");
-    
-            // Nombre del archivo ZIP
+
+            if (File::exists($directory)) {
+                
+                // Nombre del archivo ZIP
             $zipFileName = "archivos-de-los-clientes.zip";
             $zipRelativeName = "$path/zip/$zipFileName";
             $zipFilePath = storage_path($zipRelativeName);
@@ -118,10 +119,13 @@
             File::deleteDirectory($directory);
     
             return "/storage/$zipRelativeName";
+
+            } else {
+                return response()->json(['error' => 'La carpeta no existe.'], 404);
+            }
         }
     
-        private function addFilesToZip($zip, $directory, $baseDir = '')
-        {
+        private function addFilesToZip($zip, $directory, $baseDir = '') {
             $files = File::allFiles($directory);
             foreach ($files as $file) {
                 $relativePath = $baseDir . $file->getRelativePathname();
