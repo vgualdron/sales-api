@@ -65,7 +65,7 @@
                 }
                 $status = $this->zip::create([
                     'name' => 'name',
-                    'registered_by' => 9,
+                    'registered_by' => $zip['registered_by'],
                     'registered_date' => date('Y-m-d H:i:s'),
                 ]);
                 return response()->json([
