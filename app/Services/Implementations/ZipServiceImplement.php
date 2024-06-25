@@ -22,12 +22,16 @@
 
         function list(){
             try {
-                $sql = $this->zip->select(
-                    'id',
-                    'name',
-                    'registered_by',
-                    'registered_date',
-                )->get();
+                $sql = $this->zip->from('zips as z')
+                            ->select(
+                                'z.id',
+                                'z.name',
+                                'z.registered_by',
+                                'u.name as registered_byname',
+                                'z.registered_date',
+                            )
+                            ->leftJoin('users as u', 'z.registered_by', 'u.id')
+                            ->get();
 
                 if (count($sql) > 0){
                     return response()->json([
@@ -65,11 +69,9 @@
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                
+                $urlZip = $this->downloadZip('app/public');
                
-                if (File::exists("$urlZip/news")) {
-                    $urlZip = $this->downloadZip('app/public');
-                    
+                if (File::exists("$urlZip/news")) {                    
                     $status = $this->zip::create([
                         'name' => $urlZip,
                         'registered_by' => $zip['registered_by'],
