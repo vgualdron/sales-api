@@ -98,7 +98,8 @@
     
             // Nombre del archivo ZIP
             $zipFileName = "archivos-de-los-clientes.zip";
-            $zipFilePath = storage_path("$path/zip/$zipFileName");
+            $zipRelativeName = "$path/zip/$zipFileName";
+            $zipFilePath = storage_path($zipRelativeName);
     
             // Crear una instancia de ZipArchive
             $zip = new ZipArchive();
@@ -114,7 +115,7 @@
             // Cerrar el archivo ZIP
             $zip->close();
     
-            return $zipFilePath;
+            return $zipRelativeName;
         }
     
         private function addFilesToZip($zip, $directory, $baseDir = '')
