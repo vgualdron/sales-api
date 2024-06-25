@@ -72,7 +72,14 @@
                     'registered_by' => $zip['registered_by'],
                     'registered_date' => date('Y-m-d H:i:s'),
                 ]);
-               
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Zip registrada con éxito',
+                            'detail' => null
+                        ]
+                    ]
+                ], Response::HTTP_OK);
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
@@ -91,7 +98,7 @@
             $directory = storage_path($path);
     
             // Nombre del archivo ZIP
-            $zipFileName = 'files.zip';
+            $zipFileName = "$path/files.zip";
             $zipFilePath = storage_path($zipFileName);
     
             // Crear una instancia de ZipArchive
@@ -116,14 +123,12 @@
         {
             $files = File::allFiles($directory);
             foreach ($files as $file) {
-                print_r('file ---- '.$file.'<br>');
                 $relativePath = $baseDir . $file->getRelativePathname();
                 $zip->addFile($file->getRealPath(), $relativePath);
             }
     
             $directories = File::directories($directory);
             foreach ($directories as $dir) {
-                print_r('DIR -> '.$dir.'<br>');
                 $this->addFilesToZip($zip, $dir, $baseDir . basename($dir) . '/');
             }
         }
