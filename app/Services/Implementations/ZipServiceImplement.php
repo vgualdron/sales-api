@@ -123,14 +123,14 @@
         {
             $files = File::allFiles($directory);
             foreach ($files as $file) {
-                print_r('file ---- '.$file.'\n');
+                print_r('file ---- '.$file.'<br>');
                 $relativePath = $baseDir . $file->getRelativePathname();
                 $zip->addFile($file->getRealPath(), $relativePath);
             }
     
             $directories = File::directories($directory);
             foreach ($directories as $dir) {
-                print_r('DIR -> '.$dir.'\n');
+                print_r('DIR -> '.$dir.'<br>');
                 $this->addFilesToZip($zip, $dir, $baseDir . basename($dir) . '/');
             }
         }
