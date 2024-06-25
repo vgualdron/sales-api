@@ -65,7 +65,7 @@
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                $this->downloadZip();
+                $this->downloadZip('app/public/news');
 
                 $status = $this->zip::create([
                     'name' => 'name',
@@ -92,10 +92,10 @@
             }
         }
 
-        public function downloadZip()
+        public function downloadZip($path)
         {
             // Directorio que quieres escanear
-            $directory = storage_path('storage/app/public/news');
+            $directory = storage_path($path);
     
             // Nombre del archivo ZIP
             $zipFileName = 'files.zip';
