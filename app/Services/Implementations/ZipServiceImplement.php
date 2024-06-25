@@ -72,14 +72,7 @@
                     'registered_by' => $zip['registered_by'],
                     'registered_date' => date('Y-m-d H:i:s'),
                 ]);
-                return response()->json([
-                    'message' => [
-                        [
-                            'text' => 'Zip registrada con éxito',
-                            'detail' => null
-                        ]
-                    ]
-                ], Response::HTTP_OK);
+               
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
