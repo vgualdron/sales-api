@@ -55,7 +55,6 @@
             }
         }
 
-
         function create(array $zip) {
             try {
                 $validation = $this->validate($this->validator, $zip, null, 'registrar', 'zip', null);
