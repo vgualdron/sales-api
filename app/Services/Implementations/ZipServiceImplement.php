@@ -121,7 +121,7 @@
             return "/storage/$zipRelativeName";
 
             } else {
-                return response()->json(['error' => 'La carpeta no existe.'], 404);
+                return "o hay archivos para exportar.";
             }
         }
     
