@@ -85,7 +85,7 @@
                             'registered_date' => date('Y-m-d H:i:s'),
                         ]);
                         
-                        File::deleteDirectory($path);
+                        // File::cleanDirectory($path);
                         
                         return response()->json([
                             'message' => [
@@ -136,6 +136,8 @@
             $zipFileName = "$time-archivos-de-los-clientes.zip";
             $zipRelativeName = "$path/zip/$zipFileName";
             $zipFilePath = storage_path($zipRelativeName);
+            $pathClean = storage_path("$path/zip");
+            File::cleanDirectory($pathClean);
     
             // Crear una instancia de ZipArchive
             $zip = new ZipArchive();
