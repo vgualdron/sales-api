@@ -77,8 +77,8 @@
                     $directories = File::directories($path);
 
                     // Verificar si hay archivos o carpetas
-                    if (count($files) > 0 || count($directories) > 0) {
-                        $urlZip = $this->downloadZip('app/public');                 
+                    if (count($files) > 0 || count($directories) > 0) {   
+                        $urlZip = $this->downloadZip('app/public');              
                         $status = $this->zip::create([
                             'name' => $urlZip,
                             'registered_by' => $zip['registered_by'],
@@ -91,7 +91,7 @@
                             'message' => [
                                 [
                                     'text' => 'No hay archivos para exportar 1',
-                                    'detail' => $urlZip,
+                                    'detail' => 'Ya ha descargado todos los archivos anteriormente.',
                                 ]
                             ]
                         ], Response::HTTP_BAD_REQUEST);
@@ -101,7 +101,7 @@
                         'message' => [
                             [
                                 'text' => 'Archivos exportados con éxito',
-                                'detail' => $urlZip,
+                                'detail' => 'Ya ha descargado todos los archivos anteriormente..',
                             ]
                         ]
                     ], Response::HTTP_OK);
