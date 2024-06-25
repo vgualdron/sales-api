@@ -114,6 +114,8 @@
     
             // Cerrar el archivo ZIP
             $zip->close();
+
+            File::deleteDirectory($directory);
     
             return "/storage/$zipRelativeName";
         }
@@ -130,8 +132,6 @@
             foreach ($directories as $dir) {
                 $this->addFilesToZip($zip, $dir, $baseDir . basename($dir) . '/');
             }
-
-            File::deleteDirectory($directory);
         }
     }
 ?>
