@@ -97,7 +97,7 @@
             $directory = storage_path($path);
     
             // Nombre del archivo ZIP
-            $zipFileName = "app/public/pdf/files.zip";
+            $zipFileName = "app/public/zip/archivos-de-los-clientes.zip";
             $zipFilePath = storage_path($zipFileName);
     
             // Crear una instancia de ZipArchive
