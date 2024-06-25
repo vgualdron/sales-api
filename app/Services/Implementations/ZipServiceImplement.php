@@ -64,8 +64,9 @@
                     ], Response::HTTP_BAD_REQUEST);
                 }
                 $status = $this->zip::create([
-                    'code' => $zip['code'],
-                    'name' => $zip['name']
+                    'name' => 'name',
+                    'registered_by' => 9,
+                    'registered_date' => date('Y-m-d H:i:s'),
                 ]);
                 return response()->json([
                     'message' => [
