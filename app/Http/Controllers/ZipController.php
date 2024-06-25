@@ -20,6 +20,10 @@ class ZipController extends Controller
     }
 
     function create(){
+        $zone = $this->request->all();
+        $userSesion = $request->user();
+        $idUserSesion = $userSesion->id;
+        $zone["registered_by"] = $idUserSesion;
         return $this->service->create($this->request);
     }
 }
