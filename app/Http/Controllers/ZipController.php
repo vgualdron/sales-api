@@ -20,6 +20,6 @@ class ZipController extends Controller
     }
 
     function create(){
-        return $this->service->create($this->request->all());
+        return $this->service->create($this->request);
     }
 }
