@@ -132,7 +132,7 @@
             $directory = storage_path("$path/news");
     
             // Nombre del archivo ZIP
-            $time = date('d-m-Y H:i:s');
+            $time = date('d-m-Y-H-i-s');
             $zipFileName = "$time-archivos-de-los-clientes.zip";
             $zipRelativeName = "$path/zip/$zipFileName";
             $zipFilePath = storage_path($zipRelativeName);
