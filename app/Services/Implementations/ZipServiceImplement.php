@@ -64,7 +64,7 @@
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                $this->downloadZip('app/public');
+                $urlZip = $this->downloadZip('app/public');
 
                 $status = $this->zip::create([
                     'name' => 'name',
@@ -75,7 +75,7 @@
                     'message' => [
                         [
                             'text' => 'Zip registrada con éxito',
-                            'detail' => null
+                            'detail' => $urlZip,
                         ]
                     ]
                 ], Response::HTTP_OK);
@@ -98,7 +98,7 @@
     
             // Nombre del archivo ZIP
             $zipFileName = "archivos-de-los-clientes.zip";
-            $zipFilePath = storage_path("$path/$zipFileName");
+            $zipFilePath = storage_path("$path/zip/$zipFileName");
     
             // Crear una instancia de ZipArchive
             $zip = new ZipArchive();
@@ -114,15 +114,7 @@
             // Cerrar el archivo ZIP
             $zip->close();
     
-            // Configurar encabezados para la descarga del archivo ZIP
-            $headers = [
-                'Content-Type' => 'application/zip',
-                'Content-Disposition' => 'attachment; filename="'.basename($zipFileName).'"',
-                'Content-Length' => filesize($zipFilePath),
-            ];
-
-            // Enviar el archivo ZIP para su descarga y eliminarlo después de enviarlo
-            return response()->download($zipFilePath, $zipFileName, $headers)->deleteFileAfterSend(false);
+            return $zipFilePath;
         }
     
         private function addFilesToZip($zip, $directory, $baseDir = '')
