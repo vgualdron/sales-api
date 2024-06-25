@@ -79,7 +79,7 @@
                         'registered_date' => date('Y-m-d H:i:s'),
                     ]);
 
-                    File::deleteDirectory("$urlZip/news");
+                    File::deleteDirectory($path);
 
                     return response()->json([
                         'message' => [
