@@ -54,7 +54,8 @@
         }
 
 
-        function create(array $zip){
+        function create(array $zip) {
+            print_r($zip);
             try {
                 $validation = $this->validate($this->validator, $zip, null, 'registrar', 'zip', null);
                 if ($validation['success'] === false) {
@@ -62,7 +63,7 @@
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
                 }
-                $status = $this->zone::create([
+                $status = $this->zip::create([
                     'code' => $zip['code'],
                     'name' => $zip['name']
                 ]);
