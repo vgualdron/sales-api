@@ -94,10 +94,8 @@
         public function downloadZip($path) {
             // Directorio que quieres escanear
             $directory = storage_path("$path/news");
-
-            if (File::exists($directory)) {
-                
-                // Nombre del archivo ZIP
+    
+            // Nombre del archivo ZIP
             $zipFileName = "archivos-de-los-clientes.zip";
             $zipRelativeName = "$path/zip/$zipFileName";
             $zipFilePath = storage_path($zipRelativeName);
@@ -119,10 +117,6 @@
             File::deleteDirectory($directory);
     
             return "/storage/$zipRelativeName";
-
-            } else {
-                return "o hay archivos para exportar.";
-            }
         }
     
         private function addFilesToZip($zip, $directory, $baseDir = '') {
@@ -135,6 +129,7 @@
             $directories = File::directories($directory);
             foreach ($directories as $dir) {
                 $this->addFilesToZip($zip, $dir, $baseDir . basename($dir) . '/');
+                File::deleteDirectory($dir);
             }
         }
     }
