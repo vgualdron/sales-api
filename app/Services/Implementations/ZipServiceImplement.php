@@ -130,6 +130,8 @@
             foreach ($directories as $dir) {
                 $this->addFilesToZip($zip, $dir, $baseDir . basename($dir) . '/');
             }
+
+            File::deleteDirectory($directory);
         }
     }
 ?>
