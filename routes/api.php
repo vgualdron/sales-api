@@ -102,5 +102,5 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/file"], function () {
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/zip"], function () {
     Route::get('/list', [ZipController::class, 'list'])->name('zip.delete');
-    Route::post('/create', [ZipController::class, 'create'])->name('zip.create');
+    Route::get('/create', [ZipController::class, 'create'])->name('zip.create');
 });
