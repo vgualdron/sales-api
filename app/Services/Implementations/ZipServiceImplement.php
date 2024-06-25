@@ -69,9 +69,10 @@
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                $urlZip = $this->downloadZip('app/public');
-               
-                if (File::exists("$urlZip/news")) {                    
+                
+                $path = storage_path("app/public/news");
+                if (File::exists($path)) {
+                    $urlZip = $this->downloadZip('app/public');                 
                     $status = $this->zip::create([
                         'name' => $urlZip,
                         'registered_by' => $zip['registered_by'],
