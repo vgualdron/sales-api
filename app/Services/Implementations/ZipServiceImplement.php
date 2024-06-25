@@ -86,31 +86,31 @@
                         ]);
                         
                         File::deleteDirectory($path);
+                        
+                        return response()->json([
+                            'message' => [
+                                [
+                                    'text' => 'Archivos exportados con éxito',
+                                    'detail' => $urlZip,
+                                ]
+                            ]
+                        ], Response::HTTP_OK);
                     } else {
                         return response()->json([
                             'message' => [
                                 [
-                                    'text' => 'No hay archivos para exportar 1',
+                                    'text' => 'No hay archivos para exportar',
                                     'detail' => 'Ya ha descargado todos los archivos anteriormente.',
                                 ]
                             ]
-                        ], Response::HTTP_BAD_REQUEST);
+                        ], Response::HTTP_NOT_FOUND);
                     }
-
-                    return response()->json([
-                        'message' => [
-                            [
-                                'text' => 'Archivos exportados con éxito',
-                                'detail' => 'Ya ha descargado todos los archivos anteriormente..',
-                            ]
-                        ]
-                    ], Response::HTTP_OK);
                 } else {
                     return response()->json([
                         'message' => [
                             [
-                                'text' => 'No hay archivos para exportar 2',
-                                'detail' => $urlZip,
+                                'text' => 'No hay archivos para exportar',
+                                'detail' => 'Ya ha descargado todos los archivos anteriormente..',
                             ]
                         ]
                     ], Response::HTTP_BAD_REQUEST);
