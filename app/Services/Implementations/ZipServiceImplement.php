@@ -58,19 +58,26 @@
         function create(array $zip) {
             try {
                 $validation = $this->validate($this->validator, $zip, null, 'registrar', 'zip', null);
+                
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                $urlZip = $this->downloadZip('app/public');
-
+                
+               
+                if (File::exists("$urlZip/news")) {
+                    $urlZip = $this->downloadZip('app/public');
+                    
                 $status = $this->zip::create([
                     'name' => $urlZip,
                     'registered_by' => $zip['registered_by'],
                     'registered_date' => date('Y-m-d H:i:s'),
                 ]);
+
+                File::deleteDirectory("$urlZip/news");
+
                 return response()->json([
                     'message' => [
                         [
@@ -79,6 +86,16 @@
                         ]
                     ]
                 ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'No hay archivos para exportar',
+                                'detail' => $urlZip,
+                            ]
+                        ]
+                    ], Response::HTTP_BAD_REQUEST);
+                }
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
@@ -96,7 +113,7 @@
             $directory = storage_path("$path/news");
     
             // Nombre del archivo ZIP
-            $time = strtotime("now");
+            $time = date('d-m-Y H:i:s');
             $zipFileName = "$time-archivos-de-los-clientes.zip";
             $zipRelativeName = "$path/zip/$zipFileName";
             $zipFilePath = storage_path($zipRelativeName);
