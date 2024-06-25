@@ -12,6 +12,7 @@ use App\Http\Controllers\{
                         NovelController,
                         DiaryController,
                         FileController,
+                        ZipController,
                     };
 
 /*
@@ -97,4 +98,9 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/diary"], function () {
 Route::group(['middleware' => 'auth:api' , "prefix" => "/file"], function () {
     Route::post('/create', [FileController::class, 'create'])->name('image.create');
     Route::delete('/delete/{id}', [FileController::class, 'delete'])->name('image.delete');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/zip"], function () {
+    Route::get('/list', [ZipController::class, 'list'])->name('zip.delete');
+    Route::post('/create', [ZipController::class, 'create'])->name('zip.create');
 });
