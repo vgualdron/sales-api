@@ -116,7 +116,7 @@
             $zip->close();
     
             // Configurar encabezados para la descarga del archivo ZIP
-            return response()->download($zipFilePath)->deleteFileAfterSend(true);
+            return response()->download($zipFilePath)->deleteFileAfterSend(false);
         }
     
         private function addFilesToZip($zip, $directory, $baseDir = '')
