@@ -38,7 +38,7 @@
                         'message' => [
                             [
                                 'text' => 'No hay zip para mostrar',
-                                'detail' => 'Aun no ha registrado ningun zip'
+                                'detail' => 'Aun no ha exportado ningun comprimido de datos.'
                             ]
                         ]
                     ], Response::HTTP_NOT_FOUND);
@@ -114,7 +114,7 @@
             // Cerrar el archivo ZIP
             $zip->close();
 
-            File::deleteDirectory($directory);
+            File::cleanDirectory($directory);
     
             return "/storage/$zipRelativeName";
         }
@@ -129,7 +129,6 @@
             $directories = File::directories($directory);
             foreach ($directories as $dir) {
                 $this->addFilesToZip($zip, $dir, $baseDir . basename($dir) . '/');
-                File::deleteDirectory($dir);
             }
         }
     }
