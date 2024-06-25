@@ -5,6 +5,8 @@
     use App\Models\Zip;
     use App\Validator\ZipValidator;
     use App\Traits\Commons;
+    use ZipArchive;
+    use File;
     
     class ZipServiceImplement implements ZipServiceInterface {
 
@@ -55,7 +57,6 @@
 
 
         function create(array $zip) {
-            print_r($zip);
             try {
                 $validation = $this->validate($this->validator, $zip, null, 'registrar', 'zip', null);
                 if ($validation['success'] === false) {
