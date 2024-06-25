@@ -70,22 +70,22 @@
                 if (File::exists("$urlZip/news")) {
                     $urlZip = $this->downloadZip('app/public');
                     
-                $status = $this->zip::create([
-                    'name' => $urlZip,
-                    'registered_by' => $zip['registered_by'],
-                    'registered_date' => date('Y-m-d H:i:s'),
-                ]);
+                    $status = $this->zip::create([
+                        'name' => $urlZip,
+                        'registered_by' => $zip['registered_by'],
+                        'registered_date' => date('Y-m-d H:i:s'),
+                    ]);
 
-                File::deleteDirectory("$urlZip/news");
+                    File::deleteDirectory("$urlZip/news");
 
-                return response()->json([
-                    'message' => [
-                        [
-                            'text' => 'Zip registrada con éxito',
-                            'detail' => $urlZip,
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Archivos exportados con éxito',
+                                'detail' => $urlZip,
+                            ]
                         ]
-                    ]
-                ], Response::HTTP_OK);
+                    ], Response::HTTP_OK);
                 } else {
                     return response()->json([
                         'message' => [
