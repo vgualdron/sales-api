@@ -115,7 +115,7 @@
             // Cerrar el archivo ZIP
             $zip->close();
     
-            return $zipRelativeName;
+            return "storage/$zipRelativeName";
         }
     
         private function addFilesToZip($zip, $directory, $baseDir = '')
