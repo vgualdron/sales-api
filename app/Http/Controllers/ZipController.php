@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Implementations\ZipServiceImplement;
+use ZipArchive;
+use File;
 
 class ZipController extends Controller
 {
