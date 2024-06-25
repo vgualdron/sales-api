@@ -115,7 +115,9 @@
             // Cerrar el archivo ZIP
             $zip->close();
 
-            File::cleanDirectory($directory);
+            try {
+                File::cleanDirectory($directory);
+            } catch (\Throwable $e) {}
     
             return "/storage/$zipRelativeName";
         }
