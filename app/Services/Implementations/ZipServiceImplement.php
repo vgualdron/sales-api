@@ -69,17 +69,33 @@
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                
                 $path = storage_path("app/public/news");
-                if (File::exists($path)) {
-                    $urlZip = $this->downloadZip('app/public');                 
-                    $status = $this->zip::create([
-                        'name' => $urlZip,
-                        'registered_by' => $zip['registered_by'],
-                        'registered_date' => date('Y-m-d H:i:s'),
-                    ]);
 
-                    // File::deleteDirectory($path);
+                if (File::exists($path)) {
+                    // Obtener todos los archivos y carpetas dentro del directorio
+                    $files = File::files($path);
+                    $directories = File::directories($path);
+
+                    // Verificar si hay archivos o carpetas
+                    if (count($files) > 0 || count($directories) > 0) {
+                        $urlZip = $this->downloadZip('app/public');                 
+                        $status = $this->zip::create([
+                            'name' => $urlZip,
+                            'registered_by' => $zip['registered_by'],
+                            'registered_date' => date('Y-m-d H:i:s'),
+                        ]);
+                        
+                        File::deleteDirectory($path);
+                    } else {
+                        return response()->json([
+                            'message' => [
+                                [
+                                    'text' => 'No hay archivos para exportar 1',
+                                    'detail' => $urlZip,
+                                ]
+                            ]
+                        ], Response::HTTP_BAD_REQUEST);
+                    }
 
                     return response()->json([
                         'message' => [
@@ -93,7 +109,7 @@
                     return response()->json([
                         'message' => [
                             [
-                                'text' => 'No hay archivos para exportar',
+                                'text' => 'No hay archivos para exportar 2',
                                 'detail' => $urlZip,
                             ]
                         ]
