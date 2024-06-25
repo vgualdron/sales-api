@@ -67,7 +67,7 @@
                 $urlZip = $this->downloadZip('app/public');
 
                 $status = $this->zip::create([
-                    'name' => 'name',
+                    'name' => $urlZip,
                     'registered_by' => $zip['registered_by'],
                     'registered_date' => date('Y-m-d H:i:s'),
                 ]);
@@ -96,7 +96,8 @@
             $directory = storage_path("$path/news");
     
             // Nombre del archivo ZIP
-            $zipFileName = "archivos-de-los-clientes.zip";
+            $time = strtotime("now");
+            $zipFileName = "$time-archivos-de-los-clientes.zip";
             $zipRelativeName = "$path/zip/$zipFileName";
             $zipFilePath = storage_path($zipRelativeName);
     
