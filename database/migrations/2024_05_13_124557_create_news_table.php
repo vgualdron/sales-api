@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name', 50)->collation('utf8_general_ci')->nullable();
             $table->string('phone', 15)->collation('utf8_general_ci')->nullable();
             $table->string('address', 100)->collation('utf8_general_ci')->nullable();
+            $table->string('address_house', 100)->collation('utf8_general_ci')->nullable();
+            $table->string('address_work', 100)->collation('utf8_general_ci')->nullable();
+            $table->string('site_visit', 100)->collation('utf8_general_ci')->nullable();
             $table->unsignedBigInteger('sector')->nullable();
             $table->string('district', 50)->collation('utf8_general_ci')->nullable();
             $table->string('occupation', 50)->collation('utf8_general_ci')->nullable();
@@ -42,7 +45,8 @@ return new class extends Migration
             $table->string('guarantor_relationship', 50)->collation('utf8_general_ci')->nullable();
             $table->string('facebook', 150)->collation('utf8_general_ci')->nullable();
             $table->integer('quantity')->nullable();
-            $table->string('house', 10)->collation('utf8_general_ci')->nullable();
+            $table->string('type_house', 10)->collation('utf8_general_ci')->nullable();
+            $table->string('type_work', 10)->collation('utf8_general_ci')->nullable();
             $table->string('period', 30)->collation('utf8_general_ci')->nullable();
             $table->string('lent_by', 100)->collation('utf8_general_ci')->nullable();
             $table->string('approved_by', 100)->collation('utf8_general_ci')->nullable();
