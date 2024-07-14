@@ -112,7 +112,3 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/configuration"], functi
     Route::put('/{id}', [ConfigurationController::class, 'update'])->middleware('can:parameter.list')->name('parameter.list');
     Route::delete('/{id}', [ConfigurationController::class, 'destroy'])->middleware('can:parameter.list')->name('parameter.list');
 });
-
-Route::group(['prefix'=>'/configuration'], function () {
-
-});
