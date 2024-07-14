@@ -13,6 +13,7 @@ use App\Http\Controllers\{
                         DiaryController,
                         FileController,
                         ZipController,
+                        ConfigurationController,
                     };
 
 /*
