@@ -12,20 +12,7 @@ class ConfigurationController extends Controller
 {
     public function index(Request $request)
     {
-        try {
-            $idUserSesion = $request->user()->id;
-            $items = Configuration::where('id', '>', 0)->get();
-        } catch (Exception $e) {
-            return response()->json([
-                'data' => [],
-                'message'=> $idUserSesion,
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return response()->json([
-            'data' => $items,
-            'message' => 'Succeed',
-        ], JsonResponse::HTTP_OK);
+        echo "asda";
     }
 
     public function show(Request $request, $id)
