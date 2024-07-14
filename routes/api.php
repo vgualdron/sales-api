@@ -104,3 +104,15 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/zip"], function () {
     Route::get('/list', [ZipController::class, 'list'])->name('zip.delete');
     Route::get('/create', [ZipController::class, 'create'])->name('zip.create');
 });
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/configuration"], function () {
+    Route::get('/', [ConfigurationController::class, 'index'])->middleware('can:parameter.list')->name('parameter.list');
+    Route::get('/{id}', [ConfigurationController::class, 'show'])->middleware('can:parameter.list')->name('parameter.list');
+    Route::post('/', [ConfigurationController::class, 'store'])->middleware('can:parameter.list')->name('parameter.list');
+    Route::put('/{id}', [ConfigurationController::class, 'update'])->middleware('can:parameter.list')->name('parameter.list');
+    Route::delete('/{id}', [ConfigurationController::class, 'destroy'])->middleware('can:parameter.list')->name('parameter.list');
+});
+
+Route::group(['prefix'=>'/configuration'], function () {
+
+});
