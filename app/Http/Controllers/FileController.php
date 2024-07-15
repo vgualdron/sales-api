@@ -75,6 +75,36 @@ class FileController extends Controller
 
     }
 
+    public function get(Request $request)
+    {
+        try {
+            $userSesion = $request->user();
+            $idUserSesion = $userSesion->id;
+            $name = $request->name;
+            $modelName = $request->modelName;
+            $modelId = $request->modelId;
+            $type = $request->type;
+            $file = $request->file;
+            $extension = $request->extension;
+            $storage = $request->storage;
+            $item = File::where('name', $name)
+                ->where('model_id', $modelId)
+                ->where('model_name', $modelName)
+                ->first();
+
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => [],
+                'message'=>$e->getMessage()
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $item,
+            'message' => 'Succeed'
+        ], JsonResponse::HTTP_OK);
+    }
+
     public function delete(Request $request, $id)
     {
         try {

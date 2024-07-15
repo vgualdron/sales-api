@@ -97,8 +97,9 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/diary"], function () {
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/file"], function () {
-    Route::post('/create', [FileController::class, 'create'])->name('image.create');
-    Route::delete('/delete/{id}', [FileController::class, 'delete'])->name('image.delete');
+    Route::post('/create', [FileController::class, 'create'])->name('file.create');
+    Route::delete('/delete/{id}', [FileController::class, 'delete'])->name('file.delete');
+    Route::post('/get/{id}', [FileController::class, 'get'])->name('file.get');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/zip"], function () {
