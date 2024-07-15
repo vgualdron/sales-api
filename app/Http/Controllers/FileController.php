@@ -83,10 +83,6 @@ class FileController extends Controller
             $name = $request->name;
             $modelName = $request->modelName;
             $modelId = $request->modelId;
-            $type = $request->type;
-            $file = $request->file;
-            $extension = $request->extension;
-            $storage = $request->storage;
             $item = File::where('name', $name)
                 ->where('model_id', $modelId)
                 ->where('model_name', $modelName)
