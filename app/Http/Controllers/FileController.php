@@ -36,6 +36,11 @@ class FileController extends Controller
 
             Storage::disk($storage)->makeDirectory($modelId);
             $status = Storage::disk($storage)->put($path, $f);
+
+            File::where('name', $name)
+                ->where('model_id', $modelId)
+                ->where('model_name', $modelName)
+                ->delete();
          
             $item = File::create([
                 'name' => $name,
