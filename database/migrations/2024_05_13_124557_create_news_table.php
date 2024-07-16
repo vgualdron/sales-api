@@ -33,11 +33,11 @@ return new class extends Migration
             $table->string('family_reference_address', 50)->collation('utf8_general_ci')->nullable();
             $table->string('family_reference_phone', 50)->collation('utf8_general_ci')->nullable();
             $table->string('family_reference_relationship', 50)->collation('utf8_general_ci')->nullable();
-            $table->string('personal_reference_name', 50)->collation('utf8_general_ci')->nullable();
-            $table->string('personal_reference_document_number', 50)->collation('utf8_general_ci')->nullable();
-            $table->string('personal_reference_address', 50)->collation('utf8_general_ci')->nullable();
-            $table->string('personal_reference_phone', 50)->collation('utf8_general_ci')->nullable();
-            $table->string('personal_reference_relationship', 50)->collation('utf8_general_ci')->nullable();
+            $table->string('family2_reference_name', 50)->collation('utf8_general_ci')->nullable();
+            $table->string('family2_reference_document_number', 50)->collation('utf8_general_ci')->nullable();
+            $table->string('family2_reference_address', 50)->collation('utf8_general_ci')->nullable();
+            $table->string('family2_reference_phone', 50)->collation('utf8_general_ci')->nullable();
+            $table->string('family2_reference_relationship', 50)->collation('utf8_general_ci')->nullable();
             $table->string('guarantor_name', 50)->collation('utf8_general_ci')->nullable();
             $table->string('guarantor_document_number', 50)->collation('utf8_general_ci')->nullable();
             $table->string('guarantor_address', 50)->collation('utf8_general_ci')->nullable();
@@ -45,8 +45,8 @@ return new class extends Migration
             $table->string('guarantor_relationship', 50)->collation('utf8_general_ci')->nullable();
             $table->string('facebook', 150)->collation('utf8_general_ci')->nullable();
             $table->integer('quantity')->nullable();
-            $table->string('type_house', 10)->collation('utf8_general_ci')->nullable();
-            $table->string('type_work', 10)->collation('utf8_general_ci')->nullable();
+            $table->string('type_house', 15)->collation('utf8_general_ci')->nullable();
+            $table->string('type_work', 15)->collation('utf8_general_ci')->nullable();
             $table->string('period', 30)->collation('utf8_general_ci')->nullable();
             $table->string('lent_by', 100)->collation('utf8_general_ci')->nullable();
             $table->string('approved_by', 100)->collation('utf8_general_ci')->nullable();
