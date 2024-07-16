@@ -288,22 +288,47 @@
 
         function get(int $id){
             try {
-                $sql = $this->user::select(
-                    'id',
-                    'document_number as documentNumber',
-                    'name',
-                    'yard',
-                    'phone',
-                    'active',
-                    'editable',
-                    'change_yard as changeYard'
-                )
-                    ->where('id', $id)
+                $sql = $this->novel->from('news as n')
+                    ->select(
+                        'n.id',
+                        'n.document_number as documentNumber',
+                        'n.name as name',
+                        'n.phone as phone',
+                        'n.address as address',
+                        'n.address_house',
+                        'n.address_work',
+                        'n.site_visit',
+                        'n.district as district',
+                        'n.occupation as occupation',
+                        'n.attempts as attempts',
+                        'n.observation as observation',
+                        'n.status as status',
+                        'n.created_at as date',
+                        DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad") as cityName'),
+                        DB::Raw('IF(y.zone IS NOT NULL, z.id, null) as city'),
+                        DB::Raw('IF(n.sector IS NOT NULL, y.name, "Sin sector") as sectorName'),
+                        DB::Raw('IF(n.sector IS NOT NULL, y.id, null) as sector'),
+                        DB::Raw('IF(n.user_send IS NOT NULL, u.name, "Ninguno") as userSendName'),
+                        DB::Raw('IF(n.user_send IS NOT NULL, u.id, null) as userSend'),
+                        'n.family_reference_document_number',
+                        'n.family_reference_name',
+                        'n.family_reference_address',
+                        'n.family_reference_phone',
+                        'n.personal_reference_document_number',
+                        'n.personal_reference_name',
+                        'n.personal_reference_address',
+                        'n.personal_reference_phone',
+                        'n.guarantor_document_number',
+                        'n.guarantor_name',
+                        'n.guarantor_address',
+                        'n.guarantor_phone',
+                    )
+                    ->leftJoin('yards as y', 'n.sector', 'y.id')
+                    ->leftJoin('zones as z', 'y.zone', 'z.id')
+                    ->leftJoin('users as u', 'n.user_send', 'u.id')
+                    ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
-                    $roles = $sql->roles->pluck('id');
-                    unset($sql->roles);
-                    $sql->roles = $roles;
                     return response()->json([
                         'data' => $sql
                     ], Response::HTTP_OK);
