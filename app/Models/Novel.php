@@ -54,5 +54,6 @@ class Novel extends Model
         'approved_by',
         'approved_date',
         'made_by',
+        'visit_start_date',
     ];
 }

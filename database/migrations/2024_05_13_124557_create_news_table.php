@@ -54,6 +54,7 @@ return new class extends Migration
             $table->string('made_by', 100)->collation('utf8_general_ci')->nullable();
             $table->foreign('sector')->references('id')->on('yards');
             $table->foreign('user_send')->references('id')->on('users');
+            $table->timestamp('visit_start_date')->nullable();
             $table->timestamps();
         });
     }
