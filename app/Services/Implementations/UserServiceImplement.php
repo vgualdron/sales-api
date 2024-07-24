@@ -350,7 +350,7 @@
             try {
                 $sql = $this->user::find($id);
                 if(!empty($sql)) {
-                    $sql->push_token = $user['pushToken'];
+                    $sql->push_token = $token;
                     $sql->save();
                     return response()->json([
                         'message' => [
