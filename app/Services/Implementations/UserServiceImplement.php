@@ -375,7 +375,7 @@
                     'message' => [
                         [
                             'text' => 'Advertencia al actualizar el token push',
-                            'detail' => 'Si este problema persiste, contacte con un administrador'
+                            'detail' => $e->getMessage(),
                         ]
                     ]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
