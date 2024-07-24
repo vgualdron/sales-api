@@ -345,5 +345,41 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
+
+        function updatePushToken(string $token, int $id){
+            try {
+                $sql = $this->user::find($id);
+                if(!empty($sql)) {
+                    $sql->push_token = $user['pushToken'];
+                    $sql->save();
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Token push actualizado con exito',
+                                'detail' => null
+                            ]
+                        ]
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Advertencia al actualizar el token push',
+                                'detail' => 'El usuario no existe'
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Advertencia al actualizar el token push',
+                            'detail' => 'Si este problema persiste, contacte con un administrador'
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 ?>

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'yard',
         'editable',
         'active',
+        'push_token',
         'created_at',
         'updated_at'
     ];

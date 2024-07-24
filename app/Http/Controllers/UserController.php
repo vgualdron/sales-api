@@ -42,4 +42,11 @@ class UserController extends Controller
     function updateProfile(int $id){
         return $this->service->updateProfile($this->request->all(), $id);
     }
+
+    function updatePushToken() {
+        $user = $this->request->all();
+        $userSesion = $this->request->user();
+        $idUserSesion = $userSesion->id;
+        return $this->service->updatePushToken($user['pushToken'], $id);
+    }
 }
