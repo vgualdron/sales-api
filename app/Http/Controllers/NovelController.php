@@ -33,7 +33,7 @@ class NovelController extends Controller
         return $this->service->updateStatus($this->request->all(), $id);
     }
     
-    function completeData(int $id){
+    function completeData(int $id) {
        
         try {
             $item = Novel::find($id)->update($this->request->all());

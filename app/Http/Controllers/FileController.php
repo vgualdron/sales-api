@@ -101,9 +101,9 @@ class FileController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    function update(int $id) {
+    function update(Request $request, int $id) {
         try {
-            $item = File::find($id)->update($this->request->all());
+            $item = File::find($id)->update($request->all());
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
