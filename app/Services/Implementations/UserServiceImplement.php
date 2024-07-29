@@ -275,6 +275,7 @@
                     'phone',
                     'active',
                     'editable',
+                    'push_token as pushToken',
                     'change_yard as changeYard'
                 )
                     ->where('id', $id)
