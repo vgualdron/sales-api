@@ -103,7 +103,7 @@ class FileController extends Controller
 
     function update(int $id) {
         try {
-            $item = Novel::find($id)->update($this->request->all());
+            $item = File::find($id)->update($this->request->all());
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
