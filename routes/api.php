@@ -80,9 +80,9 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
 Route::group(['middleware' => 'auth:api' , "prefix" => "/new"], function () {
     Route::get('/list/{status}', [NovelController::class, 'list'])->middleware('can:new.list')->name('new.list');
     Route::post('/create', [NovelController::class, 'create'])->middleware('can:new.create')->name('new.create');
-    Route::put('/update/{id}', [NovelController::class, 'update'])->middleware('can:new.update')->name('new.update');
-    Route::put('/update-status/{id}', [NovelController::class, 'updateStatus'])->middleware('can:new.changeStatus')->name('new.changeStatus');
-    Route::put('/complete-data/{id}', [NovelController::class, 'completeData'])->middleware('can:review.completeData')->name('review.completeData');
+    Route::put('/update/{id}', [NovelController::class, 'update'])->name('new.update');
+    Route::put('/update-status/{id}', [NovelController::class, 'updateStatus'])->name('new.changeStatus');
+    Route::put('/complete-data/{id}', [NovelController::class, 'completeData'])->name('review.completeData');
     Route::delete('/delete/{id}', [NovelController::class, 'delete'])->middleware('can:new.delete')->name('new.delete');
     Route::get('/get/{id}', [NovelController::class, 'get'])->name('new.get');
 });
