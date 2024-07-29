@@ -101,6 +101,22 @@ class FileController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
+    function update(int $id) {
+        try {
+            $item = Novel::find($id)->update($this->request->all());
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => [],
+                'message'=>$e->getMessage()
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $item,
+            'message' => 'Succeed'
+        ], JsonResponse::HTTP_OK);
+    }
+
     public function delete(Request $request, $id)
     {
         try {

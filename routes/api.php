@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/file"], function () {
     Route::post('/create', [FileController::class, 'create'])->name('file.create');
     Route::delete('/delete/{id}', [FileController::class, 'delete'])->name('file.delete');
     Route::post('/get', [FileController::class, 'get'])->name('file.get');
+    Route::put('/update/{id}', [FileController::class, 'update'])->name('new.update');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/zip"], function () {
