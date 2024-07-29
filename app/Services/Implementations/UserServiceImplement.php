@@ -88,7 +88,9 @@
                             ->join('roles as r', 'mhr.role_id', 'r.id')
                             ->where('r.name', 'LIKE', '%' . $name . '%')
                             ->where('u.active', $displayAll)
-                            ->where('z.id', $city)
+                            ->when($city > 0, function ($q) use ($city) {
+                                return $q->where('z.id', $city);
+                            })
                             ->get();
 
                 if (count($sql) > 0){
