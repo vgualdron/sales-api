@@ -77,6 +77,7 @@
                                 'u.name as name',
                                 'u.phone as phone',
                                 'r.name as role',
+                                'u.push_token as pushToken',
                                 DB::Raw('IF(u.active = 1, "ACTIVO", "NO ACTIVO") as status'),
                                 DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin sector asignado") as yard'),
                                 DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad asignada") as zone')
