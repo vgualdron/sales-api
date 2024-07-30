@@ -317,6 +317,8 @@
                         DB::Raw('IF(n.sector IS NOT NULL, y.id, null) as sector'),
                         DB::Raw('IF(n.user_send IS NOT NULL, u.name, "Ninguno") as userSendName'),
                         DB::Raw('IF(n.user_send IS NOT NULL, u.id, null) as userSend'),
+                        DB::Raw('IF(us.id IS NOT NULL, us.id, null) as userVisit'),
+                        DB::Raw('IF(us.id IS NOT NULL, us.push_token, null) as userVisitTokengitgit git '),
                         'n.family_reference_document_number',
                         'n.family_reference_name',
                         'n.family_reference_address',
@@ -335,6 +337,8 @@
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
                     ->leftJoin('users as u', 'n.user_send', 'u.id')
+                    ->leftJoin('diaries as d', 'd.new_id', 'n.id')
+                    ->leftJoin('users as us', 'us.id', 'd.user_id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
