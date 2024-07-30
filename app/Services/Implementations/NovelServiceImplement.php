@@ -318,7 +318,7 @@
                         DB::Raw('IF(n.user_send IS NOT NULL, u.name, "Ninguno") as userSendName'),
                         DB::Raw('IF(n.user_send IS NOT NULL, u.id, null) as userSend'),
                         DB::Raw('IF(us.id IS NOT NULL, us.id, null) as userVisit'),
-                        DB::Raw('IF(us.id IS NOT NULL, us.push_token, null) as userVisitTokengitgit git '),
+                        DB::Raw('IF(us.id IS NOT NULL, us.push_token, null) as userVisitToken'),
                         'n.family_reference_document_number',
                         'n.family_reference_name',
                         'n.family_reference_address',
