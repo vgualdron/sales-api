@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('document_number', 15)->collation('utf8_general_ci');
+            $table->string('document_number', 15)->collation('utf8_general_ci')->nullable();
             $table->string('name', 50)->collation('utf8_general_ci')->nullable();
             $table->string('phone', 15)->collation('utf8_general_ci')->nullable();
             $table->string('address', 100)->collation('utf8_general_ci')->nullable();
