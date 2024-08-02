@@ -14,7 +14,7 @@
 
         private function rules(){
             return[                             
-                'documentNumber' => 'required|min:5|max:15|unique:news,document_number,'.$this->data['id'],
+                'documentNumber' => 'unique:news,document_number,'.$this->data['id'],
                 'name' => 'required|min:5|max:50',
                 'phone' => 'required|min:5|max:15',
             ];
@@ -22,7 +22,6 @@
 
         private function messages(){
             return [
-                'documentNumber.required' => 'El número de documento es requerido',
                 'documentNumber.unique' => 'El número de documento "'.$this->data['documentNumber'].'" ya se encuentra registrado',
                 'documentNumber.min' => 'El número de documento debe tener un mínimo de 5 caracteres',
                 'documentNumber.max' => 'El número de documento debe tener un máximo de 15 caracteres',
