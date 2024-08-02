@@ -47,7 +47,7 @@ return new class extends Migration
             $table->integer('quantity')->nullable();
             $table->string('type_house', 15)->collation('utf8_general_ci')->nullable();
             $table->string('type_work', 15)->collation('utf8_general_ci')->nullable();
-            $table->string('period', 30)->collation('utf8_general_ci')->nullable();
+            $table->string('period', 30)->collation('utf8_general_ci')->default('diario');
             $table->string('lent_by', 100)->collation('utf8_general_ci')->nullable();
             $table->string('approved_by', 100)->collation('utf8_general_ci')->nullable();
             $table->timestamp('approved_date')->nullable();
