@@ -64,6 +64,7 @@
                         'n.guarantor_phone',
                         'n.guarantor_relationship',
                         'n.period',
+                        'n.quantity',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
@@ -337,6 +338,7 @@
                         'n.guarantor_phone',
                         'n.guarantor_relationship',
                         'n.period',
+                        'n.quantity',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
