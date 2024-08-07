@@ -130,7 +130,7 @@
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Advertencia al registrar',
+                            'text' => 'Advertencia al registrar nuevo',
                             'detail' => $e->getMessage()
                         ]
                     ]
