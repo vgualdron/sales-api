@@ -202,7 +202,7 @@
                 $sql = $this->novel::find($id);
                 if(!empty($sql)) {
                      DB::transaction(function () use ($sql, $novel) {
-                        $sql->document_number = $novel['documentNumber'];
+                        // $sql->document_number = $novel['documentNumber'];
                         $sql->name = $novel['name'];
                         $sql->phone = $novel['phone'];
                         $sql->address = $novel['address'];
