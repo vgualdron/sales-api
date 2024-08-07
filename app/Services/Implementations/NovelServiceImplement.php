@@ -98,12 +98,12 @@
 
         function create(array $novel){
             try {
-                $validation = $this->validate($this->validator, $novel, null, 'registrar', 'nuevo', null);
+                /* $validation = $this->validate($this->validator, $novel, null, 'registrar', 'nuevo', null);
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
-                }
+                } */
                 DB::transaction(function () use ($novel) {
                     $sql = $this->novel::create([
                         'document_number' => null,
