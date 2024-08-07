@@ -106,7 +106,6 @@
                 }
                 DB::transaction(function () use ($novel) {
                     $sql = $this->novel::create([
-                        'document_number' => $novel['documentNumber'],
                         'name' => $novel['name'],
                         'phone' => $novel['phone'],
                         'address' => $novel['address'],
