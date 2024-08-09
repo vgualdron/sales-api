@@ -19,6 +19,7 @@ class Role extends Model
     protected $fillable = [
         'id',
         'name',
+        'route',
         'guard_name',
         'editable'
     ];

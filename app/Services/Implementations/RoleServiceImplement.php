@@ -28,7 +28,7 @@
 
         function list(){
             try {
-                $sql = $this->role->select('id', 'name')
+                $sql = $this->role->select('id', 'name', 'route')
                             ->get();
 
                 if (count($sql) > 0){
@@ -69,6 +69,7 @@
                 DB::transaction(function () use ($role) {
                     $status = $this->spRole::create([
                         'name' => $role['name'],
+                        'route' => $role['route'],
                         'guard_name' => 'api',
                         'editable' => 1
                     ]);
@@ -108,6 +109,7 @@
                         DB::transaction(function () use ($role, $id) {
                             $status = $this->spRole::find($id);                            
                             $status->name = $role['name'];
+                            $status->route = $role['route'];
                             $status->save();
                             $status->syncPermissions($role['permissions']);
                         });
@@ -212,7 +214,7 @@
 
         function get(int $id){
             try {
-                $sql = $this->role::select('id', 'name', 'editable', DB::Raw('NULL as permissions'))
+                $sql = $this->role::select('id', 'name', 'route', 'editable', DB::Raw('NULL as permissions'))
                             ->where('id', $id)   
                             ->first();
                 if(!empty($sql)) {
