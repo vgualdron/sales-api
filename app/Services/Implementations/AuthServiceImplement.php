@@ -127,14 +127,14 @@
                                     'user' => $user->id
                                 );
 
-                            $rolesArray = User::from('users as u')
+                                $rolesArray = User::from('users as u')
                                 ->select(
                                     'r.id as id',
                                     'r.name as name',
                                     'r.route as route'
                                 )
                                 ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
-                                ->join('role as r', 'r.id', 'mhr.role_id')
+                                ->join('roles as r', 'r.id', 'mhr.role_id')
                                 ->where('u.id', $user->id)
                                 ->orderBy('r.id', 'ASC')
                                 ->get();
