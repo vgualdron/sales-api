@@ -37,6 +37,12 @@ Route::group(["prefix" => "/auth"], function () {
     Route::middleware(['middleware' => 'auth:api'])->post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
+Route::group(['middleware' => 'auth:api' , "prefix" => "/session"], function () {
+    Route::get('/status', function (Request $request) {
+        return 'OK';
+    });
+});
+
 Route::group(['middleware' => 'auth:api' , "prefix" => "/zone"], function () {
     Route::get('/list', [ZoneController::class, 'list'])->middleware('can:zone.list')->name('zone.list');
     Route::post('/create', [ZoneController::class, 'create'])->middleware('can:zone.create')->name('zone.create');

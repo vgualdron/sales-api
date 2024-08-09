@@ -94,9 +94,11 @@
                                 ->orderBy('g.order_number', 'ASC')
                                 ->orderBy('p.order', 'ASC')
                                 ->get();
+
                                 $roles = $user->getRoleNames();
                                 $dataPermissions = [];
                                 $menu = [];
+                                
                                 foreach ($permissions as $permission) {
                                     $menu[$permission->group_id]['name'] = $permission->group_name;
                                     $menu[$permission->group_id]['label'] = $permission->group_label;
