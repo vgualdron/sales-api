@@ -15,6 +15,7 @@
         function list(){
             try {
                 $sql = $this->permission::select('id', 'display_name', 'group')
+                    ->orderBy('order', 'ASC')
                     ->get();
                 if (count($sql) > 0){
                     $permissions = [];
