@@ -95,6 +95,7 @@
                                 ->orderBy('p.order', 'ASC')
                                 ->get();
                                 $roles = $user->getRoleNames();
+                                $rolesArray = $user->getRoles();
                                 $dataPermissions = [];
                                 $menu = [];
                                 foreach ($permissions as $permission) {
@@ -131,7 +132,8 @@
                                     'user' => $userData,
                                     'permissions' => array_values(array_unique($dataPermissions, SORT_REGULAR)),
                                     'menu' => array_values(array_unique($menu, SORT_REGULAR)),
-                                    'roles' => $roles
+                                    'roles' => $roles,
+                                    'rolesArray' => $rolesArray,
                                 ], Response::HTTP_OK);
                             } else {
                                 return response()->json([
