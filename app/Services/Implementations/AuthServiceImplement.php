@@ -95,7 +95,6 @@
                                 ->orderBy('p.order', 'ASC')
                                 ->get();
                                 $roles = $user->getRoleNames();
-                                $rolesArray = $user->roles();
                                 $dataPermissions = [];
                                 $menu = [];
                                 foreach ($permissions as $permission) {
@@ -127,6 +126,19 @@
                                     'city' => $yard->zone,
                                     'user' => $user->id
                                 );
+
+                            $rolesArray = User::from('users as u')
+                                ->select(
+                                    'r.id as id',
+                                    'r.name as name',
+                                    'r.route as route'
+                                )
+                                ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
+                                ->join('role as r', 'r.id', 'mhr.role_id')
+                                ->where('u.id', $user->id)
+                                ->orderBy('r.id', 'ASC')
+                                ->get();
+
                                 return response()->json([
                                     'token' => $token,
                                     'user' => $userData,
