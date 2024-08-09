@@ -95,7 +95,7 @@
                                 ->orderBy('p.order', 'ASC')
                                 ->get();
                                 $roles = $user->getRoleNames();
-                                $rolesArray = $user->getRoles();
+                                $rolesArray = $user->roles();
                                 $dataPermissions = [];
                                 $menu = [];
                                 foreach ($permissions as $permission) {
