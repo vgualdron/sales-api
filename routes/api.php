@@ -14,6 +14,9 @@ use App\Http\Controllers\{
                         FileController,
                         ZipController,
                         ConfigurationController,
+                        ListingController,
+                        LendingController,
+                        PaymentController,
                     };
 
 /*
@@ -121,4 +124,34 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/configuration"], functi
     Route::post('/', [ConfigurationController::class, 'store'])->middleware('can:parameter.list')->name('parameter.create');
     Route::put('/{id}', [ConfigurationController::class, 'update'])->middleware('can:parameter.list')->name('parameter.update');
     Route::delete('/{id}', [ConfigurationController::class, 'destroy'])->middleware('can:parameter.list')->name('parameter.delete');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/listing"], function () {
+    Route::get('/', [ListingController::class, 'index']);
+    Route::get('/mine', [ListingController::class, 'getMine']);
+    Route::get('/{id}', [ListingController::class, 'show']);
+    Route::post('/', [ListingController::class, 'store']);
+    Route::put('/{id}', [ListingController::class, 'update']);
+    Route::delete('/{id}', [ListingController::class, 'destroy']);
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () {
+    Route::get('/list/{idListing}', [LendingController::class, 'index']);
+    Route::get('/list/{idListing}/payments/current-date', [LendingController::class, 'getLendingsWithPaymentsCurrentDate']);
+    Route::get('/list/{idListing}/current-date', [LendingController::class, 'getLendingsFromListCurrentDate']);
+    Route::get('/{id}', [LendingController::class, 'show']);
+    Route::post('/', [LendingController::class, 'store']);
+    Route::put('/{id}', [LendingController::class, 'update']);
+    Route::put('/update-rows/all', [LendingController::class, 'updateOrderRows']);
+    Route::delete('/{id}', [LendingController::class, 'destroy']);
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/payment"], function () {
+    Route::get('/', [PaymentController::class, 'index']);
+    Route::get('/lending/{idLending}', [PaymentController::class, 'getPaymentsForLending']);
+    Route::get('/list/{idListing}/current-date', [PaymentController::class, 'getPaymentsFromListCurrentDate']);
+    Route::get('/{id}', [PaymentController::class, 'show']);
+    Route::post('/', [PaymentController::class, 'store']);
+    Route::put('/{id}', [PaymentController::class, 'update']);
+    Route::delete('/{id}', [PaymentController::class, 'destroy']);
 });
