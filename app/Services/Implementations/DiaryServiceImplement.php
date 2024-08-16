@@ -146,7 +146,7 @@
                     'd.observation',
                     's.name as sectorName',
                 )
-                ->leftJoin('users as u', 'd.user_id', 'u.id')
+                ->join('users as u', 'd.user_id', 'u.id')
                 ->join('news as n', 'd.new_id', 'n.id')
                 ->leftJoin('yards as s', 'n.sector', 's.id')
                 ->where('date', ">=", "$date 00:00:00")
