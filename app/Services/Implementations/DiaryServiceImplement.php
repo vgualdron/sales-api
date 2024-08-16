@@ -126,7 +126,6 @@
 
         function listVisitsReview(string $date) {
             try {
-                $data = [];
                 $sql = $this->diary->from('diaries as d')
                 ->select(
                     'd.id',
@@ -152,6 +151,36 @@
                 ->where('date', ">=", "$date 00:00:00")
                 ->where('date', "<=", "$date 23:59:59")
                 ->orderBy('date', 'ASC')
+                ->get();
+                
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'data' => [],
+                    ], Response::HTTP_OK);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los registros',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        function getStatusCases(int $idNew) {
+            try {
+                $data = [];
+                $sql = $this->diary->from('news as n')
+                ->select(
+                    'n.*'
+                )->where('id', "=", $idNew)
                 ->get();
                 
                 if (count($sql) > 0){

@@ -99,7 +99,8 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/new"], function () {
 Route::group(['middleware' => 'auth:api' , "prefix" => "/diary"], function () {
     Route::get('/list/{date}/{user}/{moment}', [DiaryController::class, 'list'])->name('diary.list');
     Route::get('/list-day-by-day/{date}/{user}/{moment}', [DiaryController::class, 'listDayByDay'])->name('diary.list');
-    Route::get('/list-visits-review/{date}', [DiaryController::class, 'listVisitsReview'])->name('diary.list');
+    Route::get('/list-visits-review/{date}', [DiaryController::class, 'listVisitsReview'])->name('diary.listVisitsReview');
+    Route::get('/get-status-cases/{idNew}', [DiaryController::class, 'getStatusCases'])->name('diary.getStatusCases');
     Route::post('/create', [DiaryController::class, 'create'])->name('diary.create');
     Route::put('/update/{id}', [DiaryController::class, 'update'])->name('diary.update');
     Route::put('/update-status/{id}', [DiaryController::class, 'updateStatus'])->name('diary.changeStatus');

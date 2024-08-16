@@ -29,6 +29,10 @@ class DiaryController extends Controller
         return $this->service->listVisitsReview($date);
     }
 
+    function getStatusCases(int $idNew){
+        return $this->service->getStatusCases($idNew);
+    }
+
     function create(){
         return $this->service->create($this->request->all());
     }
