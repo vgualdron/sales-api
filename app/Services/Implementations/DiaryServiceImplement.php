@@ -181,7 +181,8 @@
                 ->select(
                     'n.*'
                 )->where('id', "=", $idNew)
-                ->get();
+                ->get()
+                ->first();
 
                 $data['dataCliente'] = $sql; 
                 
