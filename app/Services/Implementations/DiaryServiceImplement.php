@@ -185,6 +185,7 @@
                 ->first();
 
                 $data['dataCliente']['name'] = $sql->name ? true : false; 
+                $data['dataCliente']['documentNumber'] = $sql->document_number ? true : false; 
                 
                 return response()->json([
                     'data' => $data
