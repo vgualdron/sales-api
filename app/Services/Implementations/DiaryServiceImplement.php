@@ -186,6 +186,13 @@
 
                 $data['dataCliente']['name'] = $sql->name ? true : false; 
                 $data['dataCliente']['documentNumber'] = $sql->document_number ? true : false; 
+                $data['dataCliente']['addressHouse'] = $sql->address_house ? true : false; 
+                $data['dataCliente']['addressWork'] = $sql->address_work ? true : false; 
+                $data['dataCliente']['occupation'] = $sql->occupation ? true : false; 
+                $data['dataCliente']['typeHouse'] = $sql->type_house ? true : false; 
+                $data['dataCliente']['typeWork'] = $sql->type_work ? true : false; 
+                $data['dataCliente']['quantity'] = $sql->quantity ? true : false; 
+                $data['dataCliente']['period'] = $sql->period ? true : false; 
                 
                 return response()->json([
                     'data' => $data
