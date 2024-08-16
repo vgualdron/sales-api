@@ -182,16 +182,12 @@
                     'n.*'
                 )->where('id', "=", $idNew)
                 ->get();
+
+                $data['dataCliente'] = $sql; 
                 
-                if (count($sql) > 0){
-                    return response()->json([
-                        'data' => $sql
-                    ], Response::HTTP_OK);
-                } else {
-                    return response()->json([
-                        'data' => [],
-                    ], Response::HTTP_OK);
-                }
+                return response()->json([
+                    'data' => $data
+                ], Response::HTTP_OK);
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
