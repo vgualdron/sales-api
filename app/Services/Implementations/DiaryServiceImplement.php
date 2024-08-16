@@ -195,6 +195,16 @@
                 $data['dataClient']['period'] = $sql->period ? true : false;
 
 
+                $data['dataRef1']['name'] = $sql->family_reference_name ? true : false;
+                $data['dataRef1']['address'] = $sql->family_reference_address ? true : false;
+                $data['dataRef1']['phone'] = $sql->family_reference_phone ? true : false;
+                $data['dataRef1']['relationship'] = $sql->family_reference_relationship ? true : false;
+
+                $data['dataRef2']['name'] = $sql->family2_reference_name ? true : false;
+                $data['dataRef2']['address'] = $sql->family2_reference_address ? true : false;
+                $data['dataRef2']['phone'] = $sql->family2_reference_phone ? true : false;
+                $data['dataRef2']['relationship'] = $sql->family2_reference_relationship ? true : false;
+
                 $data['dataGuarantor']['name'] = $sql->guarantor_name ? true : false;
                 $data['dataGuarantor']['address'] = $sql->guarantor_address ? true : false;
                 $data['dataGuarantor']['phone'] = $sql->phone ? true : false;
