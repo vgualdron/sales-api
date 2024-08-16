@@ -149,7 +149,6 @@
                 ->leftJoin('users as u', 'd.user_id', 'u.id')
                 ->leftJoin('news as n', 'd.new_id', 'n.id')
                 ->leftJoin('yards as s', 'n.sector', 's.id')
-                ->where('user_id', $user)
                 ->where('date', "$date")
                 ->orderBy('date', 'ASC')
                 ->get();
