@@ -184,7 +184,7 @@
                 ->get()
                 ->first();
 
-                $data['dataCliente']['name'] = $sql->name; 
+                $data['dataCliente']['name'] = $sql->name ? true : false; 
                 
                 return response()->json([
                     'data' => $data
