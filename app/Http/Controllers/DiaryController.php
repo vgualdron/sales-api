@@ -25,6 +25,10 @@ class DiaryController extends Controller
         return $this->service->listDayByDay($date, $user, $moment);
     }
 
+    function listVisitsReview(string $date){
+        return $this->service->listVisitsReview($date);
+    }
+
     function create(){
         return $this->service->create($this->request->all());
     }

@@ -124,6 +124,57 @@
             }
         }
 
+        function listVisitsReview(string $date) {
+            try {
+                $data = [];
+                $sql = $this->diary->from('diaries as d')
+                ->select(
+                    'd.id',
+                    'd.user_id',
+                    'u.name as userName',
+                    'd.date',
+                    'd.new_id',
+                    'n.name as new_name',
+                    'n.address as new_address',
+                    'n.address_work',
+                    'n.address_house',
+                    'n.site_visit',
+                    'n.district as new_district',
+                    'n.occupation as new_occupation',
+                    'n.phone as new_phone',
+                    'd.status',
+                    'd.observation',
+                    's.name as sectorName',
+                )
+                ->leftJoin('users as u', 'd.user_id', 'u.id')
+                ->leftJoin('news as n', 'd.new_id', 'n.id')
+                ->leftJoin('yards as s', 'n.sector', 's.id')
+                ->where('user_id', $user)
+                ->where('date', "$date")
+                ->orderBy('date', 'ASC')
+                ->get();
+                
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'data' => [],
+                    ], Response::HTTP_OK);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los registros',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
         function create(array $diary) {
             try {
                 $validation = $this->validate($this->validator, $diary, null, 'registrar', 'diario', null);

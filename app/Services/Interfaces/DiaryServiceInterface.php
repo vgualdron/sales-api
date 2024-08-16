@@ -5,6 +5,7 @@
     {
         function list(string $date, int $user, string $moment);
         function listDayByDay(string $date, int $user, string $moment);
+        function listVisitsReview(string $date);
         function get(int $id);
         function create(array $diary);
         function update(array $diary, int $id);
