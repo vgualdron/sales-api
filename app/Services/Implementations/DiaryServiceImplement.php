@@ -184,15 +184,21 @@
                 ->get()
                 ->first();
 
-                $data['dataCliente']['name'] = $sql->name ? true : false; 
-                $data['dataCliente']['documentNumber'] = $sql->document_number ? true : false; 
-                $data['dataCliente']['addressHouse'] = $sql->address_house ? true : false; 
-                $data['dataCliente']['addressWork'] = $sql->address_work ? true : false; 
-                $data['dataCliente']['occupation'] = $sql->occupation ? true : false; 
-                $data['dataCliente']['typeHouse'] = $sql->type_house ? true : false; 
-                $data['dataCliente']['typeWork'] = $sql->type_work ? true : false; 
-                $data['dataCliente']['quantity'] = $sql->quantity ? true : false; 
-                $data['dataCliente']['period'] = $sql->period ? true : false; 
+                $data['dataClient']['name'] = $sql->name ? true : false;
+                $data['dataClient']['documentNumber'] = $sql->document_number ? true : false;
+                $data['dataClient']['addressHouse'] = $sql->address_house ? true : false;
+                $data['dataClient']['addressWork'] = $sql->address_work ? true : false;
+                $data['dataClient']['occupation'] = $sql->occupation ? true : false;
+                $data['dataClient']['typeHouse'] = $sql->type_house ? true : false;
+                $data['dataClient']['typeWork'] = $sql->type_work ? true : false;
+                $data['dataClient']['quantity'] = $sql->quantity ? true : false;
+                $data['dataClient']['period'] = $sql->period ? true : false;
+
+
+                $data['dataGuarantor']['name'] = $sql->guarantor_name ? true : false;
+                $data['dataGuarantor']['address'] = $sql->guarantor_address ? true : false;
+                $data['dataGuarantor']['phone'] = $sql->phone ? true : false;
+                $data['dataGuarantor']['relationship'] = $sql->relationship ? true : false;
                 
                 return response()->json([
                     'data' => $data
