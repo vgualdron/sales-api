@@ -184,7 +184,7 @@
                 ->get()
                 ->first();
 
-                $sql2 = $this->diary->from('files as f')
+                $files = $this->diary->from('files as f')
                 ->select(
                     'f.*'
                 )->where('model_id', "=", $idNew)
@@ -216,8 +216,28 @@
                 $data['dataGuarantor']['phone'] = $sql->phone ? true : false;
                 $data['dataGuarantor']['relationship'] = $sql->relationship ? true : false;
                 
-                $data['files'] = $sql2;
+                $data['files'] = $files;
                 // $data['files']['name'] = $sql2->name ? true : false;
+
+                $nameCertTrabClient = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
+                $data['trabajo'][$nameCertTrabClient] = array_filter($files, function($file) {
+                    return $file["name"] == $nameCertTrabClient;
+                });
+
+                foreach ($permissions as $permission) {
+                    $menu[$permission->group_id]['name'] = $permission->group_name;
+                    $menu[$permission->group_id]['label'] = $permission->group_label;
+                    $menu[$permission->group_id]['icon'] = $permission->group_icon;
+                    $menu[$permission->group_id]['options'][] = [
+                        'route' => $permission->route,
+                        'name' => $permission->group,
+                        'menu' => $permission->menu
+                    ];
+                    $dataPermissions[] = [
+                        'name' => $permission->name,
+                        'displayName' => $permission->display_name
+                    ];
+                }
 
                 return response()->json([
                     'data' => $data
