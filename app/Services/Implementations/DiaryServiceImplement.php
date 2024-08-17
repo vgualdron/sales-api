@@ -222,7 +222,7 @@
                 $nameCertTrabClient = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
                 $data['trabajo'][$nameCertTrabClient] = $files->first(function($file) use ($nameCertTrabClient) {
                     return $file["name"] == $nameCertTrabClient;
-                });
+                })->status === "aprobado" ? true : false;
 
                 /* foreach ($permissions as $permission) {
                     $menu[$permission->group_id]['name'] = $permission->group_name;
