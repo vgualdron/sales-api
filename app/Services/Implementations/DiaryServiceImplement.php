@@ -191,9 +191,34 @@
                 ->where('model_name', "=", "news")
                 ->get();
 
+                $data['dataClient']['name'] = $sql->name ? true : false;
+                $data['dataClient']['documentNumber'] = $sql->document_number ? true : false;
+                $data['dataClient']['addressHouse'] = $sql->address_house ? true : false;
+                $data['dataClient']['addressWork'] = $sql->address_work ? true : false;
+                $data['dataClient']['occupation'] = $sql->occupation ? true : false;
+                $data['dataClient']['typeHouse'] = $sql->type_house ? true : false;
+                $data['dataClient']['typeWork'] = $sql->type_work ? true : false;
+                $data['dataClient']['quantity'] = $sql->quantity ? true : false;
+                $data['dataClient']['period'] = $sql->period ? true : false;
+
+                $data['dataRef1']['name'] = $sql->family_reference_name ? true : false;
+                $data['dataRef1']['address'] = $sql->family_reference_address ? true : false;
+                $data['dataRef1']['phone'] = $sql->family_reference_phone ? true : false;
+                $data['dataRef1']['relationship'] = $sql->family_reference_relationship ? true : false;
+
+                $data['dataRef2']['name'] = $sql->family2_reference_name ? true : false;
+                $data['dataRef2']['address'] = $sql->family2_reference_address ? true : false;
+                $data['dataRef2']['phone'] = $sql->family2_reference_phone ? true : false;
+                $data['dataRef2']['relationship'] = $sql->family2_reference_relationship ? true : false;
+
+                $data['dataGuarantor']['name'] = $sql->guarantor_name ? true : false;
+                $data['dataGuarantor']['address'] = $sql->guarantor_address ? true : false;
+                $data['dataGuarantor']['phone'] = $sql->phone ? true : false;
+                $data['dataGuarantor']['relationship'] = $sql->relationship ? true : false;
+                
                 $data['files'] = $sql2;
                 // $data['files']['name'] = $sql2->name ? true : false;
-                
+
                 return response()->json([
                     'data' => $data
                 ], Response::HTTP_OK);
