@@ -220,7 +220,7 @@
                 // $data['files']['name'] = $sql2->name ? true : false;
 
                 $nameCertTrabClient = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
-                $data['trabajo'][$nameCertTrabClient] = $files->first(function($file) {
+                $data['trabajo'][$nameCertTrabClient] = $files->first(function($file) use ($nameCertTrabClient) {
                     return $file["name"] == $nameCertTrabClient;
                 });
 
