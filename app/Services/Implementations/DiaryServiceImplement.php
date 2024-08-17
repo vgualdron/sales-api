@@ -224,7 +224,7 @@
                     return $file["name"] == $nameCertTrabClient;
                 });
 
-                foreach ($permissions as $permission) {
+                /* foreach ($permissions as $permission) {
                     $menu[$permission->group_id]['name'] = $permission->group_name;
                     $menu[$permission->group_id]['label'] = $permission->group_label;
                     $menu[$permission->group_id]['icon'] = $permission->group_icon;
@@ -237,7 +237,7 @@
                         'name' => $permission->name,
                         'displayName' => $permission->display_name
                     ];
-                }
+                } */
 
                 return response()->json([
                     'data' => $data
