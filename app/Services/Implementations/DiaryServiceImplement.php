@@ -205,19 +205,33 @@
                 $data['REFERENCIA 1']['DIRECCION'] = $sql->family_reference_address ? true : false;
                 $data['REFERENCIA 1']['TELEFONO'] = $sql->family_reference_phone ? true : false;
                 $data['REFERENCIA 1']['PARENTESCO'] = $sql->family_reference_relationship ? true : false;
+                $nameFile = "VIDEO_REFERENCIA_FAMILIAR_1";
+                $data['REFERENCIA 1'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
+                $nameFile = "FOTO_CASA_REFERENCIA_FAMILIAR_1";
+                $data['REFERENCIA 1'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
 
                 $data['REFERENCIA 2']['NOMBRE'] = $sql->family2_reference_name ? true : false;
                 $data['REFERENCIA 2']['DIRECCION'] = $sql->family2_reference_address ? true : false;
                 $data['REFERENCIA 2']['TELEFONO'] = $sql->family2_reference_phone ? true : false;
                 $data['REFERENCIA 2']['PARENTESCO'] = $sql->family2_reference_relationship ? true : false;
+                $nameFile = "VIDEO_REFERENCIA_FAMILIAR_2";
+                $data['REFERENCIA 2'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
+                $nameFile = "FOTO_CASA_REFERENCIA_FAMILIAR_2";
+                $data['REFERENCIA 2'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
 
                 $data['dataGuarantor']['name'] = $sql->guarantor_name ? true : false;
                 $data['dataGuarantor']['address'] = $sql->guarantor_address ? true : false;
                 $data['dataGuarantor']['phone'] = $sql->phone ? true : false;
                 $data['dataGuarantor']['relationship'] = $sql->relationship ? true : false;
                 
-                $data['files'] = $files;
-                // $data['files']['name'] = $sql2->name ? true : false;
 
                 $nameFile = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
                 $data['TRABAJO'][$nameFile] = $files->first(function($file) use ($nameFile) {
@@ -232,20 +246,7 @@
                 })->status === "aprobado" ? true : false;
                 $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
 
-                /* foreach ($permissions as $permission) {
-                    $menu[$permission->group_id]['name'] = $permission->group_name;
-                    $menu[$permission->group_id]['label'] = $permission->group_label;
-                    $menu[$permission->group_id]['icon'] = $permission->group_icon;
-                    $menu[$permission->group_id]['options'][] = [
-                        'route' => $permission->route,
-                        'name' => $permission->group,
-                        'menu' => $permission->menu
-                    ];
-                    $dataPermissions[] = [
-                        'name' => $permission->name,
-                        'displayName' => $permission->display_name
-                    ];
-                } */
+                $data['files'] = $files;
 
                 return response()->json([
                     'data' => $data
