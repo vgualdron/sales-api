@@ -219,12 +219,17 @@
                 $data['files'] = $files;
                 // $data['files']['name'] = $sql2->name ? true : false;
 
-                $nameCertTrabClient = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
-                $data['trabajo'][$nameCertTrabClient] = $files->first(function($file) use ($nameCertTrabClient) {
-                    return $file["name"] == $nameCertTrabClient;
+                $nameFile = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
+                $data['TRABAJO'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
                 })->status === "aprobado" ? true : false;
+
                 $data['TRABAJO']["DIRECCION TRABAJO"] = $sql->address_work ? true : false;
 
+                $nameFile = "FOTO_RECIBO_CASA_CLIENTE";
+                $data['CASA PROPIA'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
                 $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
 
                 /* foreach ($permissions as $permission) {
