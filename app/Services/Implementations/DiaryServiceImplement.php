@@ -225,6 +225,8 @@
                 })->status === "aprobado" ? true : false;
                 $data['TRABAJO']["DIRECCION TRABAJO"] = $sql->address_work ? true : false;
 
+                $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
+
                 /* foreach ($permissions as $permission) {
                     $menu[$permission->group_id]['name'] = $permission->group_name;
                     $menu[$permission->group_id]['label'] = $permission->group_label;
