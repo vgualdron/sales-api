@@ -223,7 +223,7 @@
                 $data['trabajo'][$nameCertTrabClient] = $files->first(function($file) use ($nameCertTrabClient) {
                     return $file["name"] == $nameCertTrabClient;
                 })->status === "aprobado" ? true : false;
-                $data['trabajo']["Direccion trabajo"] = $sql->address_work ? true : false;
+                $data['TRABAJO']["DIRECCION TRABAJO"] = $sql->address_work ? true : false;
 
                 /* foreach ($permissions as $permission) {
                     $menu[$permission->group_id]['name'] = $permission->group_name;
