@@ -191,7 +191,7 @@
                 ->where('model_name', "=", "news")
                 ->get();
 
-                $data['CASA CLIENTE']['NOMBRE'] = $sql->name ? true : false;
+                $data['CASA CLIENTE'][]['NOMBRE'] = $sql->name ? true : false;
                 $data['CASA CLIENTE']['DOCUMENTO'] = $sql->document_number ? true : false;
                 $data['CASA CLIENTE']['DIRECCION CASA'] = $sql->address_house ? true : false;
                 $data['CASA CLIENTE']['DIRECCION TRABAJO'] = $sql->address_work ? true : false;
