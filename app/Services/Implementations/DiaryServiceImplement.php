@@ -191,15 +191,32 @@
                 ->where('model_name', "=", "news")
                 ->get();
 
-                $data['dataClient']['name'] = $sql->name ? true : false;
-                $data['dataClient']['documentNumber'] = $sql->document_number ? true : false;
-                $data['dataClient']['addressHouse'] = $sql->address_house ? true : false;
-                $data['dataClient']['addressWork'] = $sql->address_work ? true : false;
-                $data['dataClient']['occupation'] = $sql->occupation ? true : false;
-                $data['dataClient']['typeHouse'] = $sql->type_house ? true : false;
-                $data['dataClient']['typeWork'] = $sql->type_work ? true : false;
-                $data['dataClient']['quantity'] = $sql->quantity ? true : false;
-                $data['dataClient']['period'] = $sql->period ? true : false;
+                $data['CLIENTE']['NOMBRE'] = $sql->name ? true : false;
+                $data['CLIENTE']['DOCUMENTO'] = $sql->document_number ? true : false;
+                $data['CLIENTE']['DIRECCION CASA'] = $sql->address_house ? true : false;
+                $data['CLIENTE']['DIRECCION TRABAJO'] = $sql->address_work ? true : false;
+                $data['CLIENTE']['OCUPACION'] = $sql->occupation ? true : false;
+                $data['CLIENTE']['TIPO CASA'] = $sql->type_house ? true : false;
+                $data['CLIENTE']['TIPO TRABAJAO'] = $sql->type_work ? true : false;
+                $data['CLIENTE']['CANTIDAD'] = $sql->quantity ? true : false;
+                $data['CLIENTE']['PERIODO'] = $sql->period ? true : false;
+                $nameFile = "FOTO_CASA_CLIENTE";
+                $data['CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
+                $nameFile = "VIDEO_TOCANDO_CASA_CLIENTE";
+                $data['CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
+                $nameFile = "FOTO_CLIENTE";
+                $data['CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                })->status === "aprobado" ? true : false;
+
+                $data['dataGuarantor']['name'] = $sql->guarantor_name ? true : false;
+                $data['dataGuarantor']['address'] = $sql->guarantor_address ? true : false;
+                $data['dataGuarantor']['phone'] = $sql->phone ? true : false;
+                $data['dataGuarantor']['relationship'] = $sql->relationship ? true : false;
 
                 $data['REFERENCIA 1']['NOMBRE'] = $sql->family_reference_name ? true : false;
                 $data['REFERENCIA 1']['DIRECCION'] = $sql->family_reference_address ? true : false;
@@ -227,12 +244,6 @@
                     return $file["name"] == $nameFile;
                 })->status === "aprobado" ? true : false;
 
-                $data['dataGuarantor']['name'] = $sql->guarantor_name ? true : false;
-                $data['dataGuarantor']['address'] = $sql->guarantor_address ? true : false;
-                $data['dataGuarantor']['phone'] = $sql->phone ? true : false;
-                $data['dataGuarantor']['relationship'] = $sql->relationship ? true : false;
-                
-
                 $nameFile = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
                 $data['TRABAJO'][$nameFile] = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
@@ -246,7 +257,7 @@
                 })->status === "aprobado" ? true : false;
                 $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
 
-                $data['files'] = $files;
+                $data['FILES'] = $files;
 
                 return response()->json([
                     'data' => $data
