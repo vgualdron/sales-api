@@ -394,6 +394,7 @@
                         $sqlNovel->status = 'aprobado';
                         $sqlNovel->approved_date = date('Y-m-d H:i:s');
                         $sqlNovel->approved_by = $diary['idUserSesion'];
+                        $sqlNovel->lent_by = $diary['userVisit'];
                         $sqlNovel->save();
                     });
                     return response()->json([
