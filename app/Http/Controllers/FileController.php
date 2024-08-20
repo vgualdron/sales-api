@@ -25,6 +25,7 @@ class FileController extends Controller
             $file = $request->file;
             $extension = $request->extension;
             $storage = $request->storage;
+            $state = $request->status;
 
             $f = base64_decode($file);
           
@@ -51,6 +52,7 @@ class FileController extends Controller
                 'url' => $url,
                 'registered_by' => $idUserSesion,
                 'registered_date' => date('Y-m-d H:i:s'),
+                'status' => $state,
             ]);
 
         } catch (Exception $e) {
