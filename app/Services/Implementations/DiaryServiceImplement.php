@@ -262,6 +262,13 @@
                 $data['TRABAJO'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
                 $data['TRABAJO']["DIRECCION TRABAJO"] = $sql->address_work ? true : false;
 
+                $nameFile = "FOTO_RECIBO_CASA_CLIENTE";
+                $file = $files->first(function($file) use ($nameFile) {
+                    return $file["name"] == $nameFile;
+                });
+                $data['CASA PROPIA'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+                $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
+
                 $data['REFERENCIA 1']['NOMBRE'] = $sql->family_reference_name ? true : false;
                 $data['REFERENCIA 1']['DIRECCION'] = $sql->family_reference_address ? true : false;
                 $data['REFERENCIA 1']['TELEFONO'] = $sql->family_reference_phone ? true : false;
@@ -349,13 +356,6 @@
                     return $file["name"] == $nameFile;
                 });
                 $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-
-                $nameFile = "FOTO_RECIBO_CASA_CLIENTE";
-                $file = $files->first(function($file) use ($nameFile) {
-                    return $file["name"] == $nameFile;
-                });
-                $data['CASA PROPIA'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-                $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
 
                 // $data['FILES'] = $files;
 
