@@ -339,6 +339,7 @@
                         'n.guarantor_relationship',
                         'n.period',
                         'n.quantity',
+                        'd.id as diary_id',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')

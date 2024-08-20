@@ -357,8 +357,6 @@
                 });
                 $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
 
-                // $data['FILES'] = $files;
-
                 return response()->json([
                     'data' => $data
                 ], Response::HTTP_OK);
@@ -367,6 +365,48 @@
                     'message' => [
                         [
                             'text' => 'Se ha presentado un error al cargar los registros',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        function approveVisit(array $diary) {
+            try {
+                $validation = $this->validate($this->validator, $diary, null, 'registrar', 'diario', null);
+                if ($validation['success'] === false) {
+                    return response()->json([
+                        'message' => $validation['message']
+                    ], Response::HTTP_BAD_REQUEST);
+                }
+                
+                DB::transaction(function () use ($diary) {
+                    $dates = $this->getDatesOfWeek($diary['date'], $diary['moment']);
+                    $hours = $this->getHoursOfDay();
+                    foreach ($dates as $i => $value) {
+                        foreach ($hours as $j => $hour) {
+                            $sql = $this->diary::create([
+                                'date' => "$value $hour",
+                                'user_id' => $diary['userId'],
+                            ]);
+                        }
+                    }
+                });
+                
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Agenda registrado con éxito',
+                            'detail' => null
+                        ]
+                    ]
+                ], Response::HTTP_OK);
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Advertencia al registrar',
                             'detail' => $e->getMessage()
                         ]
                     ]
@@ -416,7 +456,7 @@
             }
         }
 
-        function update(array $diary, int $id){
+        function update(array $diary, int $id) {
             try {
                 $validation = $this->validate($this->validator, $diary, $id, 'actualizar', 'agenda', null);
                 if ($validation['success'] === false) {
@@ -461,7 +501,7 @@
             }
         }
         
-        function updateStatus(array $novel, int $id){
+        function updateStatus(array $novel, int $id) {
             try {
                 $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
                 if ($validation['success'] === false) {
