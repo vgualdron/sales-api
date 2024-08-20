@@ -34,7 +34,11 @@ class DiaryController extends Controller
     }
 
     function approveVisit(){
-        return $this->service->approveVisit($this->request->all());
+        $userSesion = $this->request->user();
+        $idUserSesion = $userSesion->id;
+        $data = $this->request->all();
+        $data['idUserSesion'] = $idUserSesion;
+        return $this->service->approveVisit($data);
     }
     
     function create(){

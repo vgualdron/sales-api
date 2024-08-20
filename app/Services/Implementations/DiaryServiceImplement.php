@@ -387,11 +387,13 @@
                 $sqlDiary = $this->diary::find($diary['diary_id']);
                 $sqlNovel = $this->novel::find($diary['id']);
                 if(!empty($sqlDiary) && !empty($sqlNovel)) {
-                     DB::transaction(function () use ($sqlDiary, $sqlNovel) {
+                     DB::transaction(function () use ($sqlDiary, $sqlNovel, $diary) {
                         $sqlDiary->status = 'finalizada';
                         $sqlDiary->save();
 
                         $sqlNovel->status = 'aprobado';
+                        $sqlNovel->approved_date = 'aprobado';
+                        $sqlNovel->approved_by = $diary['idUserSesion'];
                         $sqlNovel->save();
                     });
                     return response()->json([
