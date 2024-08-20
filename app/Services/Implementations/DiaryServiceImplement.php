@@ -200,117 +200,162 @@
                 $data['CASA CLIENTE']['TIPO TRABAJAO'] = $sql->type_work ? true : false;
                 $data['CASA CLIENTE']['CANTIDAD'] = $sql->quantity ? true : false;
                 $data['CASA CLIENTE']['PERIODO'] = $sql->period ? true : false;
+                
                 $nameFile = "FOTO_CASA_CLIENTE";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+                
                 $nameFile = "VIDEO_TOCANDO_CASA_CLIENTE";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_CLIENTE";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_CEDULA_CLIENTE_FRONTAL";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+              
                 $nameFile = "FOTO_CEDULA_CLIENTE_POSTERIOR";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+               
                 $nameFile = "FOTO_LETRA_CLIENTE";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+               
                 $nameFile = "FOTO_FIRMANDO_LETRA_CLIENTE";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+               
                 $nameFile = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+               
                 $nameFile = "FOTO_RECIBO_CASA_CLIENTE";
-                $data['CASA CLIENTE'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+                
 
                 $data['FIADOR']['NOMBRE'] = $sql->guarantor_name ? true : false;
                 $data['FIADOR']['DIRECCION'] = $sql->guarantor_address ? true : false;
                 $data['FIADOR']['TELEFONO'] = $sql->phone ? true : false;
                 $data['FIADOR']['PARENTESCO'] = $sql->relationship ? true : false;
+
                 $nameFile = "FOTO_CASA_FIADOR";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_FIADOR";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_CEDULA_FIADOR_FRONTAL";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_CEDULA_FIADOR_POSTERIOR";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_LETRA_FIADOR";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_FIRMANDO_LETRA_FIADOR";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_CERTIFICADO_TRABAJO_FIADOR";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+                
                 $nameFile = "FOTO_RECIBO_CASA_FIADOR";
-                $data['FIADOR'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
 
                 $data['REFERENCIA 1']['NOMBRE'] = $sql->family_reference_name ? true : false;
                 $data['REFERENCIA 1']['DIRECCION'] = $sql->family_reference_address ? true : false;
                 $data['REFERENCIA 1']['TELEFONO'] = $sql->family_reference_phone ? true : false;
                 $data['REFERENCIA 1']['PARENTESCO'] = $sql->family_reference_relationship ? true : false;
+
                 $nameFile = "VIDEO_REFERENCIA_FAMILIAR_1";
-                $data['REFERENCIA 1'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['REFERENCIA 1'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_CASA_REFERENCIA_FAMILIAR_1";
-                $data['REFERENCIA 1'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['REFERENCIA 1'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
 
                 $data['REFERENCIA 2']['NOMBRE'] = $sql->family2_reference_name ? true : false;
                 $data['REFERENCIA 2']['DIRECCION'] = $sql->family2_reference_address ? true : false;
                 $data['REFERENCIA 2']['TELEFONO'] = $sql->family2_reference_phone ? true : false;
                 $data['REFERENCIA 2']['PARENTESCO'] = $sql->family2_reference_relationship ? true : false;
+
                 $nameFile = "VIDEO_REFERENCIA_FAMILIAR_2";
-                $data['REFERENCIA 2'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['REFERENCIA 2'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $nameFile = "FOTO_CASA_REFERENCIA_FAMILIAR_2";
-                $data['REFERENCIA 2'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['REFERENCIA 2'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
 
                 $nameFile = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
-                $data['TRABAJO'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
-
+                });
+                $data['TRABAJO'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
                 $data['TRABAJO']["DIRECCION TRABAJO"] = $sql->address_work ? true : false;
 
                 $nameFile = "FOTO_RECIBO_CASA_CLIENTE";
-                $data['CASA PROPIA'][$nameFile] = $files->first(function($file) use ($nameFile) {
+                $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
-                })->status === "aprobado" ? true : false;
+                });
+                $data['CASA PROPIA'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
+
                 $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
 
                 // $data['FILES'] = $files;
