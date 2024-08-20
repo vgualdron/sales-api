@@ -340,6 +340,7 @@
                         'n.period',
                         'n.quantity',
                         'd.id as diary_id',
+                        'd.status as diary_status',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
