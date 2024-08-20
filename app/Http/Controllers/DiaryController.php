@@ -33,6 +33,10 @@ class DiaryController extends Controller
         return $this->service->getStatusCases($idNew);
     }
 
+    function approveVisit(){
+        return $this->service->approveVisit($this->request->all());
+    }
+    
     function create(){
         return $this->service->create($this->request->all());
     }

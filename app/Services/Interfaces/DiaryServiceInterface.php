@@ -7,6 +7,7 @@
         function listDayByDay(string $date, int $user, string $moment);
         function listVisitsReview(string $date);
         function getStatusCases(int $idNew);
+        function approveVisit(array $diary);
         function get(int $id);
         function create(array $diary);
         function update(array $diary, int $id);

@@ -3,6 +3,7 @@
     use App\Services\Interfaces\DiaryServiceInterface;
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\Diary;
+    use App\Models\Novel;
     use App\Validator\{DiaryValidator};
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,7 @@
 
         function __construct(DiaryValidator $validator){
             $this->diary = new Diary;
+            $this->novel = new Novel;
             $this->validator = $validator;
         }    
 
@@ -374,39 +376,45 @@
 
         function approveVisit(array $diary) {
             try {
-                $validation = $this->validate($this->validator, $diary, null, 'registrar', 'diario', null);
+                /* $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
-                }
-                
-                DB::transaction(function () use ($diary) {
-                    $dates = $this->getDatesOfWeek($diary['date'], $diary['moment']);
-                    $hours = $this->getHoursOfDay();
-                    foreach ($dates as $i => $value) {
-                        foreach ($hours as $j => $hour) {
-                            $sql = $this->diary::create([
-                                'date' => "$value $hour",
-                                'user_id' => $diary['userId'],
-                            ]);
-                        }
-                    }
-                });
-                
-                return response()->json([
-                    'message' => [
-                        [
-                            'text' => 'Agenda registrado con éxito',
-                            'detail' => null
+                } */
+                $sqlDiary = $this->diary::find($diary['diary_id']);
+                $sqlNovel = $this->novel::find($diary['id']);
+                if(!empty($sqlDiary) && !empty($sqlNovel)) {
+                     DB::transaction(function () use ($sqlDiary, $sqlNovel) {
+                        $sqlDiary->status = 'finalizada';
+                        $sqlDiary->save();
+
+                        $sqlNovel->status = 'aprobado';
+                        $sqlNovel->save();
+                    });
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Actualizado con éxito',
+                                'detail' => null
+                            ]
                         ]
-                    ]
-                ], Response::HTTP_OK);
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Advertencia al actualizar',
+                                'detail' => 'El registro no existe'
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Advertencia al registrar',
+                            'text' => 'Advertencia al actualizar',
                             'detail' => $e->getMessage()
                         ]
                     ]
