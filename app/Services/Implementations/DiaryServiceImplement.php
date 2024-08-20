@@ -355,7 +355,6 @@
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA PROPIA'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-
                 $data['CASA PROPIA']["CASA PROPIA"] = $sql->type_house === 'propia' ? true : false;
 
                 // $data['FILES'] = $files;
