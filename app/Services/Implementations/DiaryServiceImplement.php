@@ -306,8 +306,8 @@
                 
                 $data['FIADOR']['NOMBRE'] = $sql->guarantor_name ? true : false;
                 $data['FIADOR']['DIRECCION'] = $sql->guarantor_address ? true : false;
-                $data['FIADOR']['TELEFONO'] = $sql->phone ? true : false;
-                $data['FIADOR']['PARENTESCO'] = $sql->relationship ? true : false;
+                $data['FIADOR']['TELEFONO'] = $sql->guarantor_phone ? true : false;
+                $data['FIADOR']['PARENTESCO'] = $sql->guarantor_relationship ? true : false;
 
                 $nameFile = "FOTO_CASA_FIADOR";
                 $file = $files->first(function($file) use ($nameFile) {
