@@ -14,8 +14,7 @@ class ListingController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            $items = Listing::where('user_id', '>', 0)
-                                ->with('userCollector')
+            $items = Listing::with('userCollector')
                                 ->with('userLeader')
                                 ->with('userAuthorized')
                                 ->with('lendings')->get();
