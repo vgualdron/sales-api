@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lending;
 use App\Models\Payment;
-use App\Models\Interest;
+// use App\Models\Interest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class LendingController extends Controller
             $idUserSesion = $request->user()->id;
             $items = Lending::where('listing_id', '=', $idList)
                                 ->with('payments')
-                                ->with('interests')
+                                // ->with('interests')
                                 ->where('status', '=', 'open')
                                 ->orderBy('order', 'asc')->get();
         } catch (Exception $e) {
@@ -44,9 +44,9 @@ class LendingController extends Controller
             $idUserSesion = $request->user()->id;
             $items = Lending::select('lendings.*')
                                 ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
-                                ->leftjoin('interests', 'lendings.id', 'interests.lending_id')
+                                // ->leftjoin('interests', 'lendings.id', 'interests.lending_id')
                                 ->with('payments')
-                                ->with('interests')
+                                // ->with('interests')
                                 ->where('listing_id', '=', $idList)
                                 // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
                                 // ->where('payments.amount', '=', NULL)
@@ -102,7 +102,10 @@ class LendingController extends Controller
     public function show(Request $request, $id)
     {
         try {
-            $items = Lending::where('id', '=', $id)->with('payments')->with('interests')->first();
+            $items = Lending::where('id', '=', $id)
+                ->with('payments')
+                // ->with('interests')
+                ->first();
             
         } catch (Exception $e) {
             return response()->json([
@@ -182,12 +185,12 @@ class LendingController extends Controller
                         ]);
                     }
                     
-                    $itemInterest = Interest::create([
+                    /* $itemInterest = Interest::create([
                         'lending_id' => (int)$item->id,
                         'date' => $newDate,
                         'amount' => null,
                         'color' => ''
-                    ]);
+                    ]); */
                     $firstDate = $newDate;
                 }
                 
