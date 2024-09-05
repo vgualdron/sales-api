@@ -30,7 +30,7 @@ class Lending extends Authenticatable
         'order',
         'status',
         'listing_id',
-        'user_id',
+        'new_id',
         'created_at',
         'type',
     ];
@@ -40,10 +40,10 @@ class Lending extends Authenticatable
        return $this->hasMany(Payment::class, 'lending_id', 'id');
    }
    
-   public function interests()
+   /* public function interests()
    {
        return $this->hasMany(Interest::class, 'lending_id', 'id');
-   }
+   } */
 
 
     /**
