@@ -142,7 +142,7 @@ class LendingController extends Controller
                 'order' => $request->order,
                 'status' => $request->status,
                 'listing_id' => $request->listing_id,
-                'user_id' => $idUserSesion,
+                'new_id' => $idUserSesion,
                 'type' => $request->type,
             ]);
             
