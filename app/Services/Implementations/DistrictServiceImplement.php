@@ -20,7 +20,7 @@
 
         function list(){
             try {
-                $sql = $this->yard->from('districts as d')
+                $sql = $this->district->from('districts as d')
                     ->select('d.id', 'd.name', 'd.sector', 'd.status', 'd.group', 'd.order', 'y.name as sectorName')
                     ->join('yards as y', 'd.sector', 'y.id')
                     ->get();
@@ -180,7 +180,7 @@
 
         function get(int $id){
             try {
-                $sql = $this->yard->from('districts as d')
+                $sql = $this->district->from('districts as d')
                     ->select('d.id', 'd.name', 'd.sector', 'd.status', 'd.group', 'd.order', 'y.name as sectorName')
                     ->join('yards as y', 'd.sector', 'y.id')
                     ->where('id', $id)   
