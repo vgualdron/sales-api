@@ -23,6 +23,8 @@
                 $sql = $this->district->from('districts as d')
                     ->select('d.id', 'd.name', 'd.sector', 'd.status', 'd.group', 'd.order', 'y.name as sectorName')
                     ->join('yards as y', 'd.sector', 'y.id')
+                    ->orderBy('d.group', 'asc')
+                    ->orderBy('d.order', 'asc')
                     ->get();
 
                 if (count($sql) > 0){
