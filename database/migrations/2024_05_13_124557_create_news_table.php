@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address_work', 100)->collation('utf8_general_ci')->nullable();
             $table->string('site_visit', 100)->collation('utf8_general_ci')->nullable();
             $table->unsignedBigInteger('sector')->nullable();
-            $table->string('district', 50)->collation('utf8_general_ci')->nullable();
+            $table->unsignedBigInteger('district')->nullable();
             $table->string('occupation', 50)->collation('utf8_general_ci')->nullable();
             $table->string('observation', 100)->collation('utf8_general_ci')->nullable();
             $table->string('status', 25)->collation('utf8_general_ci')->default('borrador');
@@ -53,6 +53,7 @@ return new class extends Migration
             $table->timestamp('approved_date')->nullable();
             $table->string('made_by', 100)->collation('utf8_general_ci')->nullable();
             $table->foreign('sector')->references('id')->on('yards');
+            $table->foreign('district')->references('id')->on('districts');
             $table->foreign('user_send')->references('id')->on('users');
             $table->timestamp('visit_start_date')->nullable();
             $table->timestamps();
