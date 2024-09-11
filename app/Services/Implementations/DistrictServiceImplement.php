@@ -33,7 +33,7 @@
                     )
                     ->join('yards as y', 'd.sector', 'y.id')
                     ->join('zones as z', 'y.zone', 'z.id')
-                    ->orderBy('z.code', 'desc')
+                    ->orderBy('z.code', 'asc')
                     ->orderBy('d.group', 'asc')
                     ->orderBy('d.order', 'asc')
                     ->get();
