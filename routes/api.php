@@ -162,8 +162,8 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/payment"], function () 
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/district"], function () {
     Route::get('/', [DistrictController::class, 'list'])->name('district.list');
-    Route::post('/create', [DistrictController::class, 'create'])->name('district.create');
-    Route::put('/update/{id}', [DistrictController::class, 'update'])->name('district.update');
-    Route::delete('/delete/{id}', [DistrictController::class, 'delete'])->name('district.delete');
-    Route::get('/get/{id}', [DistrictController::class, 'get'])->name('district.get');
+    Route::post('/', [DistrictController::class, 'create'])->name('district.create');
+    Route::put('/{id}', [DistrictController::class, 'update'])->name('district.update');
+    Route::delete('/{id}', [DistrictController::class, 'delete'])->name('district.delete');
+    Route::get('/{id}', [DistrictController::class, 'get'])->name('district.get');
 });
