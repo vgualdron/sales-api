@@ -142,12 +142,12 @@
 
         function update(array $novel, int $id){
             try {
-                $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
+                /* $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
-                }
+                } */
                 $sql = $this->novel::find($id);
                 if(!empty($sql)) {
                     DB::transaction(function () use ($sql, $novel) {
