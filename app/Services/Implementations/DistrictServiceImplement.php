@@ -21,8 +21,18 @@
         function list(){
             try {
                 $sql = $this->district->from('districts as d')
-                    ->select('d.id', 'd.name', 'd.sector', 'd.status', 'd.group', 'd.order', 'y.name as sectorName')
+                    ->select(
+                        'd.id',
+                        'd.name',
+                        'd.sector',
+                        'd.status',
+                        'd.group',
+                        'd.order',
+                        'y.name as sectorName',
+                        'z.name as cityName',
+                    )
                     ->join('yards as y', 'd.sector', 'y.id')
+                    ->join('zones as z', 'y.zone', 'z.id')
                     ->orderBy('d.group', 'asc')
                     ->orderBy('d.order', 'asc')
                     ->get();
