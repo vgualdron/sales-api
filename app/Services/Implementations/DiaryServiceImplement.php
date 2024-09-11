@@ -84,6 +84,7 @@
                             'n.address_house',
                             'n.site_visit',
                             'n.district as new_district',
+                            'd.name as new_districtName',
                             'n.occupation as new_occupation',
                             'n.phone as new_phone',
                             'n.status as new_status',
@@ -94,6 +95,7 @@
                         ->leftJoin('users as u', 'd.user_id', 'u.id')
                         ->leftJoin('news as n', 'd.new_id', 'n.id')
                         ->leftJoin('yards as s', 'n.sector', 's.id')
+                        ->leftJoin('districts as d', 'n.district', 'd.id')
                         ->where('user_id', $user)
                         ->where('date', "$valueDate $valueDay")
                         ->orderBy('date', 'ASC')
@@ -142,6 +144,7 @@
                     'n.address_house',
                     'n.site_visit',
                     'n.district as new_district',
+                    'd.name as new_districtName',
                     'n.occupation as new_occupation',
                     'n.phone as new_phone',
                     'n.status as new_status',
@@ -152,6 +155,7 @@
                 ->join('users as u', 'd.user_id', 'u.id')
                 ->join('news as n', 'd.new_id', 'n.id')
                 ->leftJoin('yards as s', 'n.sector', 's.id')
+                ->leftJoin('districts as d', 'n.district', 'd.id')
                 ->where('date', ">=", "$date 00:00:00")
                 ->where('date', "<=", "$date 23:59:59")
                 ->orderBy('date', 'ASC')
