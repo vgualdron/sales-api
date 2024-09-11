@@ -36,6 +36,7 @@
                         'n.address_work',
                         'n.site_visit',
                         'n.district as district',
+                        'd.name as districtName',
                         'n.occupation as occupation',
                         'n.attempts as attempts',
                         'n.observation as observation',
@@ -69,6 +70,7 @@
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
                     ->leftJoin('users as u', 'n.user_send', 'u.id')
+                    ->leftJoin('districts as d', 'n.district', 'd.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('n.status', $explodeStatus);
                     })
