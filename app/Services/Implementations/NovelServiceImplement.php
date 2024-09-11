@@ -37,6 +37,8 @@
                         'n.site_visit',
                         'n.district as district',
                         'd.name as districtName',
+                        'd.group as districtGroup',
+                        'd.order as districtOrder',
                         'n.occupation as occupation',
                         'n.attempts as attempts',
                         'n.observation as observation',
@@ -74,7 +76,8 @@
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('n.status', $explodeStatus);
                     })
-                    ->orderBy('date', 'DESC')
+                    ->orderBy('d.group', 'ASC')
+                    ->orderBy('d.order', 'ASC')
                     ->get();
 
                 if (count($sql) > 0){
