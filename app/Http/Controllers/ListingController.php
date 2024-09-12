@@ -112,8 +112,12 @@ class ListingController extends Controller
         }
 
         return response()->json([
-            'data' => $item,
-            'message' => 'Succeed'
+            'message' => [
+                [
+                    'text' => 'Creado con éxito.',
+                    'detail' => null,
+                ]
+            ]
         ], JsonResponse::HTTP_OK);
     }
 
@@ -134,8 +138,12 @@ class ListingController extends Controller
         }
 
         return response()->json([
-            'data' => $items,
-            'message' => 'Succeed'
+            'message' => [
+                [
+                    'text' => 'Modificado con éxito.',
+                    'detail' => null,
+                ]
+            ]
         ], JsonResponse::HTTP_OK);
     }
 
@@ -155,8 +163,12 @@ class ListingController extends Controller
         }
 
         return response()->json([
-            'data' => $items,
-            'message' => 'Succeed'
+            'message' => [
+                [
+                    'text' => 'Eliminado con éxito.',
+                    'detail' => null,
+                ]
+            ]
         ], JsonResponse::HTTP_OK);
     }
 }
