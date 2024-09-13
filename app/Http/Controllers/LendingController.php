@@ -129,19 +129,35 @@ class LendingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
             $period = $request->period;
-            $countDays = '+1 days';
-            $firstDate = date("Y-m-d", strtotime($request->firstDate));
+            $countDays = 1;
+            $amountFees = 1;
+            $currentDate = new DateTime();
+           
+            if ($period === 'diario') {
+                $countDays = 21;
+                $amountFees = 21;
+            } else if ($period === 'semanal') {
+                $countDays = 21;
+                $amountFees = 3;
+            } else if ($period === 'quincenal') {
+                $countDays = 14;
+                $amountFees = 1;
+            }
+
+            $currentDate->add(new DateInterval("P".$countDays."D"));
+            $firstDate = $currentDate;
+            $endDate = $currentDate;
             
             $item = Lending::create([
                 'nameDebtor' => $request->nameDebtor,
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'firstDate' => $firstDate,
-                'endDate' => $request->endDate,
+                'endDate' => $endDate,
                 'amount' => $request->amount,
-                'amountFees' => $request->amountFees,
+                'amountFees' => $amountFees,
                 'percentage' => $request->percentage,
-                'period' => $request->period,
+                'period' => $period,
                 'order' => $request->order,
                 'status' => $request->status,
                 'listing_id' => $request->listing_id,
@@ -149,16 +165,8 @@ class LendingController extends Controller
                 'type' => $request->type,
             ]);
             
-            if ($period === 'diario') {
-                $countDays = '+1 days';
-            } else if ($period === 'semanal') {
-                $countDays = '+1 weeks';
-            } else if ($period === 'quincenal') {
-                $countDays = '+2 weeks';
-            } else if ($period === 'mensual') {
-                $countDays = '+1 months';
-            }
-            if ($request->type === 'normal') {
+
+            /* if ($request->type === 'normal') {
                 for ($i = 0; $i < (int)$item->amountFees; $i++) {
                     $modDate = strtotime($firstDate.$countDays);
                     $newDate = date("Y-m-d", $modDate);
@@ -185,16 +193,16 @@ class LendingController extends Controller
                         ]);
                     }
                     
-                    /* $itemInterest = Interest::create([
+                    $itemInterest = Interest::create([
                         'lending_id' => (int)$item->id,
                         'date' => $newDate,
                         'amount' => null,
                         'color' => ''
-                    ]); */
+                    ]);
                     $firstDate = $newDate;
                 }
                 
-            }
+            } */
             
         } catch (Exception $e) {
             return response()->json([
@@ -208,8 +216,12 @@ class LendingController extends Controller
         }
 
         return response()->json([
-            'data' => $item,
-            'message' => 'Succeed'
+            'message' => [
+                [
+                    'text' => 'Creado con éxito.',
+                    'detail' => null,
+                ]
+            ]
         ], JsonResponse::HTTP_OK);
     }
 
@@ -230,8 +242,12 @@ class LendingController extends Controller
         }
 
         return response()->json([
-            'data' => $items,
-            'message' => 'Succeed'
+            'message' => [
+                [
+                    'text' => 'Modificado con éxito.',
+                    'detail' => null,
+                ]
+            ]
         ], JsonResponse::HTTP_OK);
     }
 
@@ -252,8 +268,12 @@ class LendingController extends Controller
         }
 
         return response()->json([
-            'data' => $items,
-            'message' => 'Succeed'
+            'message' => [
+                [
+                    'text' => 'Eliminado con éxito.',
+                    'detail' => null,
+                ]
+            ]
         ], JsonResponse::HTTP_OK);
     }
     
