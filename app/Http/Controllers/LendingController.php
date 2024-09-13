@@ -131,7 +131,9 @@ class LendingController extends Controller
             $period = $request->period;
             $countDays = 1;
             $amountFees = 1;
-            $currentDate = new DateTime();
+            
+            $date = date("Y-m-d");
+            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
            
             if ($period === 'diario') {
                 $countDays = 21;
@@ -144,10 +146,8 @@ class LendingController extends Controller
                 $amountFees = 1;
             }
 
-            $currentDate->add(new DateInterval("P".$countDays."D"));
-            $firstDate = $currentDate;
-            $endDate = $currentDate;
-            
+            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays)));
+
             $item = Lending::create([
                 'nameDebtor' => $request->nameDebtor,
                 'address' => $request->address,
