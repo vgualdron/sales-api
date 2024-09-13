@@ -146,7 +146,7 @@ class LendingController extends Controller
                 $amountFees = 1;
             }
 
-            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays)));
+            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
 
             $item = Lending::create([
                 'nameDebtor' => $request->nameDebtor,
