@@ -49,7 +49,6 @@
             }
         }
 
-
         function create(array $zone){
             try {
                 $validation = $this->validate($this->validator, $zone, null, 'registrar', 'zona', null);

@@ -4,5 +4,6 @@
     interface ReportServiceInterface
     {
         function list();
+        function execute(int $id);
     }
 ?>

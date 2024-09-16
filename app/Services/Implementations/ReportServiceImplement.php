@@ -45,5 +45,41 @@
             }
         }
 
+        function execute(int $id){
+            try {
+                $sql = $this->report->select(
+                    'id',
+                    'name',
+                    'sql',
+                    'order')
+                    ->where('id', $id)   
+                    ->first();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'No hay reportes',
+                                'detail' => 'Aun no ha registrado ningún reporte',
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los reportes',
+                            'detail' => $e->getMessage(),
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
     }
 ?>

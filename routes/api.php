@@ -170,5 +170,6 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/district"], function ()
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/report"], function () {
-    Route::get('/', [ReportController::class, 'list'])->name('district.list');
+    Route::get('/', [ReportController::class, 'list'])->name('report.list');
+    Route::get('/execute-report/{id}', [ReportController::class, 'executeReport'])->name('report.execute');
 });

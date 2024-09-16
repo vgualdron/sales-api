@@ -18,4 +18,8 @@ class ReportController extends Controller
     function list(){
         return $this->service->list();
     }
+
+    function execute(int $id){
+        return $this->service->execute($id);
+    }
 }
