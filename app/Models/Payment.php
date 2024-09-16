@@ -24,6 +24,13 @@ class Payment extends Authenticatable
         'color',
         'status',
     ];
+
+    public function file()
+    {
+        return $this->hasOne(File::class)
+                    ->where('model_name', 'payments')
+                    ->where('model_id', 1);
+    }
     
  
     /**
