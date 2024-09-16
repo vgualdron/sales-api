@@ -47,7 +47,7 @@ class LendingController extends Controller
                                 ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
                                 // ->leftjoin('interests', 'lendings.id', 'interests.lending_id')
                                 ->with('payments')
-                                // ->with('interests')
+                                >with('file')
                                 ->where('listing_id', '=', $idList)
                                 // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
                                 // ->where('payments.amount', '=', NULL)
