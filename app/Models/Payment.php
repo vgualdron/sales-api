@@ -28,9 +28,7 @@ class Payment extends Authenticatable
 
     public function file()
     {
-        return $this->hasOne(File::class)
-                    ->where('model_name', 'payments')
-                    ->where('model_id', 1);
+        return $this->hasOne(File::class, 'id', 'file_id');
     }
     
  
