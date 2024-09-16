@@ -48,7 +48,7 @@
 
         function execute(int $id){
             try {
-                $sql = $this->report->select(
+                $report = $this->report->select(
                     'id',
                     'name',
                     'sql',
@@ -56,7 +56,7 @@
                     ->where('id', $id)   
                     ->first();
 
-                $rows = DB::select($sql->sql);
+                $rows = DB::select($report->sql);
 
                 if (count($rows) > 0){
                     return response()->json([
