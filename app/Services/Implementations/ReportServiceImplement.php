@@ -55,9 +55,11 @@
                     ->where('id', $id)   
                     ->first();
 
-                if(!empty($sql)) {
+                $rows = DB::select($sql->sql);
+
+                if (count($rows) > 0){
                     return response()->json([
-                        'data' => $sql
+                        'data' => $rows
                     ], Response::HTTP_OK);
                 } else {
                     return response()->json([
