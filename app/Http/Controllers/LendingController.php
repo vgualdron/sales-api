@@ -45,9 +45,9 @@ class LendingController extends Controller
             $idUserSesion = $request->user()->id;
             $items = Lending::select('lendings.*')
                                 ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
-                                // ->leftjoin('interests', 'lendings.id', 'interests.lending_id')
+                                // ->leftjoin('files', 'lendings.id', 'interests.lending_id')
                                 ->with('payments')
-                                >with('file')
+                                // ->with('file')
                                 ->where('listing_id', '=', $idList)
                                 // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
                                 // ->where('payments.amount', '=', NULL)
