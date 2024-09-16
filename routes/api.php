@@ -18,6 +18,7 @@ use App\Http\Controllers\{
                         LendingController,
                         PaymentController,
                         DistrictController,
+                        ReportController,
                     };
 
 /*
@@ -166,4 +167,8 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/district"], function ()
     Route::put('/{id}', [DistrictController::class, 'update'])->name('district.update');
     Route::delete('/{id}', [DistrictController::class, 'delete'])->name('district.delete');
     Route::get('/{id}', [DistrictController::class, 'get'])->name('district.get');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/report"], function () {
+    Route::get('/', [ReportController::class, 'list'])->name('district.list');
 });

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->timestamp('date')->nullable();
             $table->string('amount')->nullable();
             $table->string('color')->nullable();
+            $table->string('status')->default('creado');
             $table->foreign('lending_id')->references('id')->on('lendings')->onDelete('cascade');
             $table->timestamps();
         });

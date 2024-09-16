@@ -1,0 +1,49 @@
+<?php
+    namespace App\Services\Implementations;
+    use App\Services\Interfaces\ReportServiceInterface;
+    use Symfony\Component\HttpFoundation\Response;
+    use App\Models\Report;
+    use App\Traits\Commons;
+    
+    class ReportServiceImplement implements ReportServiceInterface {
+
+        use Commons;
+
+        private $report;
+
+        function __construct(){
+            $this->report = new Report;
+        }    
+
+        function list(){
+            try {
+                $sql = $this->report->select('id', 'name', 'sql', 'order')->get();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'No hay reportes',
+                                'detail' => 'Aun no ha registrado ningún reporte',
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los reportes',
+                            'detail' => $e->getMessage(),
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+    }
+?>
