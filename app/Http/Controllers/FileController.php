@@ -62,7 +62,8 @@ class FileController extends Controller
                         'text' => 'Se ha presentado un error',
                         'detail' => $e->getMessage()
                     ]
-                ]
+                ],
+                'data' => $item,
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
