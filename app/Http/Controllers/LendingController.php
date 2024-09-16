@@ -158,7 +158,7 @@ class LendingController extends Controller
                                 FROM listings lis
                                 LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
                                 GROUP BY lis.id
-                                ORDER BY COALESCE(SUM(len.amount), 0) DESC");
+                                ORDER BY COALESCE(SUM(len.amount), 0) DESC;");
 
             if (!empty($result)) {
                 $firstRow = $result[0];
