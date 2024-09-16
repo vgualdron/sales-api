@@ -4,6 +4,7 @@
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\Report;
     use App\Traits\Commons;
+    use Illuminate\Support\Facades\DB;
     
     class ReportServiceImplement implements ReportServiceInterface {
 
