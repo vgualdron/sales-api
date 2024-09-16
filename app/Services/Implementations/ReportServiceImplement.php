@@ -55,7 +55,7 @@
                     ->where('id', $id)   
                     ->first();
 
-                if (count($sql) > 0){
+                if(!empty($sql)) {
                     return response()->json([
                         'data' => $sql
                     ], Response::HTTP_OK);
