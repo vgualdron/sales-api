@@ -148,6 +148,22 @@ class LendingController extends Controller
 
             $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
 
+            $idList = 1;
+
+            $result = DB::select("SELECT
+                                lis.id as id,
+                                lis.name as name,
+                                COALESCE(SUM(len.amount), 0) AS capital
+                                FROM listings lis
+                                LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
+                                GROUP BY lis.id
+                                ORDER BY COALESCE(SUM(len.amount), 0) DESC");
+
+            if (!empty($result)) {
+                $firstRow = $result[0];
+                $idList = $firstRow->id;
+            }
+
             $item = Lending::create([
                 'nameDebtor' => $request->nameDebtor,
                 'address' => $request->address,
@@ -160,7 +176,7 @@ class LendingController extends Controller
                 'period' => $period,
                 'order' => $request->order,
                 'status' => $request->status,
-                'listing_id' => $request->listing_id,
+                'listing_id' => $idList,
                 'new_id' => $request->new_id,
                 'type' => $request->type,
             ]);

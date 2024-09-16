@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 30)->collation('utf8_general_ci')->required();
-            $table->string('sql')->collation('utf8_general_ci')->required();
+            $table->string('name', 200)->collation('utf8_general_ci')->required();
+            $table->string('sql', 5000)->collation('utf8_general_ci')->required();
             $table->unsignedBigInteger('order');
             $table->timestamps();
         });
