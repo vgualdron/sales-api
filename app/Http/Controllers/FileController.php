@@ -26,7 +26,7 @@ class FileController extends Controller
             $extension = $request->extension;
             $storage = $request->storage;
             $state = $request->status;
-
+            $item = null;
             $f = base64_decode($file);
           
             // Crear un nombre aleatorio para la imagen
@@ -62,8 +62,7 @@ class FileController extends Controller
                         'text' => 'Se ha presentado un error',
                         'detail' => $e->getMessage()
                     ]
-                ],
-                'data' => $item,
+                ]
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
@@ -73,7 +72,8 @@ class FileController extends Controller
                     'text' => $url,
                     'detail' => $status
                 ]
-            ]
+            ],
+            'data' => $item,
         ], Response::HTTP_OK);
 
     }
