@@ -14,7 +14,17 @@ class PaymentController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            $items = Payment::where('id', '>', 0)->get();
+            $items = $items = Payment::select('payments.*')
+                            ->leftjoin('files', 'files.id', 'payments.file_id')
+                            // ->leftjoin('files', 'lendings.id', 'interests.lending_id')
+                            ->with('file')
+                            // ->with('file')
+                            // ->where('listing_id', '=', $idList)
+                            // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
+                            // ->where('payments.amount', '=', NULL)
+                            ->where('lendings.status', '=', 'open')
+                            ->distinct()
+                            ->orderBy('payments.date', 'asc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
