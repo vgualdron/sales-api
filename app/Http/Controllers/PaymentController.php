@@ -22,7 +22,7 @@ class PaymentController extends Controller
                             // ->where('listing_id', '=', $idList)
                             // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
                             // ->where('payments.amount', '=', NULL)
-                            ->where('lendings.status', '=', 'open')
+                            ->where('payments.status', '=', 'creado')
                             ->distinct()
                             ->orderBy('payments.date', 'asc')->get();
         } catch (Exception $e) {
