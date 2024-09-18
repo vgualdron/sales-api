@@ -21,7 +21,7 @@ class PaymentController extends Controller
                                 'users.name as userName',
                             )->leftjoin('files', 'files.id', 'payments.file_id')
                             ->join('lendings', 'lendings.id', 'payments.lending_id')
-                            ->join('listings', 'listings.id', 'lending.listing_id')
+                            ->join('listings', 'listings.id', 'lendings.listing_id')
                             ->join('users', 'users.id', 'listings.user_id_collector')
                             ->with('file')
                             ->where('payments.status', '=', 'creado')
