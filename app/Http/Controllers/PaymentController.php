@@ -14,14 +14,16 @@ class PaymentController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            $items = $items = Payment::select('payments.*')
-                            ->leftjoin('files', 'files.id', 'payments.file_id')
-                            // ->leftjoin('files', 'lendings.id', 'interests.lending_id')
+            $items = $items = Payment::select(
+                                'payments.*',
+                                'len.nameDebtor',
+                                'list.name as listName',
+                                'user.name as userName',
+                            )->leftjoin('files', 'files.id', 'payments.file_id')
+                            ->join('lendings len', 'len.id', 'payments.lending_id')
+                            ->join('listings lis', 'lis.id', 'len.listing_id')
+                            ->join('users u', 'u.id', 'lis.user_id_collector')
                             ->with('file')
-                            // ->with('file')
-                            // ->where('listing_id', '=', $idList)
-                            // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
-                            // ->where('payments.amount', '=', NULL)
                             ->where('payments.status', '=', 'creado')
                             ->distinct()
                             ->orderBy('payments.date', 'asc')->get();
