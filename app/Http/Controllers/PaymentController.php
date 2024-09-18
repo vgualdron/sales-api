@@ -168,7 +168,12 @@ class PaymentController extends Controller
 
         return response()->json([
             'data' => $items,
-            'message' => 'Succeed'
+            'message' => [
+                [
+                    'text' => 'Pago modificado con éxito',
+                    'detail' => 'Se modificó el pago con éxito',
+                ]
+                ],
         ], JsonResponse::HTTP_OK);
     }
 
