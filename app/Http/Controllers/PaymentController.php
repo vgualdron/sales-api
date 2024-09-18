@@ -19,6 +19,8 @@ class PaymentController extends Controller
                                 'lendings.nameDebtor',
                                 'listings.name as listName',
                                 'users.name as userName',
+                                'files.url as urlFile',
+                                'files.type as typeFile',
                             )->leftjoin('files', 'files.id', 'payments.file_id')
                             ->join('lendings', 'lendings.id', 'payments.lending_id')
                             ->join('listings', 'listings.id', 'lendings.listing_id')
