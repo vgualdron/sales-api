@@ -33,7 +33,11 @@
                         'n.phone as phone',
                         'n.address as address',
                         'n.address_house',
+                        'n.address_house_district',
+                        'dh.name as districtHouseName',
                         'n.address_work',
+                        'n.address_work_district',
+                        'dw.name as districtWorkName',
                         'n.site_visit',
                         'n.district as district',
                         'd.name as districtName',
@@ -73,6 +77,8 @@
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
                     ->leftJoin('users as u', 'n.user_send', 'u.id')
                     ->leftJoin('districts as d', 'n.district', 'd.id')
+                    ->leftJoin('districts as dh', 'n.address_house_district', 'd.id')
+                    ->leftJoin('districts as dw', 'n.address_work_district', 'd.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('n.status', $explodeStatus);
                     })
@@ -307,7 +313,11 @@
                         'n.phone as phone',
                         'n.address as address',
                         'n.address_house',
+                        'n.address_house_district',
+                        'dh.name as districtHouseName',
                         'n.address_work',
+                        'n.address_work_district',
+                        'dw.name as districtWorkName',
                         'n.site_visit',
                         'n.type_house',
                         'n.type_work',
@@ -352,6 +362,8 @@
                     ->leftJoin('users as u', 'n.user_send', 'u.id')
                     ->leftJoin('diaries as d', 'd.new_id', 'n.id')
                     ->leftJoin('users as us', 'us.id', 'd.user_id')
+                    ->leftJoin('districts as dh', 'n.address_house_district', 'd.id')
+                    ->leftJoin('districts as dw', 'n.address_work_district', 'd.id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {

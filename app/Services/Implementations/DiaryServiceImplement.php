@@ -85,6 +85,8 @@
                             'n.site_visit',
                             'n.district as new_district',
                             'b.name as new_districtName',
+                            'dh.name as new_districtHouseName',
+                            'dw.name as new_districtWorkName',
                             'n.occupation as new_occupation',
                             'n.phone as new_phone',
                             'n.status as new_status',
@@ -96,6 +98,8 @@
                         ->leftJoin('news as n', 'd.new_id', 'n.id')
                         ->leftJoin('yards as s', 'n.sector', 's.id')
                         ->leftJoin('districts as b', 'n.district', 'b.id')
+                        ->leftJoin('districts as dh', 'n.address_house_district', 'd.id')
+                        ->leftJoin('districts as dw', 'n.address_work_district', 'd.id')
                         ->where('user_id', $user)
                         ->where('date', "$valueDate $valueDay")
                         ->orderBy('date', 'ASC')

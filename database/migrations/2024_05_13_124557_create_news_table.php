@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('phone', 15)->collation('utf8_general_ci')->nullable();
             $table->string('address', 100)->collation('utf8_general_ci')->nullable();
             $table->string('address_house', 100)->collation('utf8_general_ci')->nullable();
+            $table->unsignedBigInteger('address_house_district')->nullable();
             $table->string('address_work', 100)->collation('utf8_general_ci')->nullable();
+            $table->unsignedBigInteger('address_work_district')->nullable();
             $table->string('site_visit', 100)->collation('utf8_general_ci')->nullable();
             $table->unsignedBigInteger('sector')->nullable();
             $table->unsignedBigInteger('district')->nullable();
