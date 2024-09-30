@@ -338,16 +338,19 @@
                         DB::Raw('IF(us.id IS NOT NULL, us.id, null) as userVisit'),
                         DB::Raw('IF(us.id IS NOT NULL, us.push_token, null) as userVisitToken'),
                         'n.family_reference_district',
+                        'drf.name as family_reference_district_name',
                         'n.family_reference_name',
                         'n.family_reference_address',
                         'n.family_reference_phone',
                         'n.family_reference_relationship',
                         'n.family2_reference_district',
+                        'drf2.name as family2_reference_district_name',
                         'n.family2_reference_name',
                         'n.family2_reference_address',
                         'n.family2_reference_phone',
                         'n.family2_reference_relationship',
                         'n.guarantor_district',
+                        'dg.name as guarantor_district_name',
                         'n.guarantor_name',
                         'n.guarantor_address',
                         'n.guarantor_phone',
@@ -364,6 +367,9 @@
                     ->leftJoin('users as us', 'us.id', 'd.user_id')
                     ->leftJoin('districts as dh', 'n.address_house_district', 'dh.id')
                     ->leftJoin('districts as dw', 'n.address_work_district', 'dw.id')
+                    ->leftJoin('districts as drf', 'n.family_reference_district', 'drf.id')
+                    ->leftJoin('districts as drf2', 'n.family2_reference_district', 'drf2.id')
+                    ->leftJoin('districts as dg', 'n.guarantor_district', 'dg.id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
