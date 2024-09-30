@@ -359,6 +359,12 @@
                         'n.quantity',
                         'd.id as diary_id',
                         'd.status as diary_status',
+                        'y.id as sector',
+                        'z.id as city',
+                        'yh.id as sectorHouse',
+                        'zh.id as cityHouse',
+                        'yw.id as sectorWork',
+                        'zw.id as cityWork',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
@@ -366,10 +372,20 @@
                     ->leftJoin('diaries as d', 'd.new_id', 'n.id')
                     ->leftJoin('users as us', 'us.id', 'd.user_id')
                     ->leftJoin('districts as dh', 'n.address_house_district', 'dh.id')
+                    ->leftJoin('yards as yh', 'dh.sector', 'yh.id')
+                    ->leftJoin('zones as zh', 'yh.zone', 'zh.id')
                     ->leftJoin('districts as dw', 'n.address_work_district', 'dw.id')
+                    ->leftJoin('yards as yw', 'dw.sector', 'yw.id')
+                    ->leftJoin('zones as zw', 'yw.zone', 'zw.id')
                     ->leftJoin('districts as drf', 'n.family_reference_district', 'drf.id')
+                    ->leftJoin('yards as yrf', 'drf.sector', 'yrf.id')
+                    ->leftJoin('zones as zrf', 'yrf.zone', 'zrf.id')
                     ->leftJoin('districts as drf2', 'n.family2_reference_district', 'drf2.id')
+                    ->leftJoin('yards as yrf2', 'drf2.sector', 'yrf2.id')
+                    ->leftJoin('zones as zrf2', 'yrf2.zone', 'zrf2.id')
                     ->leftJoin('districts as dg', 'n.guarantor_district', 'dg.id')
+                    ->leftJoin('yards as yg', 'dg.sector', 'yg.id')
+                    ->leftJoin('zones as zg', 'yg.zone', 'zg.id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
