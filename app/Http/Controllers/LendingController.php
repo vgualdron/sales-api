@@ -134,7 +134,7 @@ class LendingController extends Controller
             $amountFees = 1;
             
             $date = date("Y-m-d");
-            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400)));
+            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
            
             if ($period === 'diario') {
                 $countDays = 22;
