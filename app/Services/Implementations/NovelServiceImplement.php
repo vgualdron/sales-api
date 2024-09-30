@@ -365,6 +365,12 @@
                         'zh.id as cityHouse',
                         'yw.id as sectorWork',
                         'zw.id as cityWork',
+                        'yrf.id as sectorRef1',
+                        'zrf.id as cityRef1',
+                        'yrf2.id as sectorRef2',
+                        'zrf2.id as cityRef2',
+                        'yg.id as sectorGuarantor',
+                        'zg.id as cityGuarantor',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
