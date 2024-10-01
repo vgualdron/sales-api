@@ -25,6 +25,7 @@ class Payment extends Authenticatable
         'status',
         'file_id',
         'type',
+        'reference',
     ];
 
     public function file()
