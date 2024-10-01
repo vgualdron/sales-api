@@ -152,7 +152,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () 
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/payment"], function () {
-    Route::get('/', [PaymentController::class, 'index']);
+    Route::get('list/{status}', [PaymentController::class, 'index']);
     Route::get('/lending/{idLending}', [PaymentController::class, 'getPaymentsForLending']);
     Route::get('/list/{idListing}/current-date', [PaymentController::class, 'getPaymentsFromListCurrentDate']);
     Route::get('/{id}', [PaymentController::class, 'show']);

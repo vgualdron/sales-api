@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class PaymentController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $status)
     {
         try {
+            $explodeStatus = explode(',', $status);
             $idUserSesion = $request->user()->id;
             $items = $items = Payment::select(
                                 'payments.*',
@@ -26,7 +27,9 @@ class PaymentController extends Controller
                             ->join('listings', 'listings.id', 'lendings.listing_id')
                             ->join('users', 'users.id', 'listings.user_id_collector')
                             ->with('file')
-                            ->where('payments.status', '=', 'creado')
+                            ->when($status !== 'all', function ($q) use ($explodeStatus) {
+                                return $q->whereIn('payments.status', $explodeStatus);
+                            })
                             ->distinct()
                             ->orderBy('payments.date', 'asc')->get();
         } catch (Exception $e) {
