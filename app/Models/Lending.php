@@ -33,6 +33,7 @@ class Lending extends Authenticatable
         'new_id',
         'created_at',
         'type',
+        'has_double_interest',
     ];
    
    public function payments()

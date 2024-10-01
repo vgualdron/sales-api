@@ -27,6 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('listing_id');
             $table->unsignedBigInteger('new_id')->nullable();
             $table->string('type')->default('normal');
+            $table->boolean('has_double_interest')->default(false);
             $table->foreign('listing_id')->references('id')->on('listings')->onDelete('restrict');
             $table->timestamps();
         });
