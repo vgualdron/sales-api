@@ -130,7 +130,8 @@ class PaymentController extends Controller
                 'date' => $request->date,
                 'amount' => $request->amount,
                 'color' => $request->color,
-                'file_id' => $request->file_id
+                'file_id' => $request->file_id,
+                'type' => $request->type,
             ]);
             
         } catch (Exception $e) {
