@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 100)->collation('utf8_general_ci');
             $table->unsignedBigInteger('sector');
             $table->unsignedBigInteger('group');
-            $table->unsignedBigInteger('order');
+            $table->string('order', 5)->collation('utf8_general_ci');
             $table->string('status', 100)->default('activo');
             $table->foreign('sector')->references('id')->on('yards');
             $table->timestamps();
