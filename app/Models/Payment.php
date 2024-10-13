@@ -21,7 +21,7 @@ class Payment extends Authenticatable
         'lending_id',
         'date',
         'amount',
-        'color',
+        'observation',
         'status',
         'file_id',
         'type',

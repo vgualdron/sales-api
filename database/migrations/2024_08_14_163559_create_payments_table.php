@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('lending_id');
             $table->timestamp('date')->nullable();
             $table->string('amount')->nullable();
-            $table->string('color')->nullable();
+            $table->string('observation', 500)->nullable();
             $table->string('status')->default('creado');
             $table->unsignedBigInteger('file_id')->nullable();
             $table->string('type', 20)->default('nequi');
