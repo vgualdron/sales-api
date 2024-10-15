@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('file_id')->nullable();
             $table->string('type', 20)->default('nequi');
             $table->string('reference', 50)->nullable();
+            $table->string('nequi', 150)->nullable();
+            $table->timestamp('date_transaction')->nullable();
             $table->foreign('lending_id')->references('id')->on('lendings')->onDelete('cascade');
             $table->timestamps();
         });

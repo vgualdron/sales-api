@@ -26,6 +26,8 @@ class Payment extends Authenticatable
         'file_id',
         'type',
         'reference',
+        'nequi',
+        'date_transaction',
     ];
 
     public function file()
