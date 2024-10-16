@@ -76,7 +76,7 @@ class PaymentController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            $item = Payment::where('reference', '=', $reference)->first();
+            $item = Payment::where('reference', '=', $reference)->with('file')->first();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
