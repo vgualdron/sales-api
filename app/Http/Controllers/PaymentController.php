@@ -71,6 +71,28 @@ class PaymentController extends Controller
             'message' => 'Succeed',
         ], JsonResponse::HTTP_OK);
     }
+
+    public function getPaymentByReference(Request $request, $reference)
+    {
+        try {
+            $idUserSesion = $request->user()->id;
+            $item = Payment::where('reference', '=', $reference)->get();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $item,
+            'message' => 'Succeed',
+        ], JsonResponse::HTTP_OK);
+    }
     
     public function getPaymentsFromListCurrentDate(Request $request, $idList)
     {
