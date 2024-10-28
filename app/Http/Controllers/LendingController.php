@@ -333,9 +333,10 @@ class LendingController extends Controller
                 'status' => $request->status,
             ];
 
-            $item = Lending::find($id)->update($newItem);
+            $item = Lending::find($id);
 
             echo $item;
+            $item->update($newItem);
 
             $period = $item->period;
             $countDays = 1;
