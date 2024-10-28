@@ -149,7 +149,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () 
     Route::put('/{id}', [LendingController::class, 'update']);
     Route::put('/update-rows/all', [LendingController::class, 'updateOrderRows']);
     Route::delete('/{id}', [LendingController::class, 'destroy']);
-    Route::post('renovate/{id}', [LendingController::class, 'renovate']);
+    Route::post('/renovate/{id}', [LendingController::class, 'renovate']);
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/payment"], function () {
