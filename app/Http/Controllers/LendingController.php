@@ -332,7 +332,48 @@ class LendingController extends Controller
             $newItem = [
                 'status' => $request->status,
             ];
+
             $item = Lending::find($id)->update($newItem);
+
+            $period = $item->period;
+            $countDays = 1;
+            $amountFees = 1;
+            
+            $date = $request->date;
+            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
+           
+            if ($period === 'diario') {
+                $countDays = 21;
+                $amountFees = 22;
+            } else if ($period === 'semanal') {
+                $countDays = 21;
+                $amountFees = 3;
+            } else if ($period === 'quincenal') {
+                $countDays = 14;
+                $amountFees = 1;
+            }
+
+            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
+
+            $idList = $item->listing_id;
+
+            $item = Lending::create([
+                'nameDebtor' => $item->nameDebtor,
+                'address' => $item->address,
+                'phone' => $item->phone,
+                'firstDate' => $firstDate,
+                'endDate' => $endDate,
+                'amount' => $request->amount, // pendiente, solo funciona con renovaciones menorres o igaules del valor anterior
+                'amountFees' => $amountFees,
+                'percentage' => $item->percentage,
+                'period' => $period,
+                'order' => $item->order,
+                'status' => 'open',
+                'listing_id' => $idList,
+                'new_id' => $item->new_id,
+                'type' => 'normal',
+            ]);
+
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
@@ -379,20 +420,6 @@ class LendingController extends Controller
             $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
 
             $idList = 1;
-
-            $result = DB::select("SELECT
-                                lis.id as id,
-                                lis.name as name,
-                                COALESCE(SUM(len.amount), 0) AS capital
-                                FROM listings lis
-                                LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
-                                GROUP BY lis.id
-                                ORDER BY COALESCE(SUM(len.amount), 0) ASC;");
-
-            if (!empty($result)) {
-                $firstRow = $result[0];
-                $idList = $firstRow->id;
-            }
 
             $item = Lending::create([
                 'nameDebtor' => $request->nameDebtor,
