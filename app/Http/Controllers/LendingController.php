@@ -335,6 +335,8 @@ class LendingController extends Controller
 
             $item = Lending::find($id)->update($newItem);
 
+            echo $item;
+
             $period = $item->period;
             $countDays = 1;
             $amountFees = 1;
