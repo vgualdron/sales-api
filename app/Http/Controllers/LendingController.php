@@ -268,7 +268,6 @@ class LendingController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-
     public function destroy(Request $request, $id)
     {
         try {
@@ -326,4 +325,112 @@ class LendingController extends Controller
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
+
+    public function renovate(Request $request, $id)
+    {
+        try {
+            $newItem = [
+                'status' => $request->status,
+            ];
+            $item = Lending::find($id)->update($newItem);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => [
+                [
+                    'text' => 'Modificado con éxito.',
+                    'detail' => $item,
+                ]
+            ]
+        ], JsonResponse::HTTP_OK);
+    }
+
+    public function renovateNEW(Request $request, $id)
+    {
+        try {
+            $idUserSesion = $request->user()->id;
+            $period = $request->period;
+            $countDays = 1;
+            $amountFees = 1;
+            
+            $date = date("Y-m-d");
+            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
+           
+            if ($period === 'diario') {
+                $countDays = 21;
+                $amountFees = 22;
+            } else if ($period === 'semanal') {
+                $countDays = 21;
+                $amountFees = 3;
+            } else if ($period === 'quincenal') {
+                $countDays = 14;
+                $amountFees = 1;
+            }
+
+            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
+
+            $idList = 1;
+
+            $result = DB::select("SELECT
+                                lis.id as id,
+                                lis.name as name,
+                                COALESCE(SUM(len.amount), 0) AS capital
+                                FROM listings lis
+                                LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
+                                GROUP BY lis.id
+                                ORDER BY COALESCE(SUM(len.amount), 0) ASC;");
+
+            if (!empty($result)) {
+                $firstRow = $result[0];
+                $idList = $firstRow->id;
+            }
+
+            $item = Lending::create([
+                'nameDebtor' => $request->nameDebtor,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'firstDate' => $firstDate,
+                'endDate' => $endDate,
+                'amount' => $request->amount,
+                'amountFees' => $amountFees,
+                'percentage' => $request->percentage,
+                'period' => $period,
+                'order' => $request->order,
+                'status' => $request->status,
+                'listing_id' => $idList,
+                'new_id' => $request->new_id,
+                'type' => $request->type,
+            ]);
+            
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => [
+                [
+                    'text' => 'Creado con éxito.',
+                    'detail' => null,
+                ]
+            ]
+        ], JsonResponse::HTTP_OK);
+    }
+
 }
