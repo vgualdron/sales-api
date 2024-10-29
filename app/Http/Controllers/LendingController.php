@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Lending;
 use App\Models\Payment;
-// use App\Models\Interest;
+use App\Models\Expense;
+use App\Models\File;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -150,6 +151,7 @@ class LendingController extends Controller
             $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
 
             $idList = 1;
+            $idUserExpense = 1;
 
             $result = DB::select("SELECT
                                 lis.id as id,
@@ -163,9 +165,10 @@ class LendingController extends Controller
             if (!empty($result)) {
                 $firstRow = $result[0];
                 $idList = $firstRow->id;
+                $idUserExpense = $firstRow->user_id;
             }
 
-            $item = Lending::create([
+            $statusLending = Lending::create([
                 'nameDebtor' => $request->nameDebtor,
                 'address' => $request->address,
                 'phone' => $request->phone,
@@ -181,45 +184,22 @@ class LendingController extends Controller
                 'new_id' => $request->new_id,
                 'type' => $request->type,
             ]);
-            
 
-            /* if ($request->type === 'normal') {
-                for ($i = 0; $i < (int)$item->amountFees; $i++) {
-                    $modDate = strtotime($firstDate.$countDays);
-                    $newDate = date("Y-m-d", $modDate);
-                    
-                    $itemPayment = Payment::create([
-                        'lending_id' => (int)$item->id,
-                        'date' => $newDate,
-                        'amount' => null,
-                        'color' => ''
-                    ]);
-                    $firstDate = $newDate;
-                }
-            } else {
-                for ($i = 0; $i < (int)$item->amountFees; $i++) {
-                    $modDate = strtotime($firstDate.$countDays);
-                    $newDate = date("Y-m-d", $modDate);
-                    
-                    if ($i === 0) {
-                        $itemPayment = Payment::create([
-                            'lending_id' => (int)$item->id,
-                            'date' => $newDate,
-                            'amount' => null,
-                            'color' => ''
-                        ]);
-                    }
-                    
-                    $itemInterest = Interest::create([
-                        'lending_id' => (int)$item->id,
-                        'date' => $newDate,
-                        'amount' => null,
-                        'color' => ''
-                    ]);
-                    $firstDate = $newDate;
-                }
-                
-            } */
+            $itemFile = File::where('name', 'FOTO_VOUCHER')
+            ->where('model_id', $request->new_id)
+            ->where('model_name', 'news')
+            ->first();
+            
+            $statusExpense = Expense::create([
+                'date' => $firstDate,
+                'amount' => $request->amount,
+                'status' => 'creado',
+                'description' => 'Egreso creado automaticamente cuando se aprueba el voucher de consignación del nuevo',
+                'item_id' => 8, // id del item de egreso para NUEVOS
+                'user_id' => $idUserExpense,
+                'file_id' => $itemFile->id,
+                'registered_by' => $idUserSesion,
+            ]);
             
         } catch (Exception $e) {
             return response()->json([
