@@ -325,6 +325,7 @@ class LendingController extends Controller
             
             $date = $request->date;
             $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
+            $currentDate = date("Y-m-d H:i:s");
            
             if ($period === 'diario') {
                 $countDays = 21;
@@ -340,6 +341,40 @@ class LendingController extends Controller
             $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
 
             $idList = $item->listing_id;
+            $amount = $request->amount;
+            $amountNew = $request->amountNew;
+
+            $idUserExpense = 1;
+
+            $result = DB::select("SELECT
+                                lis.id as id,
+                                lis.name as name,
+                                lis.user_id_collector as user_id,
+                                COALESCE(SUM(len.amount), 0) AS capital
+                                FROM listings lis
+                                LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
+                                GROUP BY lis.id
+                                ORDER BY COALESCE(SUM(len.amount), 0) ASC;");
+
+            if (!empty($result)) {
+                $firstRow = $result[0];
+                $idList = $firstRow->id;
+                $idUserExpense = $firstRow->user_id;
+            }
+            
+            if ($amountNew > 0) {
+                $amount = $amount + $amountNew;
+
+                $statusExpense = Expense::create([
+                    'date' => $currentDate,
+                    'amount' => $mount,
+                    'status' => 'creado',
+                    'description' => 'Egreso creado automaticamente cuando se renueva un credito por encima del valor que tenia prestado',
+                    'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
+                    'user_id' => $idUserExpense,
+                    'registered_by' => $idUserSesion,
+                ]);
+            }
 
             $item = Lending::create([
                 'nameDebtor' => $item->nameDebtor,
@@ -347,7 +382,7 @@ class LendingController extends Controller
                 'phone' => $item->phone,
                 'firstDate' => $firstDate,
                 'endDate' => $endDate,
-                'amount' => $request->amount, // pendiente, solo funciona con renovaciones menorres o igaules del valor anterior
+                'amount' => $amount,
                 'amountFees' => $amountFees,
                 'percentage' => $item->percentage,
                 'period' => $period,
