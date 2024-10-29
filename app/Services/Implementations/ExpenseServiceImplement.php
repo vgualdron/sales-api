@@ -28,8 +28,13 @@
                 $sql = $this->expense->from('expenses as e')
                     ->select(
                         'e.*',
+                        'a.id as area_id',
+                        'a.name as area_name',
+                        'i.id as item_id',
+                        'i.name as item_name',
                     )
                     ->leftJoin('items as i', 'e.item_id', 'i.id')
+                    ->leftJoin('areas as a', 'i.area_id', 'a.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('e.status', $explodeStatus);
                     })
