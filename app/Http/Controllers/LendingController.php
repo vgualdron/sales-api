@@ -346,20 +346,11 @@ class LendingController extends Controller
 
             $idUserExpense = 1;
 
-            $result = DB::select("SELECT
-                                lis.id as id,
-                                lis.name as name,
-                                lis.user_id_collector as user_id,
-                                COALESCE(SUM(len.amount), 0) AS capital
-                                FROM listings lis
-                                LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
-                                GROUP BY lis.id
-                                ORDER BY COALESCE(SUM(len.amount), 0) ASC;");
+            $result = Listing::find($idList);
 
             if (!empty($result)) {
-                $firstRow = $result[0];
-                $idList = $firstRow->id;
-                $idUserExpense = $firstRow->user_id;
+                $idList = $result->id;
+                $idUserExpense = $result->user_id_collector;
             }
             
             if ($amountNew > 0) {
@@ -367,7 +358,7 @@ class LendingController extends Controller
 
                 $statusExpense = Expense::create([
                     'date' => $currentDate,
-                    'amount' => $amount,
+                    'amount' => $amountNew,
                     'status' => 'creado',
                     'description' => 'Egreso creado automaticamente cuando se renueva un credito por encima del valor que tenia prestado',
                     'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
