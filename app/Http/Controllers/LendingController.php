@@ -316,7 +316,6 @@ class LendingController extends Controller
 
             $item = Lending::find($id);
 
-            echo $item;
             $item->update($newItem);
 
             $period = $item->period;
@@ -367,7 +366,7 @@ class LendingController extends Controller
 
                 $statusExpense = Expense::create([
                     'date' => $currentDate,
-                    'amount' => $mount,
+                    'amount' => $amount,
                     'status' => 'creado',
                     'description' => 'Egreso creado automaticamente cuando se renueva un credito por encima del valor que tenia prestado',
                     'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
