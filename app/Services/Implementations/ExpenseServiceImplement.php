@@ -29,7 +29,7 @@
                     ->select(
                         'e.*',
                     )
-                    ->leftJoin('items as i', 'e.tem_id', 'i.id')
+                    ->leftJoin('items as i', 'e.item_id', 'i.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('e.status', $explodeStatus);
                     })
