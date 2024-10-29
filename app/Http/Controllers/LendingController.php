@@ -195,7 +195,7 @@ class LendingController extends Controller
             $statusExpense = Expense::create([
                 'date' => $firstDate,
                 'amount' => $request->amount,
-                'status' => 'creado',
+                'status' => 'aprobado',
                 'description' => 'Egreso creado automaticamente cuando se aprueba el voucher de consignación del nuevo',
                 'item_id' => 8, // id del item de egreso para NUEVOS
                 'user_id' => $idUserExpense,
