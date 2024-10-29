@@ -310,6 +310,7 @@ class LendingController extends Controller
     public function renovate(Request $request, $id)
     {
         try {
+            $idUserSesion = $request->user()->id;
             $newItem = [
                 'status' => $request->status,
             ];
