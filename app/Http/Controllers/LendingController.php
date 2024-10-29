@@ -398,50 +398,13 @@ class LendingController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    public function renovateNEW(Request $request, $id)
+    public function history(Request $request, $idNew)
     {
         try {
             $idUserSesion = $request->user()->id;
-            $period = $request->period;
-            $countDays = 1;
-            $amountFees = 1;
-            
-            $date = date("Y-m-d");
-            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
-           
-            if ($period === 'diario') {
-                $countDays = 21;
-                $amountFees = 22;
-            } else if ($period === 'semanal') {
-                $countDays = 21;
-                $amountFees = 3;
-            } else if ($period === 'quincenal') {
-                $countDays = 14;
-                $amountFees = 1;
-            }
-
-            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
-
-            $idList = 1;
-
-            $item = Lending::create([
-                'nameDebtor' => $request->nameDebtor,
-                'address' => $request->address,
-                'phone' => $request->phone,
-                'firstDate' => $firstDate,
-                'endDate' => $endDate,
-                'amount' => $request->amount,
-                'amountFees' => $amountFees,
-                'percentage' => $request->percentage,
-                'period' => $period,
-                'order' => $request->order,
-                'status' => $request->status,
-                'listing_id' => $idList,
-                'new_id' => $request->new_id,
-                'type' => $request->type,
-            ]);
-            
-
+            $items = Lending::where('new_id', '=', $idNew)
+                                ->with('payments')
+                                ->orderBy('order', 'asc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
@@ -454,12 +417,8 @@ class LendingController extends Controller
         }
 
         return response()->json([
-            'message' => [
-                [
-                    'text' => 'Creado con éxito.',
-                    'detail' => null,
-                ]
-            ]
+            'data' => $items,
+            'message' => 'Succeed',
         ], JsonResponse::HTTP_OK);
     }
 
