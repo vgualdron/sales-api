@@ -156,6 +156,7 @@ class LendingController extends Controller
             $result = DB::select("SELECT
                                 lis.id as id,
                                 lis.name as name,
+                                lis.user_id_collector as user_id,
                                 COALESCE(SUM(len.amount), 0) AS capital
                                 FROM listings lis
                                 LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
