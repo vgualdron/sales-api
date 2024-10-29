@@ -19,6 +19,7 @@ use App\Http\Controllers\{
                         PaymentController,
                         DistrictController,
                         ReportController,
+                        ExpenseController,
                     };
 
 /*
@@ -175,4 +176,12 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/district"], function ()
 Route::group(['middleware' => 'auth:api' , "prefix" => "/report"], function () {
     Route::get('/', [ReportController::class, 'list'])->name('report.list');
     Route::get('/{id}', [ReportController::class, 'execute'])->name('report.execute');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/expense"], function () {
+    Route::get('/', [ExpenseController::class, 'list'])->name('expense.list');
+    Route::post('/', [ExpenseController::class, 'create'])->name('expense.create');
+    Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
+    Route::delete('/{id}', [ExpenseController::class, 'delete'])->name('expense.delete');
+    Route::get('/{id}', [ExpenseController::class, 'get'])->name('expense.get');
 });

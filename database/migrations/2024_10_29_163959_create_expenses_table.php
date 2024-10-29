@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('amount')->nullable();
             $table->string('status', 50)->collation('utf8_general_ci')->required();
             $table->string('descrption', 500)->collation('utf8_general_ci')->nullable();
-            $table->unsignedBigInteger('order');
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('file_id')->nullable();
