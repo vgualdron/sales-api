@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 200)->collation('utf8_general_ci')->required();
             $table->unsignedBigInteger('order');
+            $table->unsignedBigInteger('role_id')->nullable();
             $table->timestamps();
         });
     }

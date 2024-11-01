@@ -20,6 +20,8 @@ use App\Http\Controllers\{
                         DistrictController,
                         ReportController,
                         ExpenseController,
+                        AreaController,
+                        ItemController,
                     };
 
 /*
@@ -184,4 +186,12 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/expense"], function () 
     Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
     Route::delete('/{id}', [ExpenseController::class, 'delete'])->name('expense.delete');
     Route::get('/{id}', [ExpenseController::class, 'get'])->name('expense.get');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/area"], function () {
+    Route::get('/', [AreaController::class, 'index'])->name('area.list');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/item"], function () {
+    Route::get('/', [ItemController::class, 'index'])->name('item.list');
 });
