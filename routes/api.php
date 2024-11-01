@@ -193,5 +193,5 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/area"], function () {
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/item"], function () {
-    Route::get('/', [ItemController::class, 'index'])->name('item.list');
+    Route::get('area/{id}', [ItemController::class, 'index'])->name('item.list');
 });
