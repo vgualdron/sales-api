@@ -32,9 +32,11 @@
                         'a.name as area_name',
                         'i.id as item_id',
                         'i.name as item_name',
+                        'u.name as user_name',
                     )
                     ->leftJoin('items as i', 'e.item_id', 'i.id')
                     ->leftJoin('areas as a', 'i.area_id', 'a.id')
+                    ->leftJoin('users as u', 'u.user_id', 'u.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('e.status', $explodeStatus);
                     })
