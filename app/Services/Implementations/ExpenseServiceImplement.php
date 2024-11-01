@@ -64,23 +64,14 @@
 
         function create(array $expense){
             try {
-                /* $validation = $this->validate($this->validator, $novel, null, 'registrar', 'nuevo', null);
-                if ($validation['success'] === false) {
-                    return response()->json([
-                        'message' => $validation['message']
-                    ], Response::HTTP_BAD_REQUEST);
-                } */
-                DB::transaction(function () use ($novel) {
-                    $sql = $this->novel::create([
-                        'document_number' => null,
-                        'name' => $novel['name'],
-                        'phone' => $novel['phone'],
-                        'address' => $novel['address'],
-                        'sector' => $novel['sector'],
-                        'district' => $novel['district'],
-                        'occupation' => $novel['occupation'],
-                        'observation' => $novel['observation'],
-                        'user_send' => $novel['userSend'],
+                DB::transaction(function () use ($expense) {
+                    $sql = $this->expense::create([
+                        'date' => $expense['date'],
+                        'amount' => $expense['amount'],
+                        'status' => $expense['status'],
+                        'description' => $expense['description'],
+                        'item_id' => $expense['item_id'],
+                        'user_id' => $expense['user_id'],
                     ]);
     
                 });
