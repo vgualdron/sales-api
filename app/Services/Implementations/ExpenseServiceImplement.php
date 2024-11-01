@@ -36,7 +36,7 @@
                     )
                     ->leftJoin('items as i', 'e.item_id', 'i.id')
                     ->leftJoin('areas as a', 'i.area_id', 'a.id')
-                    ->leftJoin('users as u', 'u.user_id', 'u.id')
+                    ->leftJoin('users as u', 'e.user_id', 'u.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('e.status', $explodeStatus);
                     })
