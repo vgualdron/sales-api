@@ -45,6 +45,7 @@ return new class extends Migration
             $table->string('guarantor_address', 50)->collation('utf8_general_ci')->nullable();
             $table->string('guarantor_phone', 50)->collation('utf8_general_ci')->nullable();
             $table->string('guarantor_relationship', 50)->collation('utf8_general_ci')->nullable();
+            $table->string('extra_reference', 500)->collation('utf8_general_ci')->nullable();
             $table->string('facebook', 150)->collation('utf8_general_ci')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('type_house', 15)->collation('utf8_general_ci')->nullable();

@@ -47,6 +47,7 @@ class Novel extends Model
         'guarantor_address',
         'guarantor_phone',
         'guarantor_relationship',
+        'extra_reference',
         'facebook',
         'quantity',
         'type_house',

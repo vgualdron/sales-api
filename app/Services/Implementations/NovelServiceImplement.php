@@ -70,6 +70,7 @@
                         'n.guarantor_address',
                         'n.guarantor_phone',
                         'n.guarantor_relationship',
+                        'n.extra_reference',
                         'n.period',
                         'n.quantity',
                     )
@@ -355,6 +356,7 @@
                         'n.guarantor_address',
                         'n.guarantor_phone',
                         'n.guarantor_relationship',
+                        'n.extra_reference',
                         'n.period',
                         'n.quantity',
                         'd.id as diary_id',
