@@ -53,7 +53,7 @@ class LendingController extends Controller
                                 ->where('listing_id', '=', $idList)
                                 // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
                                 // ->where('payments.amount', '=', NULL)
-                                ->where('lendings.status', '=', 'open')
+                                ->whereIn('lendings.status', ['open', 'renovated', 'closed'])
                                 ->distinct()
                                 ->orderBy('lendings.order', 'asc')->get();
         } catch (Exception $e) {
