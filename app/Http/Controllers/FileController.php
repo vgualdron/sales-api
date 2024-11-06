@@ -26,6 +26,8 @@ class FileController extends Controller
             $extension = $request->extension;
             $storage = $request->storage;
             $state = $request->status;
+            $latitude = $request->latitude;
+            $longitude = $request->longitude;
             $item = null;
             $f = base64_decode($file);
           
@@ -53,6 +55,8 @@ class FileController extends Controller
                 'registered_by' => $idUserSesion,
                 'registered_date' => date('Y-m-d H:i:s'),
                 'status' => $state,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
             ]);
 
         } catch (Exception $e) {

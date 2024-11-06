@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('extension', 10)->collation('utf8_general_ci');
             $table->string('status', 100)->collation('utf8_general_ci')->default('creado');
             $table->string('observation', 100)->collation('utf8_general_ci')->nullable();
+            $table->string('latitude', 20)->collation('utf8_general_ci')->nullable();
+            $table->string('longitude', 20)->collation('utf8_general_ci')->nullable();
             $table->unsignedBigInteger('registered_by');
             $table->timestamp('registered_date');
             $table->unsignedBigInteger('reviewed_by')->nullable();
