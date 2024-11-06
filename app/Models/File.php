@@ -20,6 +20,8 @@ class File extends Model
         'model_id',
         'model_name',
         'status',
+        'latitude',
+        'longitude',
         'type',
         'extension',
         'observation',
