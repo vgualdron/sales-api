@@ -161,7 +161,7 @@
                 ->leftJoin('yards as s', 'n.sector', 's.id')
                 ->leftJoin('districts as b', 'n.district', 'b.id')
                 ->where('date', ">=", "$date 00:00:00")
-                ->whereDate('date', "<=", "DATE_ADD($date, INTERVAL 2 DAY)")
+                ->whereDate('date', "<=", "DATE_ADD($date, INTERVAL_ 2 DAY)")
                 ->orderBy('date', 'ASC')
                 ->get();
                 
