@@ -153,7 +153,7 @@
                     'n.phone as new_phone',
                     'n.status as new_status',
                     'd.status',
-                    'd.observation',
+                    'd.observation sa a',
                     's.name as sectorName',
                 )
                 ->join('users as u', 'd.user_id', 'u.id')
