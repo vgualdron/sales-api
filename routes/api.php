@@ -92,8 +92,8 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/new"], function () {
-    Route::get('/list/{status}', [NovelController::class, 'list'])->middleware('can:new.list')->name('new.list');
-    Route::post('/create', [NovelController::class, 'create'])->middleware('can:new.create')->name('new.create');
+    Route::get('/list/{status}', [NovelController::class, 'list'])->name('new.list');
+    Route::post('/create', [NovelController::class, 'create'])->name('new.create');
     Route::put('/update/{id}', [NovelController::class, 'update'])->name('new.update');
     Route::put('/update-status/{id}', [NovelController::class, 'updateStatus'])->name('new.changeStatus');
     Route::put('/complete-data/{id}', [NovelController::class, 'completeData'])->name('review.completeData');
