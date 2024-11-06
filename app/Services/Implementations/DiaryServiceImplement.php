@@ -153,7 +153,7 @@
                     'n.phone as new_phone',
                     'n.status as new_status',
                     'd.status',
-                    'd.observation sa a',
+                    'd.observation',
                     's.name as sectorName',
                 )
                 ->join('users as u', 'd.user_id', 'u.id')
@@ -161,7 +161,7 @@
                 ->leftJoin('yards as s', 'n.sector', 's.id')
                 ->leftJoin('districts as b', 'n.district', 'b.id')
                 ->where('date', ">=", "$date 00:00:00")
-                ->whereDate('date', "<=", "DATE_ADD($date, INTERVAL_ 2 DAY)")
+                ->where('date', "<=", "DATE_ADD($date, INTERVAL 2 DAY)")
                 ->orderBy('date', 'ASC')
                 ->get();
                 
