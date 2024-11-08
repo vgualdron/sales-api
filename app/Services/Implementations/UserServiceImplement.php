@@ -183,6 +183,7 @@
                         $sql->phone = $user['phone'];
                         $sql->yard = $user['yard'];
                         $sql->active = $user['active'];
+                        $sql->area = $user['area'];
                         $sql->password = empty($user['password']) ? $sql->password : Hash::make($user['password']);
                         $sql->change_yard = $user['changeYard'];
                         $sql->save();
