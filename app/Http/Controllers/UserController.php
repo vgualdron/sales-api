@@ -49,4 +49,11 @@ class UserController extends Controller
         $idUserSesion = $userSesion->id;
         return $this->service->updatePushToken($user['pushToken'], $idUserSesion);
     }
+
+    function updateLocation() {
+        $user = $this->request->all();
+        $userSesion = $this->request->user();
+        $idUserSesion = $userSesion->id;
+        return $this->service->updateLocation($user, $idUserSesion);
+    }
 }

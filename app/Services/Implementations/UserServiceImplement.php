@@ -403,5 +403,43 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
+
+        function updateLocation(array $user, int $id){
+            try {
+                $sql = $this->user::find($id);
+                if(!empty($sql)) {
+                    $sql->latitude = $user['latitude'];
+                    $sql->longitude = $user['longitude'];
+                    $sql->date_location = date("Y-m-d H:i:s");
+                    $sql->save();
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Ubicación actualizada con exito',
+                                'detail' => null
+                            ]
+                        ]
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Advertencia al actualizar el token push',
+                                'detail' => 'El usuario no existe'
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Advertencia al actualizar el token push',
+                            'detail' => $e->getMessage(),
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 ?>

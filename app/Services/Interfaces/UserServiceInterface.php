@@ -11,5 +11,6 @@
         function delete(int $user);
         function updateProfile(array $user, int $id);
         function updatePushToken(string $token, int $id);
+        function updateLocation(array $user, int $id);
     }
 ?>
