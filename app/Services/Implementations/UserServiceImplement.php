@@ -289,10 +289,10 @@
                     'editable',
                     'push_token as pushToken',
                     'change_yard as changeYard',
-                    'u.latitude',
-                    'u.longitude',
-                    'u.date_location',
-                    'u.area as areaId',
+                    'latitude',
+                    'longitude',
+                    'date_location',
+                    'area',
                 )
                     ->where('id', $id)
                     ->first();
