@@ -29,6 +29,10 @@ class User extends Authenticatable
         'editable',
         'active',
         'push_token',
+        'area',
+        'latitude',
+        'longitude',
+        'date_location',
         'created_at',
         'updated_at'
     ];
