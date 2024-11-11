@@ -140,6 +140,7 @@
                         'name' => $user['name'],
                         'phone' => $user['phone'],
                         'active' => $user['active'],
+                        'area' => $user['area'],
                         'password' => empty($user['password']) ? Hash::make($user['documentNumber']) : Hash::make($user['password']),
                         'yard' => $user['yard'],
                         'change_yard' => $user['changeYard']
