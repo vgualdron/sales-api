@@ -53,7 +53,6 @@ class LendingController extends Controller
                                 'news.family2_reference_phone',
                                 'news.guarantor_name',
                                 'news.guarantor_phone',
-                                '(SELECT count(lendings.new_id) FROM lendings WHERE lendings.new_id = news.id)',
                                 )
                                 ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
                                 ->leftjoin('news', 'news.id', 'lendings.new_id')
@@ -391,7 +390,7 @@ class LendingController extends Controller
                 'status' => 'open',
                 'listing_id' => $idList,
                 'new_id' => $item->new_id,
-                'type' => 'normal',
+                'type' => 'R',
             ]);
 
         } catch (Exception $e) {
