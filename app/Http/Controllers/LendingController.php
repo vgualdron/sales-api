@@ -53,6 +53,7 @@ class LendingController extends Controller
                                 'news.family2_reference_phone',
                                 'news.guarantor_name',
                                 'news.guarantor_phone',
+                                'SELECT count(lendings.new_id) as count_news FROM lendings WHERE lendingns.new_id = news.id',
                                 )
                                 ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
                                 ->leftjoin('news', 'news.id', 'lendings.new_id')
