@@ -158,6 +158,7 @@ class PaymentController extends Controller
                 'observation' => $request->observation,
                 'file_id' => $request->file_id,
                 'type' => $request->type,
+                'status' => $request->status,
             ]);
             
         } catch (Exception $e) {
