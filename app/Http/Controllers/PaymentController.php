@@ -15,7 +15,7 @@ class PaymentController extends Controller
         try {
             $explodeStatus = explode(',', $status);
             $idUserSesion = $request->user()->id;
-            $items = $items = Payment::select(
+            $items = Payment::select(
                                 'payments.*',
                                 'lendings.nameDebtor',
                                 'listings.name as listName',
