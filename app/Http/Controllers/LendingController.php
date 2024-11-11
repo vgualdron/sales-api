@@ -395,7 +395,10 @@ class LendingController extends Controller
 
             $itemPayment = Payment::where('lending_id', $id)->where('type', 'adelanto')->where('status', 'aprobado')->first();
             if ($itemPayment) {
-                $itemPayment->update(['lending_id' => $item->id]);
+                $itemPayment->update([
+                    'lending_id' => $item->id,
+                    'type' => 'nequi',
+                ]);
             }
 
         } catch (Exception $e) {
