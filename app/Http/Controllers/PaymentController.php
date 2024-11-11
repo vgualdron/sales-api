@@ -183,6 +183,13 @@ class PaymentController extends Controller
         try {
             $items = Payment::find($id)
                         ->update($request->all());
+
+            $itemPayment = Payment::where('lending_id', $request->lending_id)->where('type', 'adelanto')->where('file_id', $request->file_id)->first();
+            if ($itemPayment) {
+                $itemPayment->update(['status' => $request->status]);
+            }
+
+
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
