@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/session"], function () 
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/zone"], function () {
-    Route::get('/list', [ZoneController::class, 'list'])->middleware('can:zone.list')->name('zone.list');
+    Route::get('/list', [ZoneController::class, 'list'])->name('zone.list');
     Route::post('/create', [ZoneController::class, 'create'])->middleware('can:zone.create')->name('zone.create');
     Route::put('/update/{id}', [ZoneController::class, 'update'])->middleware('can:zone.update')->name('zone.update');
     Route::delete('/delete/{id}', [ZoneController::class, 'delete'])->middleware('can:zone.delete')->name('zone.delete');
