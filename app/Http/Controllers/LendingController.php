@@ -63,7 +63,7 @@ class LendingController extends Controller
                                 // ->where('payments.amount', '=', NULL)
                                 ->whereIn('lendings.status', ['open', 'renovated', 'closed'])
                                 ->distinct()
-                                ->orderBy('lendings.order', 'asc')->get();
+                                ->orderBy('lendings.id', 'asc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
