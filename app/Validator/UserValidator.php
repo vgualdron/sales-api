@@ -14,14 +14,14 @@
 
         private function rules(){
             return[                             
-                'documentNumber' => 'required|min:5|max:15|unique:users,document_number,'.$this->data['id'],
+                'documentNumber' => 'required|min:1|max:15|unique:users,document_number,'.$this->data['id'],
                 'name' => 'required|min:5|max:50',
-                'phone' => 'required|min:5|max:15',
+                'phone' => 'required|min:1|max:15',
                 'yard' => 'nullable|exists:yards,id',
                 'roles.*' => 'nullable|exists:roles,id',
                 'active' => 'required|boolean',
                 'changeYard' => 'required|boolean',
-                'password' => 'nullable|min:5|max:20|required_with:confirmPassword',
+                'password' => 'nullable|min:1|max:20|required_with:confirmPassword',
                 'confirmPassword' => 'nullable|same:password|required_with:password'
             ];
         }
