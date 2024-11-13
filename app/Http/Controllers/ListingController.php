@@ -34,33 +34,8 @@ class ListingController extends Controller
             'message' => 'Succeed',
         ], JsonResponse::HTTP_OK);
     }
-
-    public function getMine(Request $request)
-    {
-        try {
-            $idUserSesion = $request->user()->id;
-            $items = Listing::with('userCollector')
-                                ->with('userLeader')
-                                ->with('userAuthorized')
-                                ->with('lendings')->get();
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => [
-                    [
-                        'text' => 'Se ha presentado un error',
-                        'detail' => $e->getMessage()
-                    ]
-                ]
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return response()->json([
-            'data' => $items,
-            'message' => 'Succeed',
-        ], JsonResponse::HTTP_OK);
-    }
     
-    public function getMineOld(Request $request)
+    public function getMine(Request $request)
     {
         try {
             $idUserSesion = $request->user()->id;
