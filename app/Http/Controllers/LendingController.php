@@ -52,7 +52,7 @@ class LendingController extends Controller
                                 'news.family2_reference_name',
                                 'news.family2_reference_phone',
                                 'news.guarantor_name',
-                                'news.guarantor_phone',
+                                'news.guarantor_phon',
                                 )
                                 ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
                                 ->leftjoin('news', 'news.id', 'lendings.new_id')
