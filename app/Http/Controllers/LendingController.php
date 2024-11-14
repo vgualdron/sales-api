@@ -62,9 +62,6 @@ class LendingController extends Controller
                                 // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
                                 // ->where('payments.amount', '=', NULL)
                                 ->whereIn('lendings.status', ['open', 'renovated', 'closed'])
-                                ->when('lendings.status' === 'renovated', function ($q) {
-                                    return $q->whereBetween('updated_at', [date('Y-m-d').'00:00:00', date('Y-m-d').'23:59:59']);
-                                })
                                 ->distinct()
                                 ->orderBy('lendings.id', 'asc')->get();
         } catch (Exception $e) {
