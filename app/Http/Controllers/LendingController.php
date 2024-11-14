@@ -64,7 +64,7 @@ class LendingController extends Controller
                                 ->whereIn('lendings.status', ['open', 'renovated', 'closed'])
                                 ->distinct()
                                 ->orderBy('lendings.id', 'asc')->get();
-            $items = DB::select('select distinct `lendings`.*,
+            /* $items = DB::select('select distinct `lendings`.*,
                 `news`.`family_reference_name`,
                 `news`.`family_reference_phone`,
                 `news`.`family2_reference_name`,
@@ -84,7 +84,7 @@ class LendingController extends Controller
                 'closed',
                 date('Y-m-d'.'00:00:00'),
                 date('Y-m-d'.'23:59:59')
-            ]);
+            ]); */
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
