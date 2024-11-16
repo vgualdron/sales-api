@@ -49,6 +49,8 @@ class LendingController extends Controller
             $status3 = 'closed';
             $startDate = date('Y-m-d'.'00:00:00');
             $endDate = date('Y-m-d'.'23:59:59');
+            echo $startDate;
+            echo $endDate;
             $idUserSesion = $request->user()->id;
            
             $items = Lending::select([
