@@ -333,6 +333,7 @@ class LendingController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
+            $action = $request->action;
             $newItem = [
                 'status' => $request->status,
             ];
@@ -364,7 +365,7 @@ class LendingController extends Controller
 
             $idList = $item->listing_id;
             $amount = $request->amount;
-            $amountNew = $request->amountNew;
+            $repayment = $request->repayment;
 
             $idUserExpense = 1;
 
@@ -374,22 +375,8 @@ class LendingController extends Controller
                 $idList = $result->id;
                 $idUserExpense = $result->user_id_collector;
             }
-            
-            if ($amountNew > 0) {
-                $amount = $amount + $amountNew;
 
-                $statusExpense = Expense::create([
-                    'date' => $currentDate,
-                    'amount' => $amountNew,
-                    'status' => 'creado',
-                    'description' => 'Egreso creado automaticamente cuando se renueva un credito por encima del valor que tenia prestado',
-                    'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
-                    'user_id' => $idUserExpense,
-                    'registered_by' => $idUserSesion,
-                ]);
-            }
-
-            $item = Lending::create([
+            $itemLending = Lending::create([
                 'nameDebtor' => $item->nameDebtor,
                 'address' => $item->address,
                 'phone' => $item->phone,
@@ -406,11 +393,27 @@ class LendingController extends Controller
                 'type' => 'R',
             ]);
 
-            $itemPayment = Payment::where('lending_id', $id)->where('type', 'adelanto')->where('status', 'aprobado')->first();
-            if ($itemPayment) {
-                $itemPayment->update([
-                    'lending_id' => $item->id,
+            if ($action == 'transfer') { // SI ES TIPO TRANSFERENCIA, CREAR EXPENSE
+                $statusExpense = Expense::create([
+                    'date' => $currentDate,
+                    'amount' => $repayment,
+                    'status' => 'aprobado',
+                    'description' => 'Egreso creado al renovar el credito, y se debe transferir dinero al cliente',
+                    'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
+                    'user_id' => $idUserExpense,
+                    'registered_by' => $idUserSesion,
+                ]);
+            }
+
+            if ($action == 'repayment') { // SI ES TIPO ADELANTO, CREAR PAYMENT
+                $statusPayment = Payment::create([
+                    'lending_id' => $itemLending->id,
+                    'date' => $currentDate,
+                    'amount' => $repayment,
+                    'status' => 'aprobado',
+                    'observation' => 'Pago creado al renovar el credito',
                     'type' => 'nequi',
+                    'date_transaction' => $currentDate,
                 ]);
             }
 
