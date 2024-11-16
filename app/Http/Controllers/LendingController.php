@@ -70,8 +70,8 @@ class LendingController extends Controller
                 })
                 ->orWhere(function ($subQuery) use ($idList, $status2, $status3, $startDate, $endDate) {
                     $subQuery->where('listing_id', $idList)
-                        ->whereIn('lendings.status', [$status2, $status3])
-                        ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
+                        ->whereIn('lendings.status', [$status2, $status3]);
+                        // ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
                 });
             })
             ->distinct()
