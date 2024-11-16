@@ -50,26 +50,7 @@ class LendingController extends Controller
             $startDate = date('Y-m-d'.'00:00:00');
             $endDate = date('Y-m-d'.'23:59:59');
             $idUserSesion = $request->user()->id;
-            /* $items = Lending::select(
-                                'lendings.*',
-                                'news.family_reference_name',
-                                'news.family_reference_phone',
-                                'news.family2_reference_name',
-                                'news.family2_reference_phone',
-                                'news.guarantor_name',
-                                'news.guarantor_phone',
-                                )
-                                ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
-                                ->leftjoin('news', 'news.id', 'lendings.new_id')
-                                ->with('payments')
-                                // ->with('file')
-                                ->where('listing_id', '=', $idList)
-                                // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
-                                // ->where('payments.amount', '=', NULL)
-                                ->whereIn('lendings.status', ['open', 'renovated', 'closed'])
-                                ->distinct()
-                                ->orderBy('lendings.id', 'asc')->get();
-*/                                
+           
             $items = Lending::select([
                 'lendings.*',
                 'news.family_reference_name',
@@ -96,27 +77,6 @@ class LendingController extends Controller
             ->distinct()
             ->orderBy('lendings.id', 'asc')
             ->get();
-            /* $items = DB::select('select distinct `lendings`.*,
-                `news`.`family_reference_name`,
-                `news`.`family_reference_phone`,
-                `news`.`family2_reference_name`,
-                `news`.`family2_reference_phone`,
-                `news`.`guarantor_name`,
-                `news`.`guarantor_phone`
-                from `lendings`
-                left join `payments` on `lendings`.`id` = `payments`.`lending_id` left join `news` on `news`.`id` = `lendings`.`new_id`
-                where (`listing_id` = ? and `lendings`.`status` in (?))
-                OR (`listing_id` = ? and `lendings`.`status` in (?, ?) and lendings.updated_at BETWEEN ? and ?)
-                order by `lendings`.`id` asc;',
-            [
-                $idList,
-                'open',
-                $idList,
-                'renovated',
-                'closed',
-                date('Y-m-d'.'00:00:00'),
-                date('Y-m-d'.'23:59:59')
-            ]); */
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
