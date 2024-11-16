@@ -44,6 +44,11 @@ class LendingController extends Controller
     public function getLendingsWithPaymentsCurrentDate(Request $request, $idList)
     {
         try {
+            $status1 = 'open';
+            $status2 = 'renovated';
+            $status3 = 'closed';
+            $startDate = date('Y-m-d'.'00:00:00');
+            $endDate = date('Y-m-d'.'23:59:59');
             $idUserSesion = $request->user()->id;
             /* $items = Lending::select(
                                 'lendings.*',
@@ -65,25 +70,30 @@ class LendingController extends Controller
                                 ->distinct()
                                 ->orderBy('lendings.id', 'asc')->get();
 */                                
-            $items = Lending::select(
-                                'lendings.*',
-                                'news.family_reference_name',
-                                'news.family_reference_phone',
-                                'news.family2_reference_name',
-                                'news.family2_reference_phone',
-                                'news.guarantor_name',
-                                'news.guarantor_phone',
-                                )
-                                ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
-                                ->leftjoin('news', 'news.id', 'lendings.new_id')
-                                ->with('payments')
-                                // ->with('file')
-                                ->where('listing_id', '=', $idList)
-                                // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
-                                // ->where('payments.amount', '=', NULL)
-                                ->whereIn('lendings.status', ['open', 'renovated', 'closed'])
-                                ->distinct()
-                                ->orderBy('lendings.id', 'asc')->get();
+            $items = Lending::select([
+                'lendings.*',
+                'news.family_reference_name',
+                'news.family_reference_phone',
+                'news.family2_reference_name',
+                'news.family2_reference_phone',
+                'news.guarantor_name',
+                'news.guarantor_phone'
+            ])
+            ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
+            ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
+            ->where(function ($query) use ($idList, $status1, $idList, $status2, $status3, $startDate, $endDate) {
+                $query->where(function ($subQuery) use ($idList, $status1) {
+                    $subQuery->where('listing_id', $idList)
+                        ->whereIn('lendings.status', [$status1]);
+                })
+                ->orWhere(function ($subQuery) use ($idList, $status2, $status3, $startDate, $endDate) {
+                    $subQuery->where('listing_id', $idList)
+                        ->whereIn('lendings.status', [$status2, $status3])
+                        ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
+                });
+            })
+            ->orderBy('lendings.id', 'asc')
+            ->get();
             /* $items = DB::select('select distinct `lendings`.*,
                 `news`.`family_reference_name`,
                 `news`.`family_reference_phone`,
