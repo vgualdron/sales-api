@@ -92,6 +92,7 @@ class LendingController extends Controller
                         ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
                 });
             })
+            ->distinct()
             ->orderBy('lendings.id', 'asc')
             ->get();
             /* $items = DB::select('select distinct `lendings`.*,
