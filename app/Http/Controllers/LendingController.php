@@ -45,6 +45,26 @@ class LendingController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
+            /* $items = Lending::select(
+                                'lendings.*',
+                                'news.family_reference_name',
+                                'news.family_reference_phone',
+                                'news.family2_reference_name',
+                                'news.family2_reference_phone',
+                                'news.guarantor_name',
+                                'news.guarantor_phone',
+                                )
+                                ->leftjoin('payments', 'lendings.id', 'payments.lending_id')
+                                ->leftjoin('news', 'news.id', 'lendings.new_id')
+                                ->with('payments')
+                                // ->with('file')
+                                ->where('listing_id', '=', $idList)
+                                // ->where('payments.date', '<=', date("Y-m-d h:i:s"))
+                                // ->where('payments.amount', '=', NULL)
+                                ->whereIn('lendings.status', ['open', 'renovated', 'closed'])
+                                ->distinct()
+                                ->orderBy('lendings.id', 'asc')->get();
+*/                                
             $items = Lending::select(
                                 'lendings.*',
                                 'news.family_reference_name',
