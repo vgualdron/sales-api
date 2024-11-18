@@ -116,13 +116,12 @@
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
                 } */
+                $message = 'Nuevo registrado con éxito';
                 DB::transaction(function () use ($novel) {
                     $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
                     echo($new);
                     if ($new) {
-                        return response()->json([
-                            'message' => 'Ya existe un registro ed cliente con el número de telefono ingresado.'
-                        ], Response::HTTP_BAD_REQUEST);
+                        $message ='Ya existe un registro ed cliente con el número de telefono ingresado.';
                     }
                     $sql = $this->novel::create([
                         'document_number' => null,
@@ -140,7 +139,7 @@
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Nuevo registrado con éxito',
+                            'text' => $message,
                             'detail' => null
                         ]
                     ]
