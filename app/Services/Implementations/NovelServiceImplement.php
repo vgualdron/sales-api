@@ -117,7 +117,7 @@
                     ], Response::HTTP_BAD_REQUEST);
                 } */
                 DB::transaction(function () use ($novel) {
-                    $new = $this->novel->from('news as n')->select('news.*')->where('n.phone', $novel['phone'])->first();
+                    $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
                     if ($new) {
                         return response()->json([
                             'message' => 'Ya existe un registro ed cliente con el número de telefono ingresado.'
