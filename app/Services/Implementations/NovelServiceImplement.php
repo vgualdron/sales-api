@@ -119,8 +119,8 @@
                 $message = 'Nuevo registrado con éxito';
                 DB::transaction(function () use ($novel) {
                     $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
-                    echo($new);
-                    if ($new) {
+                    
+                    if (!is_null($new)) {
                         $message ='Ya existe un registro ed cliente con el número de telefono ingresado.';
                     }
                     $sql = $this->novel::create([
