@@ -117,6 +117,12 @@
                     ], Response::HTTP_BAD_REQUEST);
                 } */
                 DB::transaction(function () use ($novel) {
+                    $new = $this->novel->from('news as n')->select('news.*')->where('n.phone', $novel['phone'])->first();
+                    if ($new) {
+                        return response()->json([
+                            'message' => 'Ya existe un registro ed cliente con el número de telefono ingresado.'
+                        ], Response::HTTP_BAD_REQUEST);
+                    }
                     $sql = $this->novel::create([
                         'document_number' => null,
                         'name' => $novel['name'],
