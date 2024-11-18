@@ -119,9 +119,10 @@
                 $message = 'Nuevo registrado con éxito';
                 DB::transaction(function () use ($novel) {
                     $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
-                    
+                    var_dump($new); // Inspecciona exactamente lo que devuelve $new
+                    exit;
                     if (!is_null($new)) {
-                        $message ='Ya existe un registro ed cliente con el número de telefono ingresado.';
+                        $message ='Ya existe un registro de cliente con el número de telefono ingresado.';
                     }
                     $sql = $this->novel::create([
                         'document_number' => null,
