@@ -397,7 +397,7 @@ class LendingController extends Controller
                 $statusExpense = Expense::create([
                     'date' => $currentDate,
                     'amount' => $repayment,
-                    'status' => 'aprobado',
+                    'status' => 'creado',
                     'description' => 'Egreso creado al renovar el credito, y se debe transferir dinero al cliente',
                     'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
                     'user_id' => $idUserExpense,
