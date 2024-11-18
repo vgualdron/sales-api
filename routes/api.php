@@ -197,3 +197,11 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/area"], function () {
 Route::group(['middleware' => 'auth:api' , "prefix" => "/item"], function () {
     Route::get('area/{id}', [ItemController::class, 'index'])->name('item.list');
 });
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/question"], function () {
+    Route::get('/', [QuestionController::class, 'list'])->name('question.list');
+    Route::post('/', [QuestionController::class, 'create'])->name('question.create');
+    Route::put('/{id}', [QuestionController::class, 'update'])->name('question.update');
+    Route::delete('/{id}', [QuestionController::class, 'delete'])->name('question.delete');
+    Route::get('/{id}', [QuestionController::class, 'get'])->name('question.get');
+});
