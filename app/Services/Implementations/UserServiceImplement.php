@@ -134,7 +134,6 @@
                                 'u.document_number as documentNumber',
                                 'u.name as name',
                                 'u.phone as phone',
-                                'r.name as role',
                                 'u.push_token as pushToken',
                                 'u.latitude',
                                 'u.longitude',
@@ -148,8 +147,6 @@
                             ->leftJoin('yards as y', 'u.yard', 'y.id')
                             ->leftJoin('zones as z', 'y.zone', 'z.id')
                             ->leftJoin('areas as a', 'u.area', 'a.id')
-                            ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
-                            ->join('roles as r', 'mhr.role_id', 'r.id')
                             ->where('a.id', $area)
                             ->where('u.active', 1)
                            
