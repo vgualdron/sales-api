@@ -126,6 +126,56 @@
             }
         }
 
+        function listByArea(int $area){
+            try {
+                $sql = $this->user->from('users as u')
+                            ->select(
+                                'u.id',
+                                'u.document_number as documentNumber',
+                                'u.name as name',
+                                'u.phone as phone',
+                                'r.name as role',
+                                'u.push_token as pushToken',
+                                'u.latitude',
+                                'u.longitude',
+                                'u.date_location',
+                                'u.area as area',
+                                'a.name as areaName',
+                                DB::Raw('IF(u.active = 1, "ACTIVO", "NO ACTIVO") as status'),
+                                DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin sector asignado") as yard'),
+                                DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad asignada") as zone')
+                            )
+                            ->leftJoin('yards as y', 'u.yard', 'y.id')
+                            ->leftJoin('zones as z', 'y.zone', 'z.id')
+                            ->leftJoin('areas as a', 'u.area', 'a.id')
+                            ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
+                            ->join('roles as r', 'mhr.role_id', 'r.id')
+                            ->where('a.id', $area)
+                            ->where('u.active', 1)
+                           
+                            ->get();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'data' => []
+                    ], Response::HTTP_OK);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
         function create(array $user){
             try {
                 $validation = $this->validate($this->validator, $user, null, 'registrar', 'usuario', null);

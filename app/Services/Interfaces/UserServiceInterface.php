@@ -5,6 +5,7 @@
     {
         function list(int $displayAll);
         function listByRoleName(int $displayAll, string $name, int $city);
+        function listByArea(int $area);
         function get(int $id);
         function create(array $user);
         function update(array $user, int $id);

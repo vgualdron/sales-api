@@ -23,6 +23,10 @@ class UserController extends Controller
         return $this->service->listByRoleName($displayAll, $name, $city);
     }
 
+    function listByArea(int $area){
+        return $this->service->listByArea($area);
+    }
+
     function create(){
         return $this->service->create($this->request->all());
     }
