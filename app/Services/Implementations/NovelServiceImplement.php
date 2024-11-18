@@ -121,7 +121,7 @@
                 if ($new) {
                     $message ='Ya existe un registro de cliente con el número de telefono ingresado.';
                 }
-                DB::transaction(function () use ($novel) {
+                DB::transaction(function () use ($novel, $new) {
                     $sql = $this->novel::create([
                         'document_number' => null,
                         'name' => $novel['name'],
