@@ -118,7 +118,7 @@
                 } */
                 $message = 'Nuevo registrado con éxito';
                 $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
-                var_dump($new); // Inspecciona exactamente lo que devuelve $new
+                echo($new); // Inspecciona exactamente lo que devuelve $new
                 exit;
                 if (!is_null($new)) {
                     $message ='Ya existe un registro de cliente con el número de telefono ingresado.';
