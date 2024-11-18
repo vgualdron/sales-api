@@ -141,7 +141,7 @@
                             'model_name' => 'news',
                             'type' => 'nuevos',
                             'status' => 'creado',
-                            'observation' => 'El numero de telefono'.$novel['phone'].' ya está registrado para otro cliente llamado'.$new['name'],
+                            'observation' => 'El numero de telefono'.$novel['phone'].' ya está registrado para otro cliente llamado: '.$new['name'],
                             'area_id' => 3,
                             'registered_by' => $novel['registered_by'],
                         ]);
