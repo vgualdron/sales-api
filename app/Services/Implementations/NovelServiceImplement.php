@@ -120,7 +120,7 @@
                 $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
                 echo($new); // Inspecciona exactamente lo que devuelve $new
                 exit;
-                if (!is_null($new)) {
+                if ($new) {
                     $message ='Ya existe un registro de cliente con el número de telefono ingresado.';
                 }
                 DB::transaction(function () use ($novel) {
