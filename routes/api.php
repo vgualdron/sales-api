@@ -22,6 +22,7 @@ use App\Http\Controllers\{
                         ExpenseController,
                         AreaController,
                         ItemController,
+                        QuestionController,
                     };
 
 /*
