@@ -323,7 +323,7 @@
                     ->where('q.model_id', $question['model_id'])
                     ->where('q.model_name', $question['model_name'])
                     ->where('q.type', $question['type'])
-                    ->where('q.area_id', $question['area_d'])
+                    ->where('q.area_id', $question['area_id'])
                     ->first();
                 if(!empty($sql)) {
                     return response()->json([
