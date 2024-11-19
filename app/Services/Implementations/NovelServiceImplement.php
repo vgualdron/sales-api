@@ -120,7 +120,7 @@
                 $message = 'Nuevo registrado con éxito';
                 $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
 
-                DB::transaction(function () use ($novel, $new) {
+                DB::transaction(function () use ($novel, $new, $message) {
                     $sql = $this->novel::create([
                         'document_number' => null,
                         'name' => $novel['name'],
@@ -141,7 +141,7 @@
                             'model_name' => 'news',
                             'type' => 'nuevo',
                             'status' => 'pendiente',
-                            'observation' => 'El numero de telefono '.$novel['phone'].' ya está registrado para otro cliente llamado: '.$new['name'].' con numero de documento: '.$new['document_number'],
+                            'observation' => 'El numero de telefono '.$novel['phone'].' ya está registrado para otro cliente llamado: '.$new['name'].', con numero de documento: '.$new['document_number'],
                             'area_id' => 3,
                             'registered_by' => $novel['registered_by'],
                         ]);
