@@ -331,13 +331,8 @@
                     ], Response::HTTP_OK);
                 } else {
                     return response()->json([
-                        'message' => [
-                            [
-                                'text' => 'El registro no existe',
-                                'detail' => 'por favor recargue la página'
-                            ]
-                        ]
-                    ], Response::HTTP_NOT_FOUND);
+                        'data' => null
+                    ], Response::HTTP_OK);
                 }
             } catch (\Throwable $e) {
                 return response()->json([
