@@ -313,5 +313,43 @@
             }
         }
 
+        function getStatus(array $question){
+            try {
+                $sql = $this->expense->from('questions as q')
+                    ->select(
+                        'q.*',
+                    )
+                    // ->leftJoin('yards as y', 'n.sector', 'y.id')
+                    ->where('q.model_id', $question['model_id'])
+                    ->where('q.model_name', $question['model_name'])
+                    ->where('q.type', $question['type'])
+                    ->where('q.area_id', $question['area_d'])
+                    ->first();
+                if(!empty($sql)) {
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'El registro no existe',
+                                'detail' => 'por favor recargue la página'
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al buscar',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
     }
 ?>

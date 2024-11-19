@@ -204,4 +204,5 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/question"], function ()
     Route::put('/{id}', [QuestionController::class, 'update'])->name('question.update');
     Route::delete('/{id}', [QuestionController::class, 'delete'])->name('question.delete');
     Route::get('/{id}', [QuestionController::class, 'get'])->name('question.get');
+    Route::post('/get-status', [QuestionController::class, 'getStatus'])->name('question.getStatus');
 });

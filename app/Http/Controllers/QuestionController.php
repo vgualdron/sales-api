@@ -38,4 +38,12 @@ class QuestionController extends Controller
     function get(int $id){
         return $this->service->get($id);
     }
+
+    function getStatus(){
+        $item = $this->request->all();
+        $userSesion = $this->request->user();
+        $idUserSesion = $userSesion->id;
+        $item["registered_by"] = $idUserSesion;
+        return $this->service->getStatus($item);
+    }
 }
