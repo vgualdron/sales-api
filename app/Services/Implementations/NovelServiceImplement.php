@@ -139,7 +139,7 @@
                         $question = Question::create([
                             'model_id' => $sql->id,
                             'model_name' => 'news',
-                            'type' => 'nuevos',
+                            'type' => 'nuevo',
                             'status' => 'creado',
                             'observation' => 'El numero de telefono '.$novel['phone'].' ya está registrado para otro cliente llamado: '.$new['name'],
                             'area_id' => 3,
