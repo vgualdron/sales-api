@@ -120,7 +120,7 @@
                 $message = 'Nuevo registrado con éxito';
                 $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
 
-                DB::transaction(function () use ($novel, $new, $message) {
+                DB::transaction(function () use ($novel, $new, &$message) {
                     $sql = $this->novel::create([
                         'document_number' => null,
                         'name' => $novel['name'],
