@@ -96,7 +96,7 @@
             }
         }
 
-        function update(array $expense, int $id){
+        function update(array $question, int $id){
             try {
                 /* $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
                 if ($validation['success'] === false) {
@@ -315,7 +315,7 @@
 
         function getStatus(array $question){
             try {
-                $sql = $this->expense->from('questions as q')
+                $sql = $this->question->from('questions as q')
                     ->select(
                         'q.*',
                     )
