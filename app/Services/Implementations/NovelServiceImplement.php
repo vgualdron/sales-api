@@ -140,7 +140,7 @@
                             'model_id' => $sql->id,
                             'model_name' => 'news',
                             'type' => 'nuevo',
-                            'status' => 'creado',
+                            'status' => 'pendiente',
                             'observation' => 'El numero de telefono '.$novel['phone'].' ya está registrado para otro cliente llamado: '.$new['name'],
                             'area_id' => 3,
                             'registered_by' => $novel['registered_by'],
