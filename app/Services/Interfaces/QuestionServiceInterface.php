@@ -1,7 +1,7 @@
 <?php
     namespace App\Services\Interfaces;
     
-    interface QuestonServiceInterface
+    interface QuestionServiceInterface
     {
         function list(string $status);
         function create(array $question);
