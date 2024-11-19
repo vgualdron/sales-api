@@ -135,7 +135,7 @@
                     ]);
 
                     if ($new) {
-                        $message ='Ya existe un registro de cliente con el número de telefono ingresado.';
+                        $message = 'Ya existe un registro de cliente con el número de telefono ingresado.';
                         $question = Question::create([
                             'model_id' => $sql->id,
                             'model_name' => 'news',
