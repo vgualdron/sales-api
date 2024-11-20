@@ -58,10 +58,14 @@ class LendingController extends Controller
                 'news.family2_reference_name',
                 'news.family2_reference_phone',
                 'news.guarantor_name',
-                'news.guarantor_phone'
+                'news.guarantor_phone',
+                'expenses.name as expense_name',
+                'expenses.url as expense_url',
+                'expenses.status as expense_status',
             ])
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
+            ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
             ->with('payments')
             ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
                 $query->where(function ($subQuery) use ($idList, $status1) {
