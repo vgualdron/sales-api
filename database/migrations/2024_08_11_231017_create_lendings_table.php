@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('order')->nullable();
             $table->string('status');
             $table->unsignedBigInteger('listing_id');
+            $table->unsignedBigInteger('expense_id');
             $table->unsignedBigInteger('new_id')->nullable();
             $table->string('type')->default('normal');
             $table->boolean('has_double_interest')->default(false);

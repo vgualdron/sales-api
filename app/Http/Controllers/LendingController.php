@@ -376,6 +376,19 @@ class LendingController extends Controller
                 $idUserExpense = $result->user_id_collector;
             }
 
+            $itemExpense = null;
+            if ($action == 'transfer') { // SI ES TIPO TRANSFERENCIA, CREAR EXPENSE
+                $itemExpense = Expense::create([
+                    'date' => $currentDate,
+                    'amount' => $repayment,
+                    'status' => 'creado',
+                    'description' => 'Egreso creado al renovar el credito, y se debe transferir dinero al cliente',
+                    'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
+                    'user_id' => $idUserExpense,
+                    'registered_by' => $idUserSesion,
+                ]);
+            }
+
             $itemLending = Lending::create([
                 'nameDebtor' => $item->nameDebtor,
                 'address' => $item->address,
@@ -388,25 +401,14 @@ class LendingController extends Controller
                 'period' => $period,
                 'order' => $item->order,
                 'status' => 'open',
+                'expense_id' => $itemExpense->id,
                 'listing_id' => $idList,
                 'new_id' => $item->new_id,
                 'type' => 'R',
             ]);
 
-            if ($action == 'transfer') { // SI ES TIPO TRANSFERENCIA, CREAR EXPENSE
-                $statusExpense = Expense::create([
-                    'date' => $currentDate,
-                    'amount' => $repayment,
-                    'status' => 'creado',
-                    'description' => 'Egreso creado al renovar el credito, y se debe transferir dinero al cliente',
-                    'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
-                    'user_id' => $idUserExpense,
-                    'registered_by' => $idUserSesion,
-                ]);
-            }
-
             if ($action == 'repayment') { // SI ES TIPO ADELANTO, CREAR PAYMENT
-                $statusPayment = Payment::create([
+                $itemPayment = Payment::create([
                     'lending_id' => $itemLending->id,
                     'date' => $currentDate,
                     'amount' => $repayment,

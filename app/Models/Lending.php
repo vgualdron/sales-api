@@ -30,6 +30,7 @@ class Lending extends Authenticatable
         'order',
         'status',
         'listing_id',
+        'expense_id',
         'new_id',
         'created_at',
         'type',
