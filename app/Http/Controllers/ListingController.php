@@ -41,14 +41,17 @@ class ListingController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            $items = Listing::where('user_id_collector', '=', $idUserSesion)
-                        ->where('status', '=', 'activa')
-                        ->orWhere('user_id_leader', '=', $idUserSesion)
-                        ->orWhere('user_id_authorized', '=', $idUserSesion)
-                        ->with('userCollector')
-                        ->with('userLeader')
-                        ->with('userAuthorized')
-                        ->get();
+            $items = Listing::where('status', '=', 'activa')
+                            ->where(function ($query) use ($idUserSesion) {
+                                $query->where('user_id_collector', '=', $idUserSesion)
+                                    ->orWhere('user_id_leader', '=', $idUserSesion)
+                                    ->orWhere('user_id_authorized', '=', $idUserSesion);
+                            })
+                            ->with('userCollector')
+                            ->with('userLeader')
+                            ->with('userAuthorized')
+                            ->get();
+
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
