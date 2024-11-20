@@ -68,7 +68,7 @@ class LendingController extends Controller
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
             // ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
             ->leftJoin('files', function ($join) {
-                $join->on('files.id', '=', 'lendings.expense_id')
+                $join->on('files.model_id', '=', 'lendings.expense_id')
                      ->where('files.model_name', '=', 'expenses'); // Segunda condición en el join
             })
             // ->leftJoin('files', 'files.id', '=', 'expenses.file_id')
