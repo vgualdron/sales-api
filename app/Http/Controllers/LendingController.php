@@ -80,13 +80,13 @@ class LendingController extends Controller
                         ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
                 });
             })
-            ->where(function ($query) {
+            /* ->where(function ($query) {
                 $query->whereNull('lendings.expense_id') // Si expense_id es null, no se aplica la condición adicional
                     ->orWhere(function ($subQuery) {
                         $subQuery->whereNotNull('lendings.expense_id') // Si expense_id no es null, se verifica files.id
                             ->whereNotNull('files.id');
                     });
-            })
+            }) */
             ->distinct()
             ->orderBy('lendings.id', 'asc')
             ->get();
