@@ -418,7 +418,7 @@ class LendingController extends Controller
                 'period' => $period,
                 'order' => $item->order,
                 'status' => 'open',
-                'expense_id' => $itemExpense->id,
+                'expense_id' => $itemExpense ? $itemExpense->id : null,
                 'listing_id' => $idList,
                 'new_id' => $item->new_id,
                 'type' => 'R',
