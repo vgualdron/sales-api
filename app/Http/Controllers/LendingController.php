@@ -60,6 +60,7 @@ class LendingController extends Controller
                 'news.guarantor_name',
                 'news.guarantor_phone',
                 'expenses.amount as expense_amount',
+                'expenses.file_id as file_id',
                 'files.name as file_name',
                 'files.url as file_url',
                 'files.status as file_status',
