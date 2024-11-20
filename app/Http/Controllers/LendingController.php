@@ -67,7 +67,7 @@ class LendingController extends Controller
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
             ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
-            ->leftJoin('files', 'file.id', '=', 'expense.file_id')
+            ->leftJoin('files', 'files.id', '=', 'expenses.file_id')
             ->with('payments')
             ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
                 $query->where(function ($subQuery) use ($idList, $status1) {
