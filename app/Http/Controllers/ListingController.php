@@ -17,7 +17,9 @@ class ListingController extends Controller
             $items = Listing::with('userCollector')
                                 ->with('userLeader')
                                 ->with('userAuthorized')
-                                ->with('lendings')->get();
+                                ->with('lendings')
+                                ->where('status', '=', 'activa')
+                                ->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
