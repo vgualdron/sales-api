@@ -71,7 +71,7 @@ class LendingController extends Controller
                 $join->on('files.id', '=', 'lendings.expense_id')
                      ->where('files.model_name', '=', 'expenses'); // Segunda condición en el join
             })
-            ->leftJoin('files', 'files.id', '=', 'expenses.file_id')
+            // ->leftJoin('files', 'files.id', '=', 'expenses.file_id')
             ->with('payments')
             ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
                 $query->where(function ($subQuery) use ($idList, $status1) {
