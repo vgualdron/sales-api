@@ -184,7 +184,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/report"], function () {
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/expense"], function () {
-    Route::get('/list/{status}', [ExpenseController::class, 'list'])->name('expense.list');
+    Route::get('/{status}', [ExpenseController::class, 'list'])->name('expense.list');
     Route::get('/item/{item}', [ExpenseController::class, 'listByItem'])->name('expense.list');
     Route::post('/', [ExpenseController::class, 'create'])->name('expense.create');
     Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
