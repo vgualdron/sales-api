@@ -207,7 +207,6 @@ class ListingController extends Controller
                 'itemLending' => $itemLending,
                 'itemList' => $itemList,
             ],
-            'message' => 'Succeed',
         ], JsonResponse::HTTP_OK);
     }
 }
