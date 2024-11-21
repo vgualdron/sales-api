@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\Lending;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
