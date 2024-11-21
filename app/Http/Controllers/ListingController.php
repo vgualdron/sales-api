@@ -183,7 +183,7 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
-            $itemLending = Lending::find($id);
+            $itemLending = Lending::find(10);
 
             $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
             $currentDate = date("Y-m-d H:i:s");
