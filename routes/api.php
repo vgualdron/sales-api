@@ -157,6 +157,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () 
     Route::delete('/{id}', [LendingController::class, 'destroy']);
     Route::post('/renovate/{id}', [LendingController::class, 'renovate']);
     Route::get('/history/{id}', [LendingController::class, 'history']);
+    Route::get('/delivery/{listing}/date/{date}', [LendingController::class, 'getDelivery']);
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/payment"], function () {
