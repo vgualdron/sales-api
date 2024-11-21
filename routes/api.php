@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/permission"], function 
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/yard"], function () {
     Route::get('/list/{yard}/{displayAll}', [YardController::class, 'list'])->middleware('can:yard.list')->name('yard.list');
-    Route::get('/list-by-zone/{zone}/{displayAll}', [YardController::class, 'listByZone'])->middleware('can:yard.list')->name('yard.list');
+    Route::get('/list-by-zone/{zone}/{displayAll}', [YardController::class, 'listByZone'])->name('yard.list');
     Route::post('/create', [YardController::class, 'create'])->middleware('can:yard.create')->name('yard.create');
     Route::put('/update/{id}', [YardController::class, 'update'])->middleware('can:yard.update')->name('yard.update');
     Route::delete('/delete/{id}', [YardController::class, 'delete'])->middleware('can:yard.delete')->name('yard.delete');
