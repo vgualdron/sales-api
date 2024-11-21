@@ -64,6 +64,45 @@
             }
         }
 
+        function listByItem(int $item) {
+            try {
+                $sql = $this->expense->from('expenses as e')
+                    ->select(
+                        'e.*',
+                        'a.id as area_id',
+                        'a.name as area_name',
+                        'i.id as item_id',
+                        'i.name as item_name',
+                        'u.name as user_name',
+                    )
+                    ->leftJoin('items as i', 'e.item_id', 'i.id')
+                    ->leftJoin('areas as a', 'i.area_id', 'a.id')
+                    ->leftJoin('users as u', 'e.user_id', 'u.id')
+                    ->whereIn('e.item_id', $item)
+                    ->orderBy('e.date', 'ASC')
+                    ->get();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'data' => []
+                    ], Response::HTTP_OK);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los registros',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
         function create(array $expense){
             try {
                 DB::transaction(function () use ($expense) {
