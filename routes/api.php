@@ -144,6 +144,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/listing"], function () 
     Route::post('/', [ListingController::class, 'store']);
     Route::put('/{id}', [ListingController::class, 'update']);
     Route::delete('/{id}', [ListingController::class, 'destroy']);
+    Route::get('/delivery/listing/{listing}/date/{date}', [ListingController::class, 'getDelivery']);
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () {
@@ -157,7 +158,6 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () 
     Route::delete('/{id}', [LendingController::class, 'destroy']);
     Route::post('/renovate/{id}', [LendingController::class, 'renovate']);
     Route::get('/history/{id}', [LendingController::class, 'history']);
-    Route::get('/delivery/list/{listing}/date/{date}', [LendingController::class, 'getDelivery']);
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/payment"], function () {

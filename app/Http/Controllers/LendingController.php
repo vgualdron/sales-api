@@ -481,37 +481,4 @@ class LendingController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    public function getDelivery(Request $request, $idList, $date)
-    {
-        try {
-            $idUserSesion = $request->user()->id;
-
-            $itemLending = Lending::find($id);
-
-            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
-            $currentDate = date("Y-m-d H:i:s");
-      
-            $itemList = Listing::find($idList);
-
-
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => [
-                    [
-                        'text' => 'Se ha presentado un error',
-                        'detail' => $e->getMessage()
-                    ]
-                ]
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return response()->json([
-            'data' => [
-                'itemLending' => $itemLending,
-                'itemList' => $itemList,
-            ],
-            'message' => 'Succeed',
-        ], JsonResponse::HTTP_OK);
-    }
-
 }
