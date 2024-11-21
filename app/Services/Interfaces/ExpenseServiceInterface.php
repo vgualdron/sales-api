@@ -3,7 +3,7 @@
     
     interface ExpenseServiceInterface
     {
-        function list(string $status);
+        function list(string $status, string $items);
         function listByItem(int $item);
         function create(array $expense);
         function update(array $expense, int $id);

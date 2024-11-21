@@ -22,9 +22,10 @@
             $this->profileValidator = $profileValidator;
         }    
 
-        function list(string $status) {
+        function list(string $status, string $items) {
             try {
                 $explodeStatus = explode(',', $status);
+                $explodeItems = explode(',', $items);
                 $sql = $this->expense->from('expenses as e')
                     ->select(
                         'e.*',
@@ -39,6 +40,9 @@
                     ->leftJoin('users as u', 'e.user_id', 'u.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('e.status', $explodeStatus);
+                    })
+                    ->when($items !== 'all', function ($q) use ($explodeItems) {
+                        return $q->whereIn('e.item_id', $explodeItems);
                     })
                     ->orderBy('e.date', 'ASC')
                     ->get();
