@@ -131,7 +131,7 @@
                         'occupation' => $novel['occupation'],
                         'observation' => $novel['observation'],
                         'user_send' => $novel['userSend'],
-                        'status' => $new ? 'pendiente' : 'creado',
+                        'status' => $new ? 'pendiente' : $novel['status'],
                     ]);
 
                     if ($new) {
