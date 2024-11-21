@@ -78,7 +78,7 @@
                     ->leftJoin('items as i', 'e.item_id', 'i.id')
                     ->leftJoin('areas as a', 'i.area_id', 'a.id')
                     ->leftJoin('users as u', 'e.user_id', 'u.id')
-                    ->whereIn('e.item_id', $item)
+                    ->where('e.item_id', $item)
                     ->orderBy('e.date', 'ASC')
                     ->get();
 
