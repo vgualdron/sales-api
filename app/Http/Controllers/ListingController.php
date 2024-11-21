@@ -180,6 +180,7 @@ class ListingController extends Controller
 
     public function getDelivery(Request $request, $idList, $date)
     {
+        $data = null;
         try {
             $idUserSesion = $request->user()->id;
 
@@ -190,6 +191,11 @@ class ListingController extends Controller
       
             $itemList = Listing::find($idList);
 
+            $data = [
+                'itemLending' => $itemLending,
+                'itemList' => $itemList,
+                'date' => $date,
+            ];
 
         } catch (Exception $e) {
             return response()->json([
@@ -203,10 +209,7 @@ class ListingController extends Controller
         }
 
         return response()->json([
-            'data' => [
-                'itemLending' => $itemLending,
-                'itemList' => $itemList,
-            ],
+            'data' => $data,
         ], JsonResponse::HTTP_OK);
     }
 }
