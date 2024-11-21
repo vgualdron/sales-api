@@ -42,7 +42,7 @@
                         return $q->whereIn('e.status', $explodeStatus);
                     })
                     ->when($items !== 'all', function ($q) use ($explodeItems) {
-                        return $q->whereIn('e.item_id', $explodeItems);
+                        return $q->whereNotIn('e.item_id', $explodeItems);
                     })
                     ->orderBy('e.date', 'ASC')
                     ->get();
