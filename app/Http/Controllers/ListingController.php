@@ -193,7 +193,7 @@ class ListingController extends Controller
             $itemList = Listing::find($idList);
 
             $itemTransfer = DB::select("SELECT
-                COUNT(*) as count,
+                COUNT(*) as amount,
                 SUM(pay.amount) as total
                 FROM payments pay
                 JOIN lendings len ON (len.id = pay.lending_id)
