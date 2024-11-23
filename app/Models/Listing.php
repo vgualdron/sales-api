@@ -23,6 +23,7 @@ class Listing extends Authenticatable
         'user_id_leader',
         'user_id_authorized',
         'user_id',
+        'city_id',
         'status'
     ];
     

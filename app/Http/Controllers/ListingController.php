@@ -104,7 +104,8 @@ class ListingController extends Controller
                 'user_id_collector' => $request->user_id_collector,
                 'user_id_leader' => $request->user_id_leader,
                 'user_id_authorized' => $request->user_id_authorized,
-                'user_id' => $idUserSesion
+                'user_id' => $idUserSesion,
+                'city_id' => $request->city_id,
             ]);
             
         } catch (Exception $e) {
