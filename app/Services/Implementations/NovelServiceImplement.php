@@ -143,6 +143,8 @@
                         'observation' => $novel['observation'],
                         'user_send' => $novel['userSend'],
                         'status' => $new ? 'pendiente' : $novel['status'],
+                        'account_type' => 'nequi',
+                        'account_number' => $novel['phone'],
                     ]);
 
                     if ($new) {
