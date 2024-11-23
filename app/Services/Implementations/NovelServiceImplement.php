@@ -74,6 +74,17 @@
                         'n.extra_reference',
                         'n.period',
                         'n.quantity',
+                        'n.visit_end_date',
+                        'n.account_type',
+                        'n.account_number',
+                        'n.account_type_third',
+                        'n.account_number_third',
+                        'n.account_third_authorized',
+                        'n.has_letter',
+                        'n.who_received_letter',
+                        'n.date_received_letter',
+                        'n.who_returned_letter',
+                        'n.date_returned_letter',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
