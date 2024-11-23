@@ -213,7 +213,7 @@ class LendingController extends Controller
                     COALESCE(SUM(len.amount), 0) AS capital
                     FROM listings lis
                     LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
-                    WHERE lis.user_collector =".$userSend."
+                    WHERE lis.user_id_collector =".$userSend."
                     GROUP BY lis.id
                     ORDER BY COALESCE(SUM(len.amount), 0) ASC;");
             }
