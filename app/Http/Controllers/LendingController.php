@@ -170,6 +170,8 @@ class LendingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
             $period = $request->period;
+            $userSend = $request->user_send;
+            $city = $request->city;
             $countDays = 1;
             $amountFees = 1;
             
@@ -199,8 +201,22 @@ class LendingController extends Controller
                                 COALESCE(SUM(len.amount), 0) AS capital
                                 FROM listings lis
                                 LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
+                                WHERE lis.city_id =".$city."
                                 GROUP BY lis.id
                                 ORDER BY COALESCE(SUM(len.amount), 0) ASC;");
+            
+            if ($userSend) {
+                $result = DB::select("SELECT
+                    lis.id as id,
+                    lis.name as name,
+                    lis.user_id_collector as user_id,
+                    COALESCE(SUM(len.amount), 0) AS capital
+                    FROM listings lis
+                    LEFT JOIN lendings as len ON lis.id = len.listing_id AND len.status = 'open'
+                    WHERE lis.user_collector =".$userSend."
+                    GROUP BY lis.id
+                    ORDER BY COALESCE(SUM(len.amount), 0) ASC;");
+            }
 
             if (!empty($result)) {
                 $firstRow = $result[0];
