@@ -58,5 +58,16 @@ class Novel extends Model
         'approved_date',
         'made_by',
         'visit_start_date',
+        'visit_end_date',
+        'account_type',
+        'account_number',
+        'account_type_third',
+        'account_number_third',
+        'account_third_authorized',
+        'has_letter',
+        'who_received_letter',
+        'date_received_letter',
+        'who_returned_letter',
+        'date_returned_letter',
     ];
 }
