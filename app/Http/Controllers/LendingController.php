@@ -63,15 +63,22 @@ class LendingController extends Controller
                 'files.name as file_name',
                 'files.url as file_url',
                 'files.status as file_status',
+                'f.id as file_id',
+                'f.name as file_name_X',
+                'f.url as file_url_X',
+                'f.status as file_status_X',
             ])
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
-            // ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
             ->leftJoin('files', function ($join) {
                 $join->on('files.model_id', '=', 'lendings.expense_id')
                      ->where('files.model_name', '=', 'expenses'); // Segunda condición en el join
             })
-            // ->leftJoin('files', 'files.id', '=', 'expenses.file_id')
+            ->leftJoin('files as f', function ($join) {
+                $join->on('f.model_id', '=', 'news.id')
+                     ->where('f.model_name', '=', 'news') // Segunda condición en el join
+                     ->where('f.name', '=', 'FOTO_VOUCHER'); // Segunda condición en el join
+            })
             ->with('payments')
             ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
                 $query->where(function ($subQuery) use ($idList, $status1) {
