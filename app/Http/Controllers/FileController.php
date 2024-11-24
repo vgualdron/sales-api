@@ -110,12 +110,7 @@ class FileController extends Controller
 
     function update(Request $request, int $id) {
         try {
-            $item = $this->request->all();
-            $userSesion = $this->request->user();
-            $idUserSesion = $userSesion->id;
-            $item["reviewed_by"] = $idUserSesion;
-            $item["reviewed_date"] = date("Y-m-d H:i:s");
-            $item = File::find($id)->update($item);
+            $item = File::find($id)->update($request->all());
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
