@@ -78,7 +78,7 @@
                         'i.id as item_id',
                         'i.name as item_name',
                         'u.name as user_name',
-                        'n.name',
+                        'n.name as new_name',
                         'n.account_type',
                         'n.account_number',
                     )
