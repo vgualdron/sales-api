@@ -72,6 +72,7 @@
                         'model_name' => $question['model_name'],
                         'type' => $question['type'],
                         'status' => $question['status'],
+                        'observation' => $question['observation'],
                         'area_id' => $question['area_id'],
                         'registered_by' => $question['registered_by'],
                     ]);
