@@ -59,14 +59,14 @@ class LendingController extends Controller
                 'news.family2_reference_phone',
                 'news.guarantor_name',
                 'news.guarantor_phone',
-                'files.id as file_id',
-                'files.name as file_name',
-                'files.url as file_url',
-                'files.status as file_status',
-                'f.id as file_id',
-                'f.name as file_name_X',
-                'f.url as file_url_X',
-                'f.status as file_status_X',
+                'files.id as file_id_r',
+                'files.name as file_name_r',
+                'files.url as file_url_r',
+                'files.status as file_status_r',
+                'f.id as file_id_n',
+                'f.name as file_name_n',
+                'f.url as file_url_n',
+                'f.status as file_status_n',
             ])
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
