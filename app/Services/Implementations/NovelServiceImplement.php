@@ -85,6 +85,8 @@
                         'n.date_received_letter',
                         'n.who_returned_letter',
                         'n.date_returned_letter',
+                        'n.score',
+                        'n.score_observation',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
@@ -415,6 +417,8 @@
                         'n.date_received_letter',
                         'n.who_returned_letter',
                         'n.date_returned_letter',
+                        'n.score',
+                        'n.score_observation',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')

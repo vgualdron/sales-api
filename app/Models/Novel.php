@@ -69,5 +69,7 @@ class Novel extends Model
         'date_received_letter',
         'who_returned_letter',
         'date_returned_letter',
+        'score',
+        'score_observation',
     ];
 }
