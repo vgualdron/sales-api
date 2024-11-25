@@ -22,25 +22,22 @@
             $this->profileValidator = $profileValidator;
         }    
 
-        function list(string $status) {
+        function list(string $status, string $type) {
             try {
                 $explodeStatus = explode(',', $status);
-                $sql = $this->expense->from('expenses as e')
+                $explodeType = explode(',', $type);
+                $sql = $this->expense->from('questions as q')
                     ->select(
-                        'e.*',
-                        'a.id as area_id',
-                        'a.name as area_name',
-                        'i.id as item_id',
-                        'i.name as item_name',
-                        'u.name as user_name',
+                        'q.*',
                     )
-                    ->leftJoin('items as i', 'e.item_id', 'i.id')
-                    ->leftJoin('areas as a', 'i.area_id', 'a.id')
-                    ->leftJoin('users as u', 'e.user_id', 'u.id')
+                    // ->leftJoin('users as u', 'e.user_id', 'u.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
-                        return $q->whereIn('e.status', $explodeStatus);
+                        return $q->whereIn('q.status', $explodeStatus);
                     })
-                    ->orderBy('e.date', 'ASC')
+                    ->when($type !== 'all', function ($q) use ($explodeType) {
+                        return $q->whereIn('q.type', $explodeType);
+                    })
+                    ->orderBy('q.created_at', 'ASC')
                     ->get();
 
                 if (count($sql) > 0){

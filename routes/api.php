@@ -202,7 +202,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/item"], function () {
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/question"], function () {
-    Route::get('/', [QuestionController::class, 'list'])->name('question.list');
+    Route::get('/{status}/{type}', [QuestionController::class, 'list'])->name('question.list');
     Route::post('/', [QuestionController::class, 'create'])->name('question.create');
     Route::put('/{id}', [QuestionController::class, 'update'])->name('question.update');
     Route::delete('/{id}', [QuestionController::class, 'delete'])->name('question.delete');

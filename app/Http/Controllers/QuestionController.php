@@ -15,8 +15,8 @@ class QuestionController extends Controller
             $this->service = $service;
     }
 
-    function list(){
-        return $this->service->list();
+    function list(string $status, string $type){
+        return $this->service->list($status, $type);
     }
 
     function create(){
