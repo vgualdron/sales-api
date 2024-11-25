@@ -3,7 +3,7 @@
     use App\Services\Interfaces\QuestionServiceInterface;
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\Question;
-    use App\Validator\{ExpenseValidator, ProfileValidator};
+    use App\Validator\{ProfileValidator};
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\DB;
@@ -16,9 +16,8 @@
         private $validator;
         private $profileValidator;
 
-        function __construct(ExpenseValidator $validator, ProfileValidator $profileValidator){
+        function __construct(ProfileValidator $profileValidator){
             $this->question = new Question;
-            $this->validator = $validator;
             $this->profileValidator = $profileValidator;
         }    
 
@@ -26,7 +25,7 @@
             try {
                 $explodeStatus = explode(',', $status);
                 $explodeType = explode(',', $type);
-                $sql = $this->expense->from('questions as q')
+                $sql = $this->question->from('questions as q')
                     ->select(
                         'q.*',
                     )
