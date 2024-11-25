@@ -468,5 +468,24 @@
             }
         }
 
+        function getByPhone(string $phone){
+            try {
+                $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $phone)->first();
+                return response()->json([
+                    'data' => $new
+                ], Response::HTTP_OK);
+                
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al buscar',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
     }
 ?>

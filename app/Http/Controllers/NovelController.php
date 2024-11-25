@@ -61,4 +61,8 @@ class NovelController extends Controller
     function get(int $id){
         return $this->service->get($id);
     }
+
+    function getByPhone(string $phone){
+        return $this->service->getByPhone($phone);
+    }
 }
