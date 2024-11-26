@@ -101,19 +101,18 @@
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
                 } */
-                $sql = $this->novel::find($id);
+                $sql = $this->question::find($id);
                 if(!empty($sql)) {
-                    DB::transaction(function () use ($sql, $novel) {
-                        $sql->document_number = $novel['documentNumber'];
-                        $sql->name = $novel['name'];
-                        $sql->phone = $novel['phone'];
-                        $sql->address = $novel['address'];
-                        $sql->sector = $novel['sector'];
-                        $sql->status = $novel['status'];
-                        $sql->district = $novel['district'];
-                        $sql->occupation = $novel['occupation'];
-                        $sql->observation = $novel['observation'];
-                        $sql->user_send = $novel['userSend'] ? $novel['userSend'] : null;
+                    DB::transaction(function () use ($sql, $question) {
+                        $sql->model_id = $question['model_id'];
+                        $sql->model_name = $question['model_name'];
+                        $sql->type = $question['type'];
+                        $sql->status = $question['status'];
+                        $sql->observation = $question['observation'];
+                        $sql->value = $question['value'];
+                        $sql->area_id = $question['area_id'];
+                        $sql->registered_by = $question['registered_by'];
+                        $sql->answered_by = $question['answered_by'];
                         $sql->save();
                     });
                     return response()->json([
