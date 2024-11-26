@@ -28,7 +28,11 @@ class QuestionController extends Controller
     }
 
     function update(int $id){
-        return $this->service->update($this->request->all(), $id);
+        $item = $this->request->all();
+        $userSesion = $this->request->user();
+        $idUserSesion = $userSesion->id;
+        $item["answered_by"] = $idUserSesion;
+        return $this->service->update($item, $id);
     }
 
     function delete(int $id){
