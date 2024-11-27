@@ -63,6 +63,7 @@ class Novel extends Model
         'account_number',
         'account_type_third',
         'account_number_third',
+        'account_active',
         'type_cv',
         'has_letter',
         'who_received_letter',
