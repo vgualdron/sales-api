@@ -23,6 +23,7 @@ use App\Http\Controllers\{
                         AreaController,
                         ItemController,
                         QuestionController,
+                        NequiController,
                     };
 
 /*
@@ -209,4 +210,8 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/question"], function ()
     Route::delete('/{id}', [QuestionController::class, 'delete'])->name('question.delete');
     Route::get('/{id}', [QuestionController::class, 'get'])->name('question.get');
     Route::post('/get-status', [QuestionController::class, 'getStatus'])->name('question.getStatus');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/nequi"], function () {
+    Route::get('/', [NequiController::class, 'index'])->name('nequi.list');
 });
