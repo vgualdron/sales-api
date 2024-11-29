@@ -259,6 +259,7 @@
                     ->where('q.model_name', $question['model_name'])
                     ->where('q.type', $question['type'])
                     ->where('q.area_id', $question['area_id'])
+                    ->orderBy('q.created_at', 'DESC')
                     ->first();
                 if(!empty($sql)) {
                     return response()->json([
