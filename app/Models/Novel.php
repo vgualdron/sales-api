@@ -43,6 +43,7 @@ class Novel extends Model
         'family2_reference_phone',
         'family2_reference_relationship',
         'guarantor_district',
+        'guarantor_document_number',
         'guarantor_name',
         'guarantor_address',
         'guarantor_phone',
