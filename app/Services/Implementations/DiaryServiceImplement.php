@@ -316,6 +316,7 @@
                 $data['REFERENCIA 2'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
 
                 
+                $data['FIADOR']['DOCUMENTO'] = $sql->guarantor_document_number ? true : false;
                 $data['FIADOR']['NOMBRE'] = $sql->guarantor_name ? true : false;
                 $data['FIADOR']['DIRECCION'] = $sql->guarantor_address ? true : false;
                 $data['FIADOR']['TELEFONO'] = $sql->guarantor_phone ? true : false;
