@@ -415,6 +415,8 @@
                         'n.account_type_third',
                         'n.account_number_third',
                         'n.type_cv',
+                        'n.lent_by',
+                        'ul.name as lent_by_name',
                         'n.has_letter',
                         'n.who_received_letter',
                         'n.date_received_letter',
@@ -448,6 +450,7 @@
                     ->leftJoin('zones as zg', 'yg.zone', 'zg.id')
                     ->leftJoin('lendings as l', 'l.new_id', 'n.id')
                     ->leftJoin('listings as li', 'li.id', 'l.listing_id')
+                    ->leftJoin('users as ul', 'n.lent_by', 'u.id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
