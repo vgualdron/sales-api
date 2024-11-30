@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://www.micomercio.com', 'https://app-prestamos.micomercio.com.co/'],
+    'allowed_origins' => ['https://www.micomercio.com.co', 'https://app-prestamos.micomercio.com.co/'],
 
     'allowed_origins_patterns' => [],
 
