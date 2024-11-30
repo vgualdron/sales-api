@@ -450,7 +450,7 @@
                     ->leftJoin('zones as zg', 'yg.zone', 'zg.id')
                     ->leftJoin('lendings as l', 'l.new_id', 'n.id')
                     ->leftJoin('listings as li', 'li.id', 'l.listing_id')
-                    ->leftJoin('users as ul', 'n.lent_by', 'u.id')
+                    ->leftJoin('users as ul', 'n.lent_by', 'ul.id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
