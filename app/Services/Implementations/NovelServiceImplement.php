@@ -447,7 +447,7 @@
                     ->leftJoin('yards as yg', 'dg.sector', 'yg.id')
                     ->leftJoin('zones as zg', 'yg.zone', 'zg.id')
                     ->leftJoin('lendings as l', 'l.new_id', 'n.id')
-                    ->leftJoin('listings as li', 'li.id', 'l.listng_id')
+                    ->leftJoin('listings as li', 'li.id', 'l.listing_id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
