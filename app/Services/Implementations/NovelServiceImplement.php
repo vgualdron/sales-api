@@ -417,6 +417,7 @@
                         'n.type_cv',
                         'n.lent_by',
                         'ul.name as lent_by_name',
+                        'ua.name as approved_by_name',
                         'n.has_letter',
                         'n.who_received_letter',
                         'n.date_received_letter',
@@ -451,6 +452,7 @@
                     ->leftJoin('lendings as l', 'l.new_id', 'n.id')
                     ->leftJoin('listings as li', 'li.id', 'l.listing_id')
                     ->leftJoin('users as ul', 'n.lent_by', 'ul.id')
+                    ->leftJoin('users as ua', 'n.approved_by', 'ua.id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
