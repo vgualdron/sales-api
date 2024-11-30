@@ -423,6 +423,8 @@
                         'n.score',
                         'n.score_observation',
                         'n.account_active',
+                        'li.name as list_name',
+                        'li.id as list_id',
                     )
                     ->leftJoin('yards as y', 'n.sector', 'y.id')
                     ->leftJoin('zones as z', 'y.zone', 'z.id')
@@ -444,6 +446,8 @@
                     ->leftJoin('districts as dg', 'n.guarantor_district', 'dg.id')
                     ->leftJoin('yards as yg', 'dg.sector', 'yg.id')
                     ->leftJoin('zones as zg', 'yg.zone', 'zg.id')
+                    ->leftJoin('lendings as l', 'l.new_id', 'n.id')
+                    ->leftJoin('listings as li', 'li.id', 'l.listng_id')
                     ->where('n.id', $id)
                     ->first();
                 if(!empty($sql)) {
