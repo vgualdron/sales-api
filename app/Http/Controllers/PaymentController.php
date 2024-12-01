@@ -18,6 +18,7 @@ class PaymentController extends Controller
             $items = Payment::select(
                                 'payments.*',
                                 'lendings.nameDebtor',
+                                'listings.id as listId',
                                 'listings.name as listName',
                                 'users.name as userName',
                                 'nequis.name as nequiName',
