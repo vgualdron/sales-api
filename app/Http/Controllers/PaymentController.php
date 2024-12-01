@@ -23,8 +23,8 @@ class PaymentController extends Controller
                                 'nequis.name as nequiName',
                                 'files.url as urlFile',
                                 'files.type as typeFile')
-                            ->leftjoin('files', 'files.id', 'payments.nequi')
-                            ->leftjoin('nequis', 'nequis.id', 'payments.file_id')
+                            ->leftjoin('files', 'files.id', 'payments.file_id')
+                            ->leftjoin('nequis', 'nequis.id', 'payments.nequi')
                             ->join('lendings', 'lendings.id', 'payments.lending_id')
                             ->join('listings', 'listings.id', 'lendings.listing_id')
                             ->join('users', 'users.id', 'listings.user_id_collector')
