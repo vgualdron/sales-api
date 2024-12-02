@@ -199,8 +199,8 @@ class ListingController extends Controller
                 FROM payments pay
                 JOIN lendings len ON (len.id = pay.lending_id)
                 JOIN listings lis ON (lis.id = len.listing_id)
-                WHERE date BETWEEN '2024-11-21 00:00:00' AND '2024-11-21 23:59:59'
-                AND lis.id = 1
+                WHERE date BETWEEN '".$date." 00:00:00' AND '" .$date." 23:59:59'
+                AND lis.id = ".$idList."
                 AND pay.type = 'nequi';");
 
             $data = [
