@@ -205,7 +205,7 @@ class ListingController extends Controller
             $data = [
                 'itemLending' => $itemLending,
                 'itemList' => $itemList,
-                'itemTransfer' => $itemTransfer ? $itemTransfer[0] : null,
+                'itemTransfer' => $itemTransfer,
                 'date' => $date,
             ];
 
