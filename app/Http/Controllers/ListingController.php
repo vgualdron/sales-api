@@ -192,15 +192,7 @@ class ListingController extends Controller
       
             $itemList = Listing::find($idList);
 
-            $itemClients = Payment::selectRaw('COUNT(DISTINCT lendings.id) as total_clients')
-                        ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
-                        ->whereBetween('payments.date', [$date . " 00:00:00", $date . " 23:59:59"])
-                        ->where('lendings.listing_id', $idList)
-                        ->where('payments.type', 'nequi')
-                        ->whereIn('payments.status', ['aprobado', 'verificado'])
-                        ->first();
-
-            $itemTransfer = Payment::selectRaw('COUNT(*) as total_count, SUM(payments.amount) as total_amount')
+            $itemTransfer = Payment::selectRaw('COUNT(*) as total_count, SUM(payments.amount) as total_amount, COUNT(DISTINCT lendings.id) as total_clients')
                         ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
                         ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('lendings.listing_id', $idList)
@@ -223,7 +215,6 @@ class ListingController extends Controller
                         ->first();
                         
             $data = [
-                'itemClients' => $itemClients,
                 'itemList' => $itemList,
                 'itemTransfer' => $itemTransfer,
                 'itemRenove' => $itemRenove,
