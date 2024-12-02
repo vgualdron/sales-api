@@ -254,14 +254,23 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
-            $items = Listing::selectRaw('listings.*, files.*')
-                ->leftJoin('files', function ($join) use ($date) {
-                    $join->on('files.model_id', '=', 'listings.id')
-                        ->where('files.model_name', '=', 'listings')
-                        ->where('files.name', '=', 'CAPTURE_DELIVERY')
-                        ->whereBetween('files.created_at', [$date." 00:00:00", $date." 23:59:59"]);
-                })
-                ->get();
+            $items = Listing::selectRaw('
+                listings.*, 
+                files1.url as capture_delivery_file, 
+                files2.url as capture_route_file')
+            ->leftJoin('files as files1', function ($join) use ($date) {
+                $join->on('files1.model_id', '=', 'listings.id')
+                    ->where('files1.model_name', '=', 'listings')
+                    ->where('files1.name', '=', 'CAPTURE_DELIVERY')
+                    ->whereBetween('files1.created_at', [$date." 00:00:00", $date." 23:59:59"]);
+            })
+            ->leftJoin('files as files2', function ($join) use ($date) {
+                $join->on('files2.model_id', '=', 'listings.id')
+                    ->where('files2.model_name', '=', 'listings')
+                    ->where('files2.name', '=', 'CAPTURE_ROUTE')
+                    ->whereBetween('files2.created_at', [$date." 00:00:00", $date." 23:59:59"]);
+            })
+            ->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
