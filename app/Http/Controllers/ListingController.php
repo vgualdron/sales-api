@@ -255,7 +255,6 @@ class ListingController extends Controller
             $idUserSesion = $request->user()->id;
 
             $items = Listing::selectRaw('listings.*, files.*')
-                ->leftJoin('files', 'lendings.id', '=', 'payments.lending_id')
                 ->leftJoin('files', function ($join) use ($date) {
                     $join->on('files.model_name', '=', 'listings')
                          ->on('files.model_id', '=', 'listings.id')
