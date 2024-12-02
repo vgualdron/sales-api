@@ -200,6 +200,7 @@ class ListingController extends Controller
                         ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('listings.id', $idList)
                         ->where('payments.type', 'nequi')
+                        ->whereIn('payments.status', ['aprobado', 'verificado'])
                         ->first();
 
             $data = [
