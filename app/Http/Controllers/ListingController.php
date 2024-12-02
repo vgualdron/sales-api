@@ -259,10 +259,11 @@ class ListingController extends Controller
                 files1.url as capture_delivery_file, 
                 files2.url as capture_route_file
             ')
-            ->leftJoin('files as files1', function ($join) {
+            ->leftJoin('files as files1', function ($join) use ($date) {
                 $join->on('files1.model_id', '=', 'listings.id')
                     ->where('files1.model_name', '=', 'listings')
                     ->where('files1.name', '=', 'CAPTURE_DELIVERY')
+                    ->whereBetween('files2.created_at', [$date." 00:00:00", $date." 23:59:59"]);
                     ->whereRaw('files1.created_at = (
                         SELECT MAX(created_at) 
                         FROM files 
@@ -271,10 +272,11 @@ class ListingController extends Controller
                         AND files.name = "CAPTURE_DELIVERY"
                     )');
             })
-            ->leftJoin('files as files2', function ($join) {
+            ->leftJoin('files as files2', function ($join) use ($date) {
                 $join->on('files2.model_id', '=', 'listings.id')
                     ->where('files2.model_name', '=', 'listings')
                     ->where('files2.name', '=', 'CAPTURE_ROUTE')
+                    ->whereBetween('files2.created_at', [$date." 00:00:00", $date." 23:59:59"]);
                     ->whereRaw('files2.created_at = (
                         SELECT MAX(created_at) 
                         FROM files 
