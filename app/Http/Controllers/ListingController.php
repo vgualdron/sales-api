@@ -201,7 +201,7 @@ class ListingController extends Controller
                         ->whereIn('payments.status', ['aprobado', 'verificado'])
                         ->first();
 
-            $itemRenoves = Lending::selectRaw('COUNT(*) as total_count, SUM(amount) as total_amount')
+            $itemRenove = Lending::selectRaw('COUNT(*) as total_count, SUM(amount) as total_amount')
                         ->whereBetween('created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
                         ->where('listing_id', $idList)
                         ->first();
@@ -209,7 +209,7 @@ class ListingController extends Controller
             $data = [
                 'itemList' => $itemList,
                 'itemTransfer' => $itemTransfer,
-                'itemRenoves' => $itemRenoves,
+                'itemRenove' => $itemRenove,
                 'date' => $date,
             ];
 
