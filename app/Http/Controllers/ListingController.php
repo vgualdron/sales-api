@@ -256,7 +256,7 @@ class ListingController extends Controller
 
             $items = Listing::selectRaw('listings.name, files.name')
                 ->leftJoin('files', function ($join) use ($date) {
-                    $join->on('files.model_name', '=', 'listings')
+                    $join->on('files.model_name', '=', 'xxx')
                          ->on('files.model_id', '=', 'listings.id')
                          ->on('files.name', '=', 'CAPTURE_DELIVERY')
                          ->whereBetween('files.created_at', [$date." 00:00:00", $date." 23:59:59"]);
