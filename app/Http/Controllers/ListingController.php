@@ -192,9 +192,9 @@ class ListingController extends Controller
       
             $itemList = Listing::find($idList);
 
-            $itemClients = Payment::selectRaw('COUNT(lendings.id) as total_clients')
+            $itemClients = Payment::selectRaw('COUNT(DISTINCT lendings.id) as total_clients')
                         ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
-                        ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
+                        ->whereBetween('payments.date', [$date . " 00:00:00", $date . " 23:59:59"])
                         ->where('lendings.listing_id', $idList)
                         ->where('payments.type', 'nequi')
                         ->whereIn('payments.status', ['aprobado', 'verificado'])
