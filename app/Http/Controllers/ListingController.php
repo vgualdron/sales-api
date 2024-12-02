@@ -256,7 +256,7 @@ class ListingController extends Controller
 
             $items = Listing::selectRaw('listings.*, files.*')
                 ->leftJoin('files', 'lendings.id', '=', 'payments.lending_id')
-                ->leftJoin('files', function ($join) use ($userId) {
+                ->leftJoin('files', function ($join) use ($date) {
                     $join->on('files.model_name', '=', 'listings')
                          ->on('files.model_id', '=', 'listings.id')
                          ->on('table1.name', '=', 'CAPTURE_DELIVERY')
