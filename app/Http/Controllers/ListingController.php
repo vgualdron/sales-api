@@ -254,12 +254,12 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
-            $items = Listing::selectRaw('listings.name, files.name')
+            $items = Listing::selectRaw('listings.*, files.*')
                 ->leftJoin('files', function ($join) use ($date) {
                     $join->on('files.model_id', '=', 'listings.id')
-                        ->where('files.model_name', '=', 'listings') // Comparación con un valor estático
-                        ->where('files.name', '=', 'CAPTURE_DELIVERY') // Comparación con un valor estático
-                        ->whereBetween('files.created_at', [$date." 00:00:00", $date." 23:59:59"]); // Rango de fechas
+                        ->where('files.model_name', '=', 'listings')
+                        ->where('files.name', '=', 'CAPTURE_DELIVERY')
+                        ->whereBetween('files.created_at', [$date." 00:00:00", $date." 23:59:59"]);
                 })
                 ->get();
         } catch (Exception $e) {
