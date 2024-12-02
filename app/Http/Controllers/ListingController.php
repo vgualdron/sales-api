@@ -63,8 +63,6 @@ class ListingController extends Controller
             ->where('listings.status', '=', 'activa')
             ->get();
 
-
-                                
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
@@ -117,7 +115,45 @@ class ListingController extends Controller
     public function show(Request $request, $id)
     {
         try {
-            $items = Listing::where('id', '=', $id)->with('userCollector')->with('userLeader')->with('userAuthorized')->first();
+            // $items = Listing::where('id', '=', $id)->with('userCollector')->with('userLeader')->with('userAuthorized')->first();
+
+            $items = Listing::selectRaw('
+                listings.*, 
+                files1.url as capture_delivery_file, 
+                files2.url as capture_route_file
+            ')
+            ->leftJoin('files as files1', function ($join) use ($date) {
+                $join->on('files1.model_id', '=', 'listings.id')
+                    ->where('files1.model_name', '=', 'listings')
+                    ->where('files1.name', '=', 'CAPTURE_DELIVERY')
+                    ->whereRaw('files1.created_at = (
+                        SELECT MAX(created_at) 
+                        FROM files 
+                        WHERE files.model_id = listings.id
+                        AND files.model_name = "listings"
+                        AND files.name = "CAPTURE_DELIVERY"
+                        AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
+                    )');
+            })
+            ->leftJoin('files as files2', function ($join) use ($date) {
+                $join->on('files2.model_id', '=', 'listings.id')
+                    ->where('files2.model_name', '=', 'listings')
+                    ->where('files2.name', '=', 'CAPTURE_ROUTE')
+                    ->whereRaw('files2.created_at = (
+                        SELECT MAX(created_at) 
+                        FROM files 
+                        WHERE files.model_id = listings.id 
+                        AND files.model_name = "listings" 
+                        AND files.name = "CAPTURE_ROUTE"
+                        AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
+                    )');
+            })
+            ->with('userCollector')
+            ->with('userLeader')
+            ->with('userAuthorized')
+            ->with('lendings')
+            ->where('listings.id', $id)
+            ->first();
             
         } catch (Exception $e) {
             return response()->json([
@@ -131,7 +167,7 @@ class ListingController extends Controller
         }
 
         return response()->json([
-            'data' => $items,
+            'data' => $item,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
