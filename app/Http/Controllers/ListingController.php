@@ -192,7 +192,7 @@ class ListingController extends Controller
       
             $itemList = Listing::find($idList);
 
-            $itemTransfer = Payment::selectRaw('
+            $itemPayment = Payment::selectRaw('
                     COUNT(*) as total_count, 
                     SUM(payments.amount) as total_amount, 
                     COUNT(DISTINCT lendings.id) as total_clients,
@@ -227,7 +227,7 @@ class ListingController extends Controller
                         
             $data = [
                 'itemList' => $itemList,
-                'itemTransfer' => $itemTransfer,
+                'itemPayment' => $itemPayment,
                 'itemRenove' => $itemRenove,
                 'itemNovel' => $itemNovel,
                 'date' => $date,
