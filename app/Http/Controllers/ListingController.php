@@ -199,6 +199,9 @@ class ListingController extends Controller
                     SUM(CASE WHEN payments.type = "nequi" THEN payments.amount ELSE 0 END) as total_amount_nequi,
                     SUM(CASE WHEN payments.type = "renovacion" THEN payments.amount ELSE 0 END) as total_amount_renovation,
                     SUM(CASE WHEN payments.type = "article" THEN payments.amount ELSE 0 END) as total_amount_article,
+                    COUNT(CASE WHEN payments.type = "nequi" THEN 1 ELSE NULL END) as total_count_nequi,
+                    COUNT(CASE WHEN payments.type = "renovacion" THEN 1 ELSE NULL END) as total_count_renovation,
+                    COUNT(CASE WHEN payments.type = "article" THEN 1 ELSE NULL END) as total_count_article,
                     SUM(CASE WHEN payments.is_street = 0 THEN payments.amount ELSE 0 END) as total_secre,
                     SUM(CASE WHEN payments.is_street = 1 THEN payments.amount ELSE 0 END) as total_street')
                 ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
