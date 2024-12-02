@@ -29,13 +29,11 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
             'throw' => false,
         ],
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -43,7 +41,6 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-
         'news' => [
             'driver' => 'local',
             'root' => storage_path('app/public/news'),
@@ -51,7 +48,6 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-
         'payments' => [
             'driver' => 'local',
             'root' => storage_path('app/public/payments'),
@@ -59,7 +55,6 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-
         'expenses' => [
             'driver' => 'local',
             'root' => storage_path('app/public/expenses'),
@@ -67,7 +62,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-
+        'listings' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/listings'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
