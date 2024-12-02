@@ -18,12 +18,6 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
             $date = date("Y-m-d");
-            /* $items = Listing::with('userCollector')
-                                ->with('userLeader')
-                                ->with('userAuthorized')
-                                ->with('lendings')
-                                ->where('status', '=', 'activa')
-                                ->get(); */
             
             $items = Listing::selectRaw('
                 listings.*, 
@@ -115,7 +109,7 @@ class ListingController extends Controller
     public function show(Request $request, $id)
     {
         try {
-            // $items = Listing::where('id', '=', $id)->with('userCollector')->with('userLeader')->with('userAuthorized')->first();
+            $date = date("Y-m-d");
 
             $items = Listing::selectRaw('
                 listings.*, 
