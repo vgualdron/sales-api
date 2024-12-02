@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\Lending;
+use App\Models\Payment;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -193,15 +194,13 @@ class ListingController extends Controller
       
             $itemList = Listing::find($idList);
 
-            $itemTransfer = DB::select("SELECT
-                COUNT(*) as amount,
-                SUM(pay.amount) as total
-                FROM payments pay
-                JOIN lendings len ON (len.id = pay.lending_id)
-                JOIN listings lis ON (lis.id = len.listing_id)
-                WHERE date BETWEEN '".$date." 00:00:00' AND '" .$date." 23:59:59'
-                AND lis.id = ".$idList."
-                AND pay.type = 'nequi';");
+            $itemTransfer = Payment::selectRaw('COUNT(*) as amount, SUM(payments.amount) as total')
+                        ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
+                        ->join('listings', 'listings.id', '=', 'lendings.listing_id')
+                        ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
+                        ->where('listings.id', $idList)
+                        ->where('payments.type', 'nequi')
+                        ->first();
 
             $data = [
                 'itemLending' => $itemLending,
