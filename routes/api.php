@@ -147,6 +147,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/listing"], function () 
     Route::put('/{id}', [ListingController::class, 'update']);
     Route::delete('/{id}', [ListingController::class, 'destroy']);
     Route::get('/delivery/listing/{listing}/date/{date}', [ListingController::class, 'getDelivery']);
+    Route::get('/list-with-deliveries/{date}', [ListingController::class, 'listWithDeliveries']);
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () {

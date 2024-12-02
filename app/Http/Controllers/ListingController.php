@@ -247,4 +247,37 @@ class ListingController extends Controller
             'data' => $data,
         ], JsonResponse::HTTP_OK);
     }
+
+    public function listWithDeliveries(Request $request, $date)
+    {
+        $items = [];
+        try {
+            $idUserSesion = $request->user()->id;
+
+            $items = Listing::selectRaw('listings.*, files.*')
+                ->leftJoin('files', 'lendings.id', '=', 'payments.lending_id')
+                ->leftJoin('files', function ($join) use ($userId) {
+                    $join->on('files.model_name', '=', 'listings')
+                         ->on('files.model_id', '=', 'listings.id')
+                         ->on('table1.name', '=', 'CAPTURE_DELIVERY')
+                         ->whereBetween('files.created_at', [$date." 00:00:00", $date." 23:59:59"]);
+                })
+                ->get();
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $items,
+        ], JsonResponse::HTTP_OK);
+    }
+
 }
