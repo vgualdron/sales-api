@@ -187,14 +187,12 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
-            $itemLending = Lending::find($idList);
-
             $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
             $currentDate = date("Y-m-d H:i:s");
       
             $itemList = Listing::find($idList);
 
-            $itemTransfer = Payment::selectRaw('COUNT(*) as amount, SUM(payments.amount) as total')
+            $itemTransfer = Payment::selectRaw('COUNT(*) as total_count, SUM(payments.amount) as total_amount')
                         ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
                         ->join('listings', 'listings.id', '=', 'lendings.listing_id')
                         ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
@@ -203,10 +201,15 @@ class ListingController extends Controller
                         ->whereIn('payments.status', ['aprobado', 'verificado'])
                         ->first();
 
+            $itemRenoves = Lending::selectRaw('COUNT(*) as total_count, SUM(amount) as total_amount')
+                        ->whereBetween('created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
+                        ->where('listing_id', $idList)
+                        ->first();
+
             $data = [
-                'itemLending' => $itemLending,
                 'itemList' => $itemList,
                 'itemTransfer' => $itemTransfer,
+                'itemRenoves' => $itemRenoves,
                 'date' => $date,
             ];
 
