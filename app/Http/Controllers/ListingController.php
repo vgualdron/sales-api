@@ -270,6 +270,10 @@ class ListingController extends Controller
                     ->where('files2.name', '=', 'CAPTURE_ROUTE')
                     ->whereBetween('files2.created_at', [$date." 00:00:00", $date." 23:59:59"]);
             })
+            ->whereRaw('files.created_at = (SELECT MAX(created_at) 
+                            FROM files 
+                            WHERE files.model_id = listings.id 
+                            AND files.model_name = "listings")')
             ->get();
         } catch (Exception $e) {
             return response()->json([
