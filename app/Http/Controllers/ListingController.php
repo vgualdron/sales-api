@@ -111,7 +111,7 @@ class ListingController extends Controller
         try {
             $date = date("Y-m-d");
 
-            $items = Listing::selectRaw('
+            $item = Listing::selectRaw('
                 listings.*, 
                 files1.url as capture_delivery_file, 
                 files2.url as capture_route_file
