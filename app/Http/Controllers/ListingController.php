@@ -206,10 +206,18 @@ class ListingController extends Controller
                         ->where('listing_id', $idList)
                         ->first();
 
+            $itemNovel = Lending::selectRaw('COUNT(*) as total_count, SUM(amount) as total_amount')
+                        ->whereBetween('created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
+                        ->where('listing_id', $idList)
+                        ->where('status', 'open')
+                        ->where('type', 'N')
+                        ->first();
+
             $data = [
                 'itemList' => $itemList,
                 'itemTransfer' => $itemTransfer,
                 'itemRenove' => $itemRenove,
+                'itemNovel' => $itemNovel,
                 'date' => $date,
             ];
 
