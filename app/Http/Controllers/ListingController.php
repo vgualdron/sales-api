@@ -196,12 +196,15 @@ class ListingController extends Controller
                     COUNT(*) as total_count, 
                     SUM(payments.amount) as total_amount, 
                     COUNT(DISTINCT lendings.id) as total_clients,
+                    SUM(CASE WHEN payments.type = "nequi" THEN payments.amount ELSE 0 END) as total_amount_nequi,
+                    SUM(CASE WHEN payments.type = "renovacion" THEN payments.amount ELSE 0 END) as total_amount_renovation,
+                    SUM(CASE WHEN payments.type = "article" THEN payments.amount ELSE 0 END) as total_amount_article,
                     SUM(CASE WHEN payments.is_street = 0 THEN payments.amount ELSE 0 END) as total_secre,
                     SUM(CASE WHEN payments.is_street = 1 THEN payments.amount ELSE 0 END) as total_street')
                 ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
                 ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
                 ->where('lendings.listing_id', $idList)
-                ->where('payments.type', 'nequi')
+                // ->where('payments.type', 'nequi')
                 ->whereIn('payments.status', ['aprobado', 'verificado'])
                 ->first();
 
