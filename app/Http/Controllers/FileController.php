@@ -28,6 +28,7 @@ class FileController extends Controller
             $state = $request->status;
             $latitude = $request->latitude;
             $longitude = $request->longitude;
+            $maintainFile = $request->maintain;
             $item = null;
             $f = base64_decode($file);
           
@@ -40,10 +41,12 @@ class FileController extends Controller
             Storage::disk($storage)->makeDirectory($modelId);
             $status = Storage::disk($storage)->put($path, $f);
 
-            File::where('name', $name)
-                ->where('model_id', $modelId)
-                ->where('model_name', $modelName)
-                ->delete();
+            if (!$maintainFile) {
+                File::where('name', $name)
+                    ->where('model_id', $modelId)
+                    ->where('model_name', $modelName)
+                    ->delete();
+            }
          
             $item = File::create([
                 'name' => $name,
