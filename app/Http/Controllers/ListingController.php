@@ -194,7 +194,7 @@ class ListingController extends Controller
 
             $itemPayment = Payment::selectRaw('
                     COUNT(*) as total_count, 
-                    SUM(payments.amount) as total_amount, 
+                    COALESCE(SUM(payments.amount), 0) as total_amount, 
                     COUNT(DISTINCT lendings.id) as total_clients,
                     SUM(CASE WHEN payments.type = "nequi" THEN payments.amount ELSE 0 END) as total_amount_nequi,
                     SUM(CASE WHEN payments.type = "renovacion" THEN payments.amount ELSE 0 END) as total_amount_renovation,
@@ -207,7 +207,6 @@ class ListingController extends Controller
                 ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
                 ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
                 ->where('lendings.listing_id', $idList)
-                // ->where('payments.type', 'nequi')
                 ->whereIn('payments.status', ['aprobado', 'verificado'])
                 ->first();
 
