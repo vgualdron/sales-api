@@ -259,30 +259,30 @@ class ListingController extends Controller
                 files1.url as capture_delivery_file, 
                 files2.url as capture_route_file
             ')
-            ->leftJoin('files as files1', function ($join) use ($date) {
+            ->leftJoin('files as files1', function ($join) {
                 $join->on('files1.model_id', '=', 'listings.id')
                     ->where('files1.model_name', '=', 'listings')
                     ->where('files1.name', '=', 'CAPTURE_DELIVERY')
-                    ->whereBetween('files2.created_at', [$date." 00:00:00", $date." 23:59:59"]);
                     ->whereRaw('files1.created_at = (
                         SELECT MAX(created_at) 
                         FROM files 
-                        WHERE files.model_id = listings.id 
-                        AND files.model_name = "listings" 
+                        WHERE files.model_id = listings.id
+                        AND files.model_name = "listings"
                         AND files.name = "CAPTURE_DELIVERY"
+                        AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
                     )');
             })
-            ->leftJoin('files as files2', function ($join) use ($date) {
+            ->leftJoin('files as files2', function ($join) {
                 $join->on('files2.model_id', '=', 'listings.id')
                     ->where('files2.model_name', '=', 'listings')
                     ->where('files2.name', '=', 'CAPTURE_ROUTE')
-                    ->whereBetween('files2.created_at', [$date." 00:00:00", $date." 23:59:59"]);
                     ->whereRaw('files2.created_at = (
                         SELECT MAX(created_at) 
                         FROM files 
                         WHERE files.model_id = listings.id 
                         AND files.model_name = "listings" 
                         AND files.name = "CAPTURE_ROUTE"
+                        AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
                     )');
             })
             ->get();
