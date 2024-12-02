@@ -60,7 +60,7 @@ class ListingController extends Controller
             ->with('userLeader')
             ->with('userAuthorized')
             ->with('lendings')
-            ->where('status', '=', 'activa')
+            ->where('listings.status', '=', 'activa')
             ->get();
 
 
