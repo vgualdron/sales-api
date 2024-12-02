@@ -192,7 +192,7 @@ class ListingController extends Controller
       
             $itemList = Listing::find($idList);
 
-            $itemTransfer = Payment::selectRaw('COUNT(*) as total_count, SUM(payments.amount) as total_amount, COUNT(lendings.*) as total_clients,')
+            $itemTransfer = Payment::selectRaw('COUNT(*) as total_count, SUM(payments.amount) as total_amount, COUNT(lendings.*) as total_clients')
                         ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
                         ->join('listings', 'listings.id', '=', 'lendings.listing_id')
                         ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
@@ -215,13 +215,6 @@ class ListingController extends Controller
                         ->where('type', 'N')
                         ->first();
                         
-            $itemClients = Lending::selectRaw('COUNT(*) as total_count, SUM(amount) as total_amount')
-                        ->whereBetween('created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
-                        ->where('listing_id', $idList)
-                        ->where('status', 'open')
-                        ->where('type', 'N')
-                        ->first();
-
             $data = [
                 'itemList' => $itemList,
                 'itemTransfer' => $itemTransfer,
