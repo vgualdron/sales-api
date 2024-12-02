@@ -258,7 +258,7 @@ class ListingController extends Controller
                 ->leftJoin('files', function ($join) use ($date) {
                     $join->on('files.model_name', '=', 'listings')
                          ->on('files.model_id', '=', 'listings.id')
-                         ->on('table1.name', '=', 'CAPTURE_DELIVERY')
+                         ->on('files.name', '=', 'CAPTURE_DELIVERY')
                          ->whereBetween('files.created_at', [$date." 00:00:00", $date." 23:59:59"]);
                 })
                 ->get();
