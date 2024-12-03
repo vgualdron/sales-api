@@ -24,6 +24,7 @@ use App\Http\Controllers\{
                         ItemController,
                         QuestionController,
                         NequiController,
+                        UploadDataController,
                     };
 
 /*
