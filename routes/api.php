@@ -221,4 +221,4 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/nequi"], function () {
 // endpoints de carga da datos
 Route::post('/upload-data-payments', [UploadDataController::class, 'uploadPayments']);
 Route::post('/create-new', [UploadDataController::class, 'createNew']);
-Route::post('/list-news', [UploadDataController::class, 'listNews']);
+Route::get('/list-news', [UploadDataController::class, 'listNews']);
