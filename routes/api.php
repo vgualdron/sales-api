@@ -216,3 +216,6 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/question"], function ()
 Route::group(['middleware' => 'auth:api' , "prefix" => "/nequi"], function () {
     Route::get('/', [NequiController::class, 'index'])->name('nequi.list');
 });
+
+// endpoints de carga da datos
+Route::post('/upload-data-payments', [UploadDataController::class, 'uploadPayments']);
