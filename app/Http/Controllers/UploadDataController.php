@@ -13,9 +13,10 @@ class PaymentController extends Controller
 {
     public function uploadPayments(Request $request)
     {
-        try {
+        echo $request->data;
+        /* try {
             $data = $request->data;
-            /* DB::transaction(function () use ($data) {
+            DB::transaction(function () use ($data) {
                 foreach ($data as $item) {
                     Payment::create([
                         'reference' => $item['value'], // Cambia según los datos del array
@@ -25,7 +26,7 @@ class PaymentController extends Controller
                         'status' => 'aprobado',
                     ]);
                 }
-            }); */
+            });
             
         } catch (Exception $e) {
             return response()->json([
@@ -41,5 +42,6 @@ class PaymentController extends Controller
         return response()->json([
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
+        */
     }
 }
