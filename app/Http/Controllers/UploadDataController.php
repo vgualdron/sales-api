@@ -9,12 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class PaymentController extends Controller
+class UploadDataController extends Controller
 {
     public function uploadPayments(Request $request)
     {
-        echo $request->data;
-        /* try {
+        try {
             $data = $request->data;
             DB::transaction(function () use ($data) {
                 foreach ($data as $item) {
@@ -42,6 +41,5 @@ class PaymentController extends Controller
         return response()->json([
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
-        */
     }
 }
