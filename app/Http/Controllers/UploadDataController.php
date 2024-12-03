@@ -39,7 +39,6 @@ class PaymentController extends Controller
         }
 
         return response()->json([
-            'data' => $item,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
