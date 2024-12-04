@@ -215,7 +215,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/question"], function ()
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/nequi"], function () {
-    Route::get('/', [NequiController::class, 'index'])->name('nequi.list');
+    Route::get('/listing/{id}', [NequiController::class, 'index'])->name('nequi.list');
 });
 
 // endpoints de carga da datos

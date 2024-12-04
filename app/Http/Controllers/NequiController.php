@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class NequiController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $idList)
     {
         try {
             $idUserSesion = $request->user()->id;
-            $items = Nequi::where('status', 'activo')->orderBy('order', 'asc')->get();
+            $items = Nequi::where('status', 'activo')->where('listing_id', $idList)->orderBy('order', 'asc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
