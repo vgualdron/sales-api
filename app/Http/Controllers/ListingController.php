@@ -21,6 +21,7 @@ class ListingController extends Controller
             
             $items = Listing::selectRaw('
                 listings.*, 
+                zones.name as city_name, 
                 files1.url as capture_delivery_file, 
                 files2.url as capture_route_file
             ')
@@ -50,6 +51,7 @@ class ListingController extends Controller
                         AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
                     )');
             })
+            ->leftJoin('zones', 'zone.id', '=', 'listings.city_id')
             ->with('userCollector')
             ->with('userLeader')
             ->with('userAuthorized')
