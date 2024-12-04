@@ -19,5 +19,6 @@ class Nequi extends Model
         'number',
         'order',
         'status',
+        'listing_id',
     ];
 }
