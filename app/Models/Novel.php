@@ -74,5 +74,6 @@ class Novel extends Model
         'date_returned_letter',
         'score',
         'score_observation',
+        'created_at',
     ];
 }
