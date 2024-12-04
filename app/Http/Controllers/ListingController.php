@@ -51,7 +51,7 @@ class ListingController extends Controller
                         AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
                     )');
             })
-            ->leftJoin('zones', 'zone.id', '=', 'listings.city_id')
+            ->leftJoin('zones', 'zones.id', '=', 'listings.city_id')
             ->with('userCollector')
             ->with('userLeader')
             ->with('userAuthorized')
