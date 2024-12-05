@@ -75,6 +75,7 @@ class UploadDataController extends Controller
                 'listing_id' => $request->listing_id,
                 'new_id' => $itemNovel->id,
                 'type' => 'N',
+                'created_at' => $firstDate,
             ]);
 
             $itemPayment = Payment::create([
