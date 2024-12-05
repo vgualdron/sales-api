@@ -32,6 +32,13 @@ class UploadDataController extends Controller
                 'address_house' => $request->address,
                 'address_house_sector' => $request->sector,
                 'address_house_district' => $request->district,
+                'observation' => $request->observation,
+                'status' => $request->status,
+                'attempts' => $request->attempts,
+                'type_cv' => $request->type_cv,
+                'site_visit' => $request->site_visit,
+                'occupation' => $request->occupation,
+                'user_send' => $request->user_send,
             ]);
 
             $countDays = 1;
