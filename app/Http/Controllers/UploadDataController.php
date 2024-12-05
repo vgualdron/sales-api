@@ -38,6 +38,7 @@ class UploadDataController extends Controller
                 'type_cv' => $request->type_cv,
                 'site_visit' => $request->site_visit,
                 'occupation' => $request->occupation,
+                'type_work' => $request->type_work,
                 'user_send' => $request->user_send,
                 'type_house' => $request->type_house,
                 'address_work' => $request->address_work,
@@ -48,9 +49,18 @@ class UploadDataController extends Controller
                 'guarantor_occupation' => $request->guarantor_occupation,
                 'guarantor_phone' => $request->guarantor_phone,
                 'guarantor_relationship' => $request->guarantor_relationship,
-                'guarantor_sector' => $request->guarantor_sector,
                 'guarantor_district' => $request->guarantor_district,
                 'guarantor_address' => $request->guarantor_address,
+                'family_reference_name' => $request->family_reference_name,
+                'family_reference_phone' => $request->family_reference_phone,
+                'family_reference_relationship' => $request->family_reference_relationship,
+                'family_reference_address' => $request->family_reference_address,
+                'family_reference_district' => $request->family_reference_district,
+                'family2_reference_name' => $request->family2_reference_name,
+                'family2_reference_phone' => $request->family2_reference_phone,
+                'family2_reference_relationship' => $request->family2_reference_relationship,
+                'family2_reference_address' => $request->family2_reference_address,
+                'family2_reference_district' => $request->family2_reference_district,
             ]);
 
             $countDays = 1;
