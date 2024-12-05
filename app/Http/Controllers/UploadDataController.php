@@ -23,7 +23,7 @@ class UploadDataController extends Controller
                 'phone' => $request->phone,
                 'period' => $request->period,
                 'quantity' => $request->quantity,
-                'created_at' => $request->created_at,
+                'created_at' => date("Y-m-d H:i:s", (strtotime(date($request->created_at)) + 8640)),
                 'lent_by' => $request->lent_by,
                 'approved_by' => $request->approved_by,
                 'address' => $request->address,
