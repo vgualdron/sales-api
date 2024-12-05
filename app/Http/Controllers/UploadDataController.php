@@ -58,7 +58,7 @@ class UploadDataController extends Controller
             }
 
             $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
-            $paymentDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * 2) + 86399));
+            $paymentDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * 2) + 86300));
 
             $itemLending = Lending::create([
                 'nameDebtor' => $request->name,
