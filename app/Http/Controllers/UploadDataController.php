@@ -61,6 +61,13 @@ class UploadDataController extends Controller
                 'family2_reference_relationship' => $request->family2_reference_relationship,
                 'family2_reference_address' => $request->family2_reference_address,
                 'family2_reference_district' => $request->family2_reference_district,
+                'account_type' => $request->account_type,
+                'account_number' => $request->account_number,
+                'account_type_third' => $request->account_type_third,
+                'account_number_third' => $request->account_number_third,
+                'account_active' => $request->account_active,
+                'has_letter' => $request->has_letter,
+                'extra_reference' => $request->extra_reference,
             ]);
 
             $countDays = 1;
