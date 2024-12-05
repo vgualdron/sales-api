@@ -39,6 +39,18 @@ class UploadDataController extends Controller
                 'site_visit' => $request->site_visit,
                 'occupation' => $request->occupation,
                 'user_send' => $request->user_send,
+                'type_house' => $request->type_house,
+                'address_work' => $request->address_work,
+                'address_work_sector' => $request->address_work_sector,
+                'address_work_district' => $request->address_work_district,
+                'guarantor_document_number' => $request->guarantor_document_number,
+                'guarantor_name' => $request->guarantor_name,
+                'guarantor_occupation' => $request->guarantor_occupation,
+                'guarantor_phone' => $request->guarantor_phone,
+                'guarantor_relationship' => $request->guarantor_relationship,
+                'guarantor_sector' => $request->guarantor_sector,
+                'guarantor_district' => $request->guarantor_district,
+                'guarantor_address' => $request->guarantor_address,
             ]);
 
             $countDays = 1;
