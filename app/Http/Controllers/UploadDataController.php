@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Novel;
+use App\Models\Lending;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,65 @@ class UploadDataController extends Controller
     {
         try {
             $data = $request->all();
-            Novel::create($data);
+            $itemNovel = Novel::create([
+                'document_number' => $request->document_number,
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'period' => $request->period,
+                'quantity' => $request->quantity,
+                'created_at' => $request->created_at,
+                'lent_by' => $request->lent_by,
+                'approved_by' => $request->approved_by,
+                'address' => $request->address,
+                'sector' => $request->sector,
+                'district' => $request->district,
+                'address_house' => $request->address,
+                'address_house_sector' => $request->sector,
+                'address_house_district' => $request->district,
+            ]);
+
+            $countDays = 1;
+            $amountFees = 1;
+            $date = $request->date_lending;
+            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
+           
+            if ($request->period === 'diario') {
+                $countDays = 21;
+                $amountFees = 22;
+            } else if ($request->period === 'semanal') {
+                $countDays = 21;
+                $amountFees = 3;
+            } else if ($request->period === 'quincenal') {
+                $countDays = 14;
+                $amountFees = 1;
+            }
+
+            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
+
+            $itemLending = Lending::create([
+                'nameDebtor' => $request->name,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'firstDate' => $firstDate,
+                'endDate' => $endDate,
+                'amount' => $request->amount_lending,
+                'amountFees' => $amountFees,
+                'percentage' => 32,
+                'period' => $request->period,
+                'order' => 1,
+                'status' => 'open',
+                'listing_id' => $request->listing_id,
+                'new_id' => $itemNovel->id,
+                'type' => 'normal',
+            ]);
+
+            $itemPayment = Payment::create([
+                'lending_id' => $itemLending->id,
+                'date' => $request->date_lending,
+                'amount' => $request->amount_lending,
+                'type' => 'nequi',
+                'status' => 'aprobado',
+            ]);
             
         } catch (Exception $e) {
             return response()->json([
