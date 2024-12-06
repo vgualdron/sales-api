@@ -453,7 +453,7 @@ class LendingController extends Controller
                     'date' => $currentDate,
                     'amount' => $repayment,
                     'status' => 'aprobado',
-                    'observation' => 'Pago creado al renovar el credito, con el saldo restante del prestamo anterior',
+                    'observation' => 'adelanto',
                     'type' => 'nequi',
                     'date_transaction' => $currentDate,
                 ]);
