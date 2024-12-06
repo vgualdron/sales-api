@@ -270,7 +270,7 @@ class ListingController extends Controller
                     COALESCE(SUM(payments.amount), 0) as total_amount, 
                     COUNT(DISTINCT lendings.id) as total_clients,
                     COALESCE(SUM(CASE WHEN payments.type = "nequi" AND payments.observation != "adelanto" THEN payments.amount ELSE 0 END), 0) as total_amount_nequi,
-                    COALESCE(SUM(CASE WHEN payments.type = "nequi" AND payments.observation = "adelanto" ELSE 0 END), 0) as total_amount_repayment,
+                    COALESCE(SUM(CASE WHEN payments.type = "nequi" AND payments.observation = "adelanto" THEN payments.amount ELSE 0 END), 0) as total_amount_repayment,
                     COALESCE(SUM(CASE WHEN payments.type = "articulo" THEN payments.amount ELSE 0 END), 0) as total_amount_article,
                     COUNT(CASE WHEN payments.type = "nequi" AND payments.observation != "adelanto" THEN 1 ELSE NULL END) as total_count_nequi,
                     COUNT(CASE WHEN payments.type = "nequi" AND payments.observation = "adelanto" THEN 1 ELSE NULL END) as total_count_repayment,
