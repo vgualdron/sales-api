@@ -104,7 +104,7 @@ class UploadDataController extends Controller
                 'listing_id' => $request->listing_id,
                 'new_id' => $itemNovel->id,
                 'type' => 'N',
-                'created_at' => $firstDate,
+                'created_at' => date("Y-m-d H:i:s", (strtotime(date($date)) + 8630)),
             ]);
 
             $itemPayment = Payment::create([
