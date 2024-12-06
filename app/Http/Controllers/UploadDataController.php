@@ -134,7 +134,7 @@ class UploadDataController extends Controller
     public function listNews(Request $request)
     {
         try {
-            $items = Novel::where('type_cv', 'pdf')->orderBy('created_at', 'desc')->get();
+            $items = Novel::where('status', 'migracion')->orderBy('created_at', 'desc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
