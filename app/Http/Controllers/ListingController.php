@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use App\Models\Lending;
 use App\Models\Payment;
+use App\Models\Expense;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -297,11 +298,19 @@ class ListingController extends Controller
                         ->where('type', 'N')
                         ->first();
                         
+            $itemExpense = Expense::selectRaw('COUNT(*) as total_count, COALESCE(SUM(amount), 0) as total_amount')
+                        ->join('listings', 'lendings.user_id_collector', '=', 'expense.user_id')
+                        ->whereBetween('created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
+                        ->where('item_id', 1)
+                        ->where('listings.id', $idList)
+                        ->first();
+                        
             $data = [
                 'itemList' => $itemList,
                 'itemPayment' => $itemPayment,
                 'itemRenove' => $itemRenove,
                 'itemNovel' => $itemNovel,
+                'itemExpense' => $itemExpense,
                 'date' => $date,
             ];
 
