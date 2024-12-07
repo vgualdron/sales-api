@@ -36,7 +36,7 @@ class UpdateLendingsDoubleInterest extends Command
             WHERE 
                 lendings.status = "open"
                 AND lendings.has_double_interest = false
-                AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 0
+                AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 15
             GROUP BY
                 lendings.id
             HAVING
