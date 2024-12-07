@@ -112,7 +112,7 @@ class UploadDataController extends Controller
                 'date' => $paymentDate,
                 'amount' => $request->amount_payment,
                 'type' => 'nequi',
-                'status' => 'aprobado',
+                'status' => 'verificado',
             ]);
             
         } catch (Exception $e) {
@@ -163,7 +163,7 @@ class UploadDataController extends Controller
                         'date' => date("Y-m-d H:i:s"),
                         'observation' => 'insert manual',
                         'type' => 'old',
-                        'status' => 'aprobado',
+                        'status' => 'verificado',
                     ]);
                 }
             });
