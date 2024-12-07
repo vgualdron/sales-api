@@ -12,8 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('update:double-interest')->everyMinute();
-        // $schedule->command('update:double-interest')->dailyAt('01:01');
+        $schedule->command('update:double-interest')->dailyAt('01:01');
     }
 
     /**
