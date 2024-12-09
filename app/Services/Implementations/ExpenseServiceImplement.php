@@ -83,6 +83,7 @@
                         'n.account_number',
                         'n.account_type_third',
                         'n.account_number_third',
+                        'n.account_name_third',
                     )
                     ->leftJoin('items as i', 'e.item_id', 'i.id')
                     ->leftJoin('areas as a', 'i.area_id', 'a.id')

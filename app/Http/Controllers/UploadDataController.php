@@ -65,6 +65,7 @@ class UploadDataController extends Controller
                 'account_number' => $request->account_number,
                 'account_type_third' => $request->account_type_third,
                 'account_number_third' => $request->account_number_third,
+                'account_name_third' => $request->account_name_third,
                 'account_active' => $request->account_active,
                 'has_letter' => $request->has_letter,
                 'extra_reference' => $request->extra_reference,
