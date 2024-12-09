@@ -135,7 +135,7 @@ class UploadDataController extends Controller
     public function listNews(Request $request)
     {
         try {
-            $items = Novel::where('status', 'migracion')->orderBy('created_at', 'desc')->get();
+            // $items = Novel::where('status', 'migracion')->orderBy('created_at', 'desc')->get();
             $items = DB::table('news')
             ->leftJoin('lendings', 'lendings.new_id', '=', 'news.id')
             ->where('news.status', 'migracion')
@@ -144,7 +144,8 @@ class UploadDataController extends Controller
                 'news.*',
                 'lendings.listing_id as listing_id'
             )
-            ->get();;
+            ->distinct()
+            ->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
