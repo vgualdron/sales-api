@@ -138,11 +138,13 @@ class UploadDataController extends Controller
             // $items = Novel::where('status', 'migracion')->orderBy('created_at', 'desc')->get();
             $items = DB::table('news')
             ->leftJoin('lendings', 'lendings.new_id', '=', 'news.id')
+            ->leftJoin('listings', 'listings.id', '=', 'lendings.listing_id')
             ->where('news.status', 'migracion')
             ->orderBy('news.created_at', 'desc')
             ->select(
                 'news.*',
-                'lendings.listing_id as listing_id'
+                'lendings.listing_id as listing_id',
+                'listings.name as listing_name',
             )
             ->distinct()
             ->get();
