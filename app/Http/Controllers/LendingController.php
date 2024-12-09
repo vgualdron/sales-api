@@ -59,6 +59,7 @@ class LendingController extends Controller
                 'news.family2_reference_phone',
                 'news.guarantor_name',
                 'news.guarantor_phone',
+                'news.has_letter',
                 'files.id as file_id_r',
                 'files.name as file_name_r',
                 'files.url as file_url_r',
