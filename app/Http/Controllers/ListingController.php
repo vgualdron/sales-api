@@ -281,7 +281,7 @@ class ListingController extends Controller
                 ->join('lendings', 'lendings.id', '=', 'payments.lending_id')
                 ->whereBetween('payments.date', [$date." 00:00:00", $date." 23:59:59"])
                 ->where('lendings.listing_id', $idList)
-                ->whereIn('payments.status', ['aprobado', 'verificado'])
+                ->where('payments.is_valid', 1)
                 ->first();
 
             $itemRenove = Lending::selectRaw('COUNT(*) as total_count, COALESCE(SUM(amount), 0) as total_amount')
