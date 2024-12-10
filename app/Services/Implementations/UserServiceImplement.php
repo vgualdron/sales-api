@@ -98,7 +98,7 @@
                             ->leftJoin('areas as a', 'u.area', 'a.id')
                             ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
                             ->join('roles as r', 'mhr.role_id', 'r.id')
-                            ->where('r.name', 'LIKE', '%' . $name . '%')
+                            ->where('r.name', $name)
                             ->where('u.active', $displayAll)
                             ->when($city > 0, function ($q) use ($city) {
                                 return $q->where('z.id', $city);
