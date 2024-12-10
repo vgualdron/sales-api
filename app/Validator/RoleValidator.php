@@ -14,8 +14,8 @@
 
         private function rules(){
             return[
-                "name" => "required|min:5|max:30|unique:roles,name,".$this->data['id'],
-                "route" => "required|min:4|max:20",
+                "name" => "required|min:5|max:100|unique:roles,name,".$this->data['id'],
+                "route" => "required|min:4|max:30",
                 'permissions.*' => 'nullable|exists:permissions,id',
             ];
         }
@@ -25,7 +25,7 @@
                 'name.required' => 'El nombre es requerido',
                 'name.unique' => 'El nombre "'.$this->data['name'].'", ya existe',
                 'name.min' => 'El nombre debe tener un mínimo de 5 caracteres',
-                'name.max' => 'El nombre debe tener un máximo de 30 caracteres',
+                'name.max' => 'El nombre debe tener un máximo de 100 caracteres',
                 'route.required' => 'El link es requerido',
                 'route.min' => 'El link debe tener un mínimo de 4 caracteres',
                 'route.max' => 'El link debe tener un máximo de 20 caracteres',
