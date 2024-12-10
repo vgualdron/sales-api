@@ -113,7 +113,7 @@ class UploadDataController extends Controller
                 'date' => $paymentDate,
                 'amount' => $request->amount_payment,
                 'type' => 'nequi',
-                'status' => 'verificado',
+                'status' => 'certificado',
                 'is_valid' => 1,
             ]);
             
