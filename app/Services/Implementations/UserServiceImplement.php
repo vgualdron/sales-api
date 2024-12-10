@@ -103,6 +103,7 @@
                             ->when($city > 0, function ($q) use ($city) {
                                 return $q->where('z.id', $city);
                             })
+                            ->distinct()
                             ->get();
 
                 if (count($sql) > 0){
