@@ -114,6 +114,7 @@ class UploadDataController extends Controller
                 'amount' => $request->amount_payment,
                 'type' => 'nequi',
                 'status' => 'verificado',
+                'is_valid' => 1,
             ]);
             
         } catch (Exception $e) {
