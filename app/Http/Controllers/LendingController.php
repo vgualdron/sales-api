@@ -456,6 +456,7 @@ class LendingController extends Controller
                     'status' => 'aprobado',
                     'observation' => 'adelanto',
                     'type' => 'nequi',
+                    'is_valid' => 1,
                     'date_transaction' => $currentDate,
                 ]);
             }
