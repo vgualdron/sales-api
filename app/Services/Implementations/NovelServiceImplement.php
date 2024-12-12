@@ -134,7 +134,7 @@
                         lendings.id AS id,
                         lendings.amount,
                         lendings.percentage,
-                        lendings.has_double, -- Mostrar el campo has_double directamente
+                        lendings.has_double_interest, -- Mostrar el campo has_double directamente
                         lendings.status,
                         listings.name as listing_name,
                         COALESCE(SUM(payments.amount), 0) AS total_paid,
@@ -149,14 +149,14 @@
                         
                         -- Cálculo del porcentaje ajustado según has_double
                         CASE 
-                            WHEN lendings.has_double = 1 THEN lendings.percentage * 2
+                            WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2
                             ELSE lendings.percentage
                         END AS adjusted_percentage,
                         
                         -- Cálculo del monto adeudado utilizando adjusted_percentage
                         (lendings.amount * (1 + 
                             CASE 
-                                WHEN lendings.has_double = 1 THEN lendings.percentage * 2 / 100
+                                WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                                 ELSE lendings.percentage / 100
                             END
                         )) AS total_due, 
@@ -164,7 +164,7 @@
                         -- Cálculo del saldo restante
                         (lendings.amount * (1 + 
                             CASE 
-                                WHEN lendings.has_double = 1 THEN lendings.percentage * 2 / 100
+                                WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                                 ELSE lendings.percentage / 100
                             END
                         ) - COALESCE(SUM(payments.amount), 0)) AS remaining_balance,
