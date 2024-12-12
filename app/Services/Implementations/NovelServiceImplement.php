@@ -126,6 +126,134 @@
             }
         }
 
+        function listReds(int $city) {
+            try {
+              
+                $sql = "
+                    SELECT 
+                        lendings.id AS id,
+                        lendings.amount,
+                        lendings.percentage,
+                        lendings.status,
+                        listings.name as listing_name,
+                        COALESCE(SUM(payments.amount), 0) AS total_paid,
+                        news.id AS news_id,
+                        news.name AS news_name,
+                        news.status AS news_status,
+                        news.observation AS news_observation,
+                        lendings.firstDate,
+                        districts.name AS district_name,
+                        yards.name AS yard_name,
+                        DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
+                        -- Cálculo del monto adeudado
+                        (lendings.amount * (1 + lendings.percentage / 100)) AS total_due, 
+                        -- Cálculo del saldo restante
+                        (lendings.amount * (1 + lendings.percentage / 100) - COALESCE(SUM(payments.amount), 0)) AS remaining_balance,
+                        -- Direcciones con filtro de NULLs
+                        address_data.address_type,
+                        address_data.address_name,
+                        address_data.address,
+                        address_data.district,
+                        districts.order AS district_order
+                    FROM 
+                        lendings
+                    LEFT JOIN 
+                        listings ON lendings.listing_id = listings.id
+                    LEFT JOIN 
+                        payments ON lendings.id = payments.lending_id
+                    LEFT JOIN 
+                        news ON lendings.new_id = news.id
+                    LEFT JOIN (
+                        SELECT 
+                            news.id as new_id,
+                            news.observation as new_observation,
+                            'CASA' AS address_type,
+                            'CASA' AS address_name,
+                            address_house AS address,
+                            address_house_district AS district
+                        FROM news
+                        WHERE address_house IS NOT NULL AND address_house_district IS NOT NULL
+                        UNION ALL
+                        SELECT 
+                            news.id as new_id,
+                            news.observation as new_observation,
+                            'TRABAJO' AS address_type,
+                            'TRABAJO' AS address_name,
+                            address_work,
+                            address_work_district
+                        FROM news
+                        WHERE address_work IS NOT NULL AND address_work_district IS NOT NULL
+                        UNION ALL
+                        SELECT 
+                            news.id as new_id,
+                            news.observation as new_observation,
+                            'REF 1' AS address_type,
+                            CONCAT(family_reference_name, ' | ', family_reference_relationship) AS address_name,
+                            family_reference_address,
+                            family_reference_district
+                        FROM news
+                        WHERE family_reference_address IS NOT NULL AND family_reference_district IS NOT NULL
+                        UNION ALL
+                        SELECT 
+                            news.id as new_id,
+                            news.observation as new_observation,
+                            'REF 2' AS address_type,
+                            CONCAT(family2_reference_name, ' | ', family2_reference_relationship) AS address_name,
+                            family2_reference_address,
+                            family2_reference_district
+                        FROM news
+                        WHERE family2_reference_address IS NOT NULL AND family2_reference_district IS NOT NULL
+                        UNION ALL
+                        SELECT 
+                            news.id as new_id,
+                            news.observation as new_observation,
+                            'FIADOR' AS address_type,
+                            CONCAT(guarantor_name, ' | ', guarantor_relationship) AS address_name,
+                            guarantor_address,
+                            guarantor_district
+                        FROM news
+                        WHERE guarantor_address IS NOT NULL AND guarantor_district IS NOT NULL
+                    ) AS address_data ON news.id = address_data.new_id
+                    LEFT JOIN 
+                        districts ON address_data.district = districts.id
+                    LEFT JOIN 
+                        yards ON districts.sector = yards.id
+                    WHERE 
+                        lendings.status = 'open' AND
+                        news.status = 'consignado'
+                    GROUP BY 
+                        lendings.id, news.id, districts.id, address_data.address_type, address_data.address, address_data.district
+                    HAVING 
+                        days_since_creation > 19
+                    ORDER BY 
+                        CAST(SUBSTRING_INDEX(districts.order, ' ', 1) AS UNSIGNED) ASC, 
+                        SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
+                        lendings.id ASC
+                ";
+
+                $results = DB::select($sql);
+
+                if (count($results) > 0){
+                    return response()->json([
+                        'data' => $results
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'data' => []
+                    ], Response::HTTP_OK);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los registros',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
         function create(array $novel){
             try {
                 /* $validation = $this->validate($this->validator, $novel, null, 'registrar', 'nuevo', null);

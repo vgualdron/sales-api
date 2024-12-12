@@ -4,6 +4,7 @@
     interface NovelServiceInterface
     {
         function list(string $status);
+        function listReds(int $city);
         function create(array $novel);
         function update(array $novel, int $id);
         function updateStatus(array $novel, int $id);

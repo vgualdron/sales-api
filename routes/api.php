@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/new"], function () {
     Route::delete('/delete/{id}', [NovelController::class, 'delete'])->middleware('can:new.delete')->name('new.delete');
     Route::get('/get/{id}', [NovelController::class, 'get'])->name('new.get');
     Route::get('/get-by-phone/{phone}', [NovelController::class, 'getByPhone'])->name('new.getByPhone');
+    Route::get('/list-reds/{city}', [NovelController::class, 'listReds'])->name('new.listReds');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/diary"], function () {
