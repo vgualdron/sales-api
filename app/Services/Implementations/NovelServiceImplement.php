@@ -143,7 +143,10 @@
                         news.observation AS news_observation,
                         lendings.firstDate,
                         districts.name AS district_name,
-                        yards.name AS yard_name,
+                        yards.name AS sector_name,
+                        yards.id AS sector_id,
+                        zones.name AS zone_name,
+                        zones.id AS zone_id,
                         DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
                         -- Cálculo del monto adeudado
                         (lendings.amount * (1 + lendings.percentage / 100)) AS total_due, 
@@ -218,6 +221,8 @@
                         districts ON address_data.district = districts.id
                     LEFT JOIN 
                         yards ON districts.sector = yards.id
+                    LEFT JOIN 
+                        zones ON zones.id = yards.zone
                     WHERE 
                         lendings.status = 'open' AND
                         news.status = 'consignado'
