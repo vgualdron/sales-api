@@ -134,6 +134,7 @@
                         lendings.id AS id,
                         lendings.amount,
                         lendings.percentage,
+                        lendings.has_double, -- Mostrar el campo has_double directamente
                         lendings.status,
                         listings.name as listing_name,
                         COALESCE(SUM(payments.amount), 0) AS total_paid,
@@ -143,15 +144,31 @@
                         news.observation AS news_observation,
                         lendings.firstDate,
                         districts.name AS district_name,
-                        yards.name AS sector_name,
-                        yards.id AS sector_id,
-                        zones.name AS city_name,
-                        zones.id AS city_id,
+                        yards.name AS yard_name,
                         DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
-                        -- Cálculo del monto adeudado
-                        (lendings.amount * (1 + lendings.percentage / 100)) AS total_due, 
+                        
+                        -- Cálculo del porcentaje ajustado según has_double
+                        CASE 
+                            WHEN lendings.has_double = 1 THEN lendings.percentage * 2
+                            ELSE lendings.percentage
+                        END AS adjusted_percentage,
+                        
+                        -- Cálculo del monto adeudado utilizando adjusted_percentage
+                        (lendings.amount * (1 + 
+                            CASE 
+                                WHEN lendings.has_double = 1 THEN lendings.percentage * 2 / 100
+                                ELSE lendings.percentage / 100
+                            END
+                        )) AS total_due, 
+                        
                         -- Cálculo del saldo restante
-                        (lendings.amount * (1 + lendings.percentage / 100) - COALESCE(SUM(payments.amount), 0)) AS remaining_balance,
+                        (lendings.amount * (1 + 
+                            CASE 
+                                WHEN lendings.has_double = 1 THEN lendings.percentage * 2 / 100
+                                ELSE lendings.percentage / 100
+                            END
+                        ) - COALESCE(SUM(payments.amount), 0)) AS remaining_balance,
+
                         -- Direcciones con filtro de NULLs
                         address_data.address_type,
                         address_data.address_name,
@@ -221,8 +238,6 @@
                         districts ON address_data.district = districts.id
                     LEFT JOIN 
                         yards ON districts.sector = yards.id
-                    LEFT JOIN 
-                        zones ON zones.id = yards.zone
                     WHERE 
                         lendings.status = 'open' AND
                         news.status = 'consignado'
@@ -233,7 +248,7 @@
                     ORDER BY 
                         CAST(SUBSTRING_INDEX(districts.order, ' ', 1) AS UNSIGNED) ASC, 
                         SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
-                        lendings.id ASC
+                        lendings.id ASC;
                 ";
 
                 $results = DB::select($sql);
