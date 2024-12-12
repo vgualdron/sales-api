@@ -25,24 +25,25 @@ class UpdateLendingsDoubleInterest extends Command
         // Ejecutar la consulta para obtener los registros que cumplen las condiciones
         $lendingsToUpdate = DB::select('
             SELECT 
-                lendings.id AS lending_id,
-                DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_first_date,
-                IFNULL(SUM(payments.amount), 0) AS total_paid,
-                (lendings.amount * (lendings.percentage / 100)) AS expected_interest
-            FROM 
-                lendings
-            LEFT JOIN 
-                payments ON lendings.id = payments.lending_id
-            WHERE 
-                lendings.status = "open"
-                AND lendings.has_double_interest = false
-                AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 15
-            GROUP BY
-                lendings.id
-            HAVING
-                expected_interest > total_paid
-            ORDER BY 
-                lendings.id
+            lendings.id AS lending_id,
+            DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_first_date,
+            DATE_ADD(lendings.firstDate, INTERVAL 15 DAY) AS new_date,
+            IFNULL(SUM(payments.amount), 0) AS total_paid,
+            (lendings.amount * (lendings.percentage / 100)) AS expected_interest
+        FROM 
+            lendings
+        LEFT JOIN 
+            payments ON lendings.id = payments.lending_id
+        WHERE 
+            lendings.status = "open"
+            AND lendings.has_double_interest = false
+            AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 15
+        GROUP BY
+            lendings.id
+        HAVING
+            expected_interest > total_paid
+        ORDER BY 
+            lendings.id;
         ');
 
         // Actualizar los registros seleccionados
@@ -51,7 +52,7 @@ class UpdateLendingsDoubleInterest extends Command
                 ->where('id', $lending->lending_id)
                 ->update([
                     'has_double_interest' => true,
-                    'doubleDate' => now(), // Actualizar con la fecha actual
+                    'doubleDate' => $lending->new_date, // Actualizar con la fecha actual
                 ]);
         }
 

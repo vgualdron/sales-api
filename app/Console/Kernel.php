@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('update:double-interest')
-                ->dailyAt('01:01')
+                // ->dailyAt('01:01')
+                ->everyMinute()
                 ->appendOutputTo(storage_path('logs/scheduler.log'));
     }
 
