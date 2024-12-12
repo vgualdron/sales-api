@@ -129,12 +129,16 @@
         function listReds(int $city) {
             try {
               
-                $sql = "
-                    SELECT 
+                $sql = "SELECT 
+                        ROW_NUMBER() OVER (ORDER BY 
+                            CAST(SUBSTRING_INDEX(districts.order, ' ', 1) AS UNSIGNED) ASC, 
+                            SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
+                            lendings.id ASC
+                        ) AS `order`, -- Generar el consecutivo
                         lendings.id AS id,
                         lendings.amount,
                         lendings.percentage,
-                        lendings.has_double_interest, -- Mostrar el campo has_double directamente
+                        lendings.has_double_interest,
                         lendings.status,
                         listings.name as listing_name,
                         COALESCE(SUM(payments.amount), 0) AS total_paid,
@@ -144,31 +148,25 @@
                         news.observation AS news_observation,
                         lendings.firstDate,
                         districts.name AS district_name,
-                        yards.name AS yard_name,
+                        yards.name AS sector_name,
+                        yards.id AS sector_id,
+                        zones.name AS city_name,
+                        zones.id AS city_id,
                         DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
-                        
-                        -- Cálculo del porcentaje ajustado según has_double
-                        CASE 
-                            WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2
-                            ELSE lendings.percentage
-                        END AS adjusted_percentage,
-                        
-                        -- Cálculo del monto adeudado utilizando adjusted_percentage
+                        -- Cálculo del monto adeudado considerando has_double_interest
                         (lendings.amount * (1 + 
                             CASE 
                                 WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                                 ELSE lendings.percentage / 100
                             END
                         )) AS total_due, 
-                        
-                        -- Cálculo del saldo restante
+                        -- Cálculo del saldo restante considerando has_double_interest
                         (lendings.amount * (1 + 
                             CASE 
                                 WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                                 ELSE lendings.percentage / 100
                             END
                         ) - COALESCE(SUM(payments.amount), 0)) AS remaining_balance,
-
                         -- Direcciones con filtro de NULLs
                         address_data.address_type,
                         address_data.address_name,
@@ -238,6 +236,8 @@
                         districts ON address_data.district = districts.id
                     LEFT JOIN 
                         yards ON districts.sector = yards.id
+                    LEFT JOIN 
+                        zones ON zones.id = yards.zone
                     WHERE 
                         lendings.status = 'open' AND
                         news.status = 'consignado'
@@ -248,8 +248,7 @@
                     ORDER BY 
                         CAST(SUBSTRING_INDEX(districts.order, ' ', 1) AS UNSIGNED) ASC, 
                         SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
-                        lendings.id ASC;
-                ";
+                        lendings.id ASC;";
 
                 $results = DB::select($sql);
 
