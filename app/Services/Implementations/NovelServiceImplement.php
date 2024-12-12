@@ -145,8 +145,8 @@
                         districts.name AS district_name,
                         yards.name AS sector_name,
                         yards.id AS sector_id,
-                        zones.name AS zone_name,
-                        zones.id AS zone_id,
+                        zones.name AS city_name,
+                        zones.id AS city_id,
                         DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
                         -- Cálculo del monto adeudado
                         (lendings.amount * (1 + lendings.percentage / 100)) AS total_due, 
