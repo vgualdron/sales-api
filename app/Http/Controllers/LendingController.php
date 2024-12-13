@@ -87,7 +87,7 @@ class LendingController extends Controller
             ->leftJoin('files as filePdf', function ($join) {
                 $join->on('filePdf.model_id', '=', 'news.id')
                      ->where('filePdf.model_name', '=', 'news')
-                     ->where('filePdf.name', '=', 'CV_PDF');
+                     ->where('filePdf.name', '=', 'CV_PFD');
             })
             ->with('payments')
             ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
