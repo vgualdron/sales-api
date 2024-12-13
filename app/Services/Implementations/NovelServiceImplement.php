@@ -135,7 +135,7 @@
                             SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
                             lendings.id ASC
                         ) AS `order`, -- Generar el consecutivo
-                        lendings.id AS id,
+                        lendings.id AS lending_id,
                         lendings.amount,
                         lendings.percentage,
                         lendings.has_double_interest,
