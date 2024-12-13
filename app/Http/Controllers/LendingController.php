@@ -68,17 +68,26 @@ class LendingController extends Controller
                 'f.name as file_name_n',
                 'f.url as file_url_n',
                 'f.status as file_status_n',
+                'filePdf.id as file_pdf_id',
+                'filePdf.name as file_pdf_name',
+                'filePdf.url as file_pdf_url',
+                'filePdf.status as file_pdf_status',
             ])
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
             ->leftJoin('files', function ($join) {
                 $join->on('files.model_id', '=', 'lendings.expense_id')
-                     ->where('files.model_name', '=', 'expenses'); // Segunda condición en el join
+                     ->where('files.model_name', '=', 'expenses');
             })
             ->leftJoin('files as f', function ($join) {
                 $join->on('f.model_id', '=', 'news.id')
-                     ->where('f.model_name', '=', 'news') // Segunda condición en el join
-                     ->where('f.name', '=', 'FOTO_VOUCHER'); // Segunda condición en el join
+                     ->where('f.model_name', '=', 'news')
+                     ->where('f.name', '=', 'FOTO_VOUCHER');
+            })
+            ->leftJoin('files as filePdf', function ($join) {
+                $join->on('filePdf.model_id', '=', 'news.id')
+                     ->where('filePdf.model_name', '=', 'news')
+                     ->where('filePdf.name', '=', 'CV_PDF');
             })
             ->with('payments')
             ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
