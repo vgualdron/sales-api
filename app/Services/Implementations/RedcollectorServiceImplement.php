@@ -26,7 +26,7 @@
                     $sql = $this->redcollector::create([
                         'collector_id' => $redcollector['collector_id'],
                         'registered_by' => $redcollector['idUserSesion'],
-                        'registered_date' => $redcollector['registered_date'],
+                        'registered_date' => date('Y-m-d H:i:s'),
                         'sector_id' => $redcollector['sector_id'],
                     ]);
     
