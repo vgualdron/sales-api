@@ -240,24 +240,8 @@
                         yards ON districts.sector = yards.id
                     LEFT JOIN 
                         zones ON zones.id = yards.zone
-                                        LEFT JOIN (
-                        SELECT 
-                            rc.sector_id,
-                            rc.collector_id,
-                            rc.registered_date
-                        FROM 
-                            redcollectors rc
-                        INNER JOIN (
-                            SELECT 
-                                sector_id,
-                                MAX(registered_date) AS latest_date
-                            FROM 
-                                redcollectors
-                            GROUP BY 
-                                sector_id
-                        ) AS latest_rc ON rc.sector_id = latest_rc.sector_id 
-                                       AND rc.registered_date = latest_rc.latest_date
-                    ) AS redcollectors ON redcollectors.sector_id = yards.id
+                    LEFT JOIN 
+                        redcollectors ON redcollectors.sector_id = yards.id
                     LEFT JOIN 
                         users ON redcollectors.collector_id = users.id
                     WHERE 

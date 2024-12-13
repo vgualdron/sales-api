@@ -23,13 +23,22 @@
         function create(array $redcollector){
             try {
                 DB::transaction(function () use ($redcollector) {
-                    $sql = $this->redcollector::create([
-                        'collector_id' => $redcollector['collector_id'],
-                        'registered_by' => $redcollector['idUserSesion'],
-                        'registered_date' => date('Y-m-d H:i:s'),
-                        'sector_id' => $redcollector['sector_id'],
-                    ]);
-    
+                    $item = $this->redcollector::where('collector_id', $redcollector['collector_id'])->first();
+                    if ($item) {
+                        $sql = $this->redcollector::where('id', $item->id)->update([
+                            'collector_id' => $redcollector['collector_id'],
+                            'registered_by' => $redcollector['idUserSesion'],
+                            'registered_date' => date('Y-m-d H:i:s'),
+                            'sector_id' => $redcollector['sector_id'],
+                        ]);
+                    } else {
+                        $sql = $this->redcollector::create([
+                            'collector_id' => $redcollector['collector_id'],
+                            'registered_by' => $redcollector['idUserSesion'],
+                            'registered_date' => date('Y-m-d H:i:s'),
+                            'sector_id' => $redcollector['sector_id'],
+                        ]);
+                    }
                 });
                 return response()->json([
                     'message' => [
