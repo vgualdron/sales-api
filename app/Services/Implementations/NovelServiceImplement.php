@@ -172,7 +172,9 @@
                         address_data.address_name,
                         address_data.address,
                         address_data.district,
-                        districts.order AS district_order
+                        districts.order AS district_order,
+                        redcollectors.collector_id AS collector_id,
+                        users.name AS collector_name
                     FROM 
                         lendings
                     LEFT JOIN 
@@ -238,6 +240,10 @@
                         yards ON districts.sector = yards.id
                     LEFT JOIN 
                         zones ON zones.id = yards.zone
+                    LEFT JOIN 
+                        redcollectors ON redcollectors.sector_id = yards.id
+                    LEFT JOIN 
+                        users ON redcollectors.collector_id = users.id
                     WHERE 
                         lendings.status = 'open' AND
                         news.status = 'consignado'
