@@ -12,7 +12,7 @@ class RedcollectorController extends Controller
     private $service;
     private $request;
 
-    public function __construct(Request $request, ExpenseServiceImplement $service) { 
+    public function __construct(Request $request, RedcollectorServiceImplement $service) { 
         $this->request = $request;
         $this->service = $service;
     }
