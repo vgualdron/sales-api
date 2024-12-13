@@ -150,6 +150,7 @@
                         districts.name AS district_name,
                         yards.name AS sector_name,
                         yards.id AS sector_id,
+                        yards.code AS sector_code,
                         zones.name AS city_name,
                         zones.id AS city_id,
                         DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
