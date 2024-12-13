@@ -34,7 +34,7 @@
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Red Collector registrado con éxito',
+                            'text' => 'Sector asignado registrado con éxito',
                             'detail' => null
                         ]
                     ]
