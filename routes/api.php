@@ -25,6 +25,7 @@ use App\Http\Controllers\{
                         QuestionController,
                         NequiController,
                         UploadDataController,
+                        RedcollectorController,
                     };
 
 /*
@@ -217,6 +218,10 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/question"], function ()
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/nequi"], function () {
     Route::get('/listing/{id}', [NequiController::class, 'index'])->name('nequi.list');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/redcollectors"], function () {
+    Route::post('/', [RedcollectorController::class, 'create'])->name('redcollectors.create');
 });
 
 // endpoints de carga da datos
