@@ -23,6 +23,12 @@
         function create(array $redcollector){
             try {
                 DB::transaction(function () use ($redcollector) {
+
+                    $itemSector = $this->redcollector::where('sector_id', $redcollector['sector_id'])->first();
+                    if ($itemSector) {
+                        $itemSector->delete();
+                    }
+
                     $item = $this->redcollector::where('collector_id', $redcollector['collector_id'])->first();
                     if ($item) {
                         $sql = $this->redcollector::where('id', $item->id)->update([
