@@ -175,7 +175,8 @@
                         address_data.district,
                         districts.order AS district_order,
                         redcollectors.collector_id AS collector_id,
-                        users.name AS collector_name
+                        users.name AS collector_name,
+                        news.observation as new_observation
                     FROM 
                         lendings
                     LEFT JOIN 
@@ -187,7 +188,6 @@
                     LEFT JOIN (
                         SELECT 
                             news.id as new_id,
-                            news.observation as new_observation,
                             'CASA' AS address_type,
                             'CASA' AS address_name,
                             address_house AS address,
@@ -197,7 +197,6 @@
                         UNION ALL
                         SELECT 
                             news.id as new_id,
-                            news.observation as new_observation,
                             'TRABAJO' AS address_type,
                             'TRABAJO' AS address_name,
                             address_work,
@@ -207,7 +206,6 @@
                         UNION ALL
                         SELECT 
                             news.id as new_id,
-                            news.observation as new_observation,
                             'REF 1' AS address_type,
                             CONCAT(family_reference_name, ' | ', family_reference_relationship) AS address_name,
                             family_reference_address,
@@ -217,7 +215,6 @@
                         UNION ALL
                         SELECT 
                             news.id as new_id,
-                            news.observation as new_observation,
                             'REF 2' AS address_type,
                             CONCAT(family2_reference_name, ' | ', family2_reference_relationship) AS address_name,
                             family2_reference_address,
@@ -227,7 +224,6 @@
                         UNION ALL
                         SELECT 
                             news.id as new_id,
-                            news.observation as new_observation,
                             'FIADOR' AS address_type,
                             CONCAT(guarantor_name, ' | ', guarantor_relationship) AS address_name,
                             guarantor_address,
