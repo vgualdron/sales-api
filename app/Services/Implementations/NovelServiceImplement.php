@@ -134,7 +134,7 @@
                             CAST(SUBSTRING_INDEX(districts.order, ' ', 1) AS UNSIGNED) ASC, 
                             SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
                             lendings.id ASC
-                        ) AS order,
+                        ) AS 'order',
                         lendings.id AS lending_id,
                         lendings.amount,
                         lendings.percentage,
