@@ -141,6 +141,7 @@
                         lendings.has_double_interest,
                         lendings.status,
                         listings.name as listing_name,
+                        listings.id as listing_id,
                         COALESCE(SUM(payments.amount), 0) AS total_paid,
                         news.id AS news_id,
                         news.name AS news_name,
@@ -154,21 +155,18 @@
                         zones.name AS city_name,
                         zones.id AS city_id,
                         DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
-                        -- Cálculo del monto adeudado considerando has_double_interest
                         (lendings.amount * (1 + 
                             CASE 
                                 WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                                 ELSE lendings.percentage / 100
                             END
                         )) AS total_due, 
-                        -- Cálculo del saldo restante considerando has_double_interest
                         (lendings.amount * (1 + 
                             CASE 
                                 WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                                 ELSE lendings.percentage / 100
                             END
                         ) - COALESCE(SUM(payments.amount), 0)) AS remaining_balance,
-                        -- Direcciones con filtro de NULLs
                         address_data.address_type,
                         address_data.address_name,
                         address_data.address,
