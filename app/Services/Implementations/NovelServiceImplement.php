@@ -156,6 +156,7 @@
                         zones.name AS city_name,
                         zones.id AS city_id,
                         DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
+                        (lendings.amount * (1 + lendings.percentage / 100)) AS total_value, 
                         (lendings.amount * (1 + 
                             CASE 
                                 WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
