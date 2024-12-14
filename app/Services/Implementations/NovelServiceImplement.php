@@ -175,8 +175,7 @@
                         address_data.district,
                         districts.order AS district_order,
                         redcollectors.collector_id AS collector_id,
-                        users.name AS collector_name,
-                        news.observation as new_observation
+                        users.name AS collector_name
                     FROM 
                         lendings
                     LEFT JOIN 
