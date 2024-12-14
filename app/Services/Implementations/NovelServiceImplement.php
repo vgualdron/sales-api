@@ -148,6 +148,7 @@
                         news.status AS news_status,
                         news.observation AS news_observation,
                         lendings.firstDate,
+                        lendings.endDate,
                         districts.name AS district_name,
                         yards.name AS sector_name,
                         yards.id AS sector_id,
