@@ -257,11 +257,11 @@
                         AND news.status = 'consignado'";
                         
                 if ($city && $city > 0) {
-                    $sql .= " AND yards.id = ".$city;
+                    $sql .= " AND zones.id = ".$city;
                 }
 
                 if ($user && $user > 0) {
-                    $sql .= " AND user.id = ".$user;
+                    $sql .= " AND redcollectors.collector_id = ".$user;
                 }
 
                 $sql .= " GROUP BY 
