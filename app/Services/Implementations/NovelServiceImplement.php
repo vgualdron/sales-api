@@ -126,7 +126,7 @@
             }
         }
 
-        function listReds(int $city) {
+        function listReds(int $city, int $user) {
             try {
               
                 $sql = "SELECT 
@@ -253,9 +253,18 @@
                     LEFT JOIN 
                         users ON redcollectors.collector_id = users.id
                     WHERE 
-                        lendings.status = 'open' AND
-                        news.status = 'consignado'
-                    GROUP BY 
+                        lendings.status = 'open'
+                        AND news.status = 'consignado'";
+                        
+                if ($city && $city > 0) {
+                    $sql .= " AND yards.id = ".$city;
+                }
+
+                if ($user && $user > 0) {
+                    $sql .= " AND user.id = ".$user;
+                }
+
+                $sql .= " GROUP BY 
                         lendings.id, news.id, districts.id, address_data.address_type, address_data.address, address_data.district
                     HAVING 
                         days_since_creation > 19

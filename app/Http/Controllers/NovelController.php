@@ -21,8 +21,8 @@ class NovelController extends Controller
         return $this->service->list($status);
     }
 
-    function listReds(int $city){
-        return $this->service->listReds($city);
+    function listReds(int $city, int $user){
+        return $this->service->listReds($city, $user);
     }
 
     function create(){
