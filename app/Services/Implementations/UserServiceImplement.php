@@ -89,6 +89,7 @@
                                 'u.date_location',
                                 'u.area as area',
                                 'a.name as areaName',
+                                'yrc.name as sector_name_collector',
                                 DB::Raw('IF(u.active = 1, "ACTIVO", "NO ACTIVO") as status'),
                                 DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin sector asignado") as yard'),
                                 DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad asignada") as zone')
@@ -98,6 +99,8 @@
                             ->leftJoin('areas as a', 'u.area', 'a.id')
                             ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
                             ->join('roles as r', 'mhr.role_id', 'r.id')
+                            ->leftJoin('redcollectors as rc', 'u.id', 'rc.collector_id')
+                            ->leftJoin('yards as yrc', 'yrc.id', 'rc.sector_id')
                             ->where('r.name', $name)
                             ->where('u.active', $displayAll)
                             ->when($city > 0, function ($q) use ($city) {
