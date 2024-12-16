@@ -177,7 +177,8 @@
                         address_data.address_longitude,
                         districts.order AS district_order,
                         redcollectors.collector_id AS collector_id,
-                        users.name AS collector_name
+                        users.name AS collector_name,
+                        (SELECT id FROM reddirections WHERE address = address_data.address AND type_ref = address_data.address_type) AS is_current
                     FROM 
                         lendings
                     LEFT JOIN 
