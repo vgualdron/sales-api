@@ -85,17 +85,11 @@
                                     'g.icon as group_icon',
                                     'g.label as group_label',
                                     'g.id as group_id',
-                                    'files.url as url_photo_profile',
                                 )
                                 ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
                                 ->join('role_has_permissions as rhp', 'mhr.role_id', 'rhp.role_id')
                                 ->join('permissions as p', 'rhp.permission_id', 'p.id')
                                 ->join('groups as g', 'p.group_id', 'g.id')
-                                ->leftJoin('files', function ($join) {
-                                    $join->on('files.model_id', '=', 'u.id')
-                                        ->where('files.model_name', '=', 'users')
-                                        ->where('files.name', '=', 'FOTO_PROFILE');
-                                })
                                 ->where('u.id', $user->id)
                                 ->orderBy('g.order_number', 'ASC')
                                 ->orderBy('p.order', 'ASC')
@@ -133,7 +127,6 @@
                                     'currentYard' => $user->yard,
                                     'city' => $yard->zone,
                                     'user' => $user->id,
-                                    'url_photo_profile' => $user->url_photo_profile,
                                 );
 
                                 $rolesArray = User::from('users as u')
