@@ -3,6 +3,6 @@
     
     interface RedcollectorServiceInterface
     {
-        function create(array $expense);
+        function create(array $redcollector);
     }
 ?>
