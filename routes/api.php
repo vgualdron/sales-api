@@ -26,6 +26,7 @@ use App\Http\Controllers\{
                         NequiController,
                         UploadDataController,
                         RedcollectorController,
+                        ReddirectionController,
                     };
 
 /*
@@ -222,6 +223,10 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/nequi"], function () {
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/redcollectors"], function () {
     Route::post('/', [RedcollectorController::class, 'create'])->name('redcollectors.create');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/reddirections"], function () {
+    Route::post('/', [ReddirectionController::class, 'create'])->name('reddirections.create');
 });
 
 // endpoints de carga da datos
