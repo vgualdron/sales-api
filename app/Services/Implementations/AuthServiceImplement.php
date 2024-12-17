@@ -196,12 +196,12 @@
                     ], Response::HTTP_NOT_FOUND);
                 }
             } catch (\Throwable $t) {
-                dd($t->getMessage().' '.$t->getLine());
+                // dd($t->getMessage().' '.$t->getLine());
                 return response()->json([
                     'message' => [
                         [
                             'text' => 'Se ha presentado un error en el servicio',
-                            'detail' => 'por favor, contacte con un administrador'
+                            'detail' => $t->getMessage().' '.$t->getLine(),
                         ]
                     ]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
