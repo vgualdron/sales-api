@@ -94,7 +94,7 @@
                                 ->leftJoin('files', function ($join) use ($date) {
                                     $join->on('files.model_id', '=', 'user.id')
                                         ->where('files.model_name', '=', 'users')
-                                        ->where('files.name', '=', 'FOTO_PROFILE')
+                                        ->where('files.name', '=', 'FOTO_PROFILE');
                                 })
                                 ->where('u.id', $user->id)
                                 ->orderBy('g.order_number', 'ASC')
