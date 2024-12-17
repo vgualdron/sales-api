@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reddirections extends Model
+class Reddirection extends Model
 {
     public $table = "reddirections";
 
