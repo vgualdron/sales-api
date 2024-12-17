@@ -91,7 +91,7 @@
                                 ->join('role_has_permissions as rhp', 'mhr.role_id', 'rhp.role_id')
                                 ->join('permissions as p', 'rhp.permission_id', 'p.id')
                                 ->join('groups as g', 'p.group_id', 'g.id')
-                                ->leftJoin('files', function ($join) use ($date) {
+                                ->leftJoin('files', function ($join) {
                                     $join->on('files.model_id', '=', 'user.id')
                                         ->where('files.model_name', '=', 'users')
                                         ->where('files.name', '=', 'FOTO_PROFILE');
