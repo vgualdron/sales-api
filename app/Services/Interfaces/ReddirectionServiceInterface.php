@@ -4,5 +4,6 @@
     interface ReddirectionServiceInterface
     {
         function create(array $reddirection);
+        function getCurrentByUser(int $user);
     }
 ?>

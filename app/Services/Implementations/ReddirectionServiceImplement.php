@@ -55,5 +55,27 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
+
+        
+        function getCurrentByUser(int $user){
+            try {
+                $item = $this->reddirection->from('reddirections as rd')
+                                        ->select('rd.*')
+                                        ->where('rd.collector_id', $user)->first();
+                return response()->json([
+                    'data' => $item
+                ], Response::HTTP_OK);
+                
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al buscar',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 ?>

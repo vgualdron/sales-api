@@ -24,4 +24,8 @@ class ReddirectionController extends Controller
         $data['idUserSesion'] = $idUserSesion;
         return $this->service->create($data);
     }
+
+    function getCurrentByUser(int $user){
+        return $this->service->getCurrentByUser($user);
+    }
 }
