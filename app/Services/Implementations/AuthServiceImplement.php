@@ -132,7 +132,8 @@
                                     'yard' => $user->change_yard.'-'.$user->yard,
                                     'currentYard' => $user->yard,
                                     'city' => $yard->zone,
-                                    'user' => $user->id
+                                    'user' => $user->id,
+                                    'url_photo_profile' => $user->url_photo_profile,
                                 );
 
                                 $rolesArray = User::from('users as u')
