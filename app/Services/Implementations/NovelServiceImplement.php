@@ -186,7 +186,15 @@
                             AND status IN ('creado', 'activo')
                             ORDER BY registered_date DESC
                             LIMIT 1
-                        ) AS is_current
+                        ) AS is_current,
+                        (SELECT id 
+                            FROM reddirections
+                            WHERE address = address_data.address
+                            AND type_ref = address_data.address_type
+                            AND status IN ('aprobado', 'rechazado')
+                            ORDER BY registered_date DESC
+                            LIMIT 1
+                        ) AS has_visited
                     FROM 
                         lendings
                     LEFT JOIN 
