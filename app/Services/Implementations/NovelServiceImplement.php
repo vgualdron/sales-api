@@ -147,6 +147,7 @@
                         news.name AS news_name,
                         news.status AS news_status,
                         news.observation AS news_observation,
+                        news.type_cv AS news_type_cv,
                         lendings.firstDate,
                         lendings.endDate,
                         districts.name AS district_name,
