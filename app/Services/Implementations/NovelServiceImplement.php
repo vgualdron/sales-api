@@ -202,8 +202,8 @@
                             'CASA' AS address_name,
                             address_house AS address,
                             address_house_district AS district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_longitude
+                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
+                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
                         FROM news
                         WHERE address_house IS NOT NULL AND address_house_district IS NOT NULL
                         UNION ALL
@@ -213,8 +213,8 @@
                             'TRABAJO' AS address_name,
                             address_work,
                             address_work_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_longitude
+                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
+                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
                         FROM news
                         WHERE address_work IS NOT NULL AND address_work_district IS NOT NULL
                         UNION ALL
@@ -224,8 +224,8 @@
                             CONCAT(family_reference_name, ' | ', family_reference_relationship) AS address_name,
                             family_reference_address,
                             family_reference_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_longitude
+                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
+                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
                         FROM news
                         WHERE family_reference_address IS NOT NULL AND family_reference_district IS NOT NULL
                         UNION ALL
@@ -235,8 +235,8 @@
                             CONCAT(family2_reference_name, ' | ', family2_reference_relationship) AS address_name,
                             family2_reference_address,
                             family2_reference_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_longitude
+                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
+                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
                         FROM news
                         WHERE family2_reference_address IS NOT NULL AND family2_reference_district IS NOT NULL
                         UNION ALL
@@ -246,8 +246,8 @@
                             CONCAT(guarantor_name, ' | ', guarantor_relationship) AS address_name,
                             guarantor_address,
                             guarantor_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'CV_PFD') AS address_longitude
+                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
+                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
                         FROM news
                         WHERE guarantor_address IS NOT NULL AND guarantor_district IS NOT NULL
                     ) AS address_data ON news.id = address_data.new_id
