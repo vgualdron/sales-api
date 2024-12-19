@@ -79,9 +79,9 @@
                                         ->leftJoin('districts as d', 'd.id', 'rd.district_id')
                                         ->leftJoin('yards as y', 'y.id', 'd.sector')
                                         ->leftJoin('files as f', function($join) {
-                                            $join->on('f.model_name', '=', 'news')
+                                            $join->where('f.model_name', '=', 'news')
                                                  ->on('f.model_id', '=', 'n.id')
-                                                 ->on('f.name', '=', 'PDF_CV');
+                                                 ->where('f.name', '=', 'PDF_CV');
                                         })
                                         ->where('rd.collector_id', $user)
                                         ->where('rd.status', 'activo')
