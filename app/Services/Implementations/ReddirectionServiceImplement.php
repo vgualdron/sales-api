@@ -61,7 +61,9 @@
             try {
                 $item = $this->reddirection->from('reddirections as rd')
                                         ->select('rd.*')
-                                        ->where('rd.collector_id', $user)->first();
+                                        ->where('rd.collector_id', $user)
+                                        ->where('rd.status', 'activo')
+                                        ->first();
                 return response()->json([
                     'data' => $item
                 ], Response::HTTP_OK);
