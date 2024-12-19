@@ -60,9 +60,13 @@
         function getCurrentByUser(int $user){
             try {
                 $item = $this->reddirection->from('reddirections as rd')
-                                        ->select('rd.*')
-                                        ->select('l.*')
+                                        ->select(
+                                            'rd.*',
+                                            'l.*',
+                                            'd.name as district_name'
+                                        )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
+                                        ->leftJoin('districts as d', 'd.id', 'rd.district_id')
                                         ->where('rd.collector_id', $user)
                                         ->where('rd.status', 'activo')
                                         ->first();
