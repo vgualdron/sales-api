@@ -63,9 +63,11 @@
                                         ->select(
                                             'rd.*',
                                             'l.*',
+                                            'li.name as listing_name',
                                             'd.name as district_name'
                                         )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
+                                        ->leftJoin('listings as li', 'li.id', 'l.listing_id')
                                         ->leftJoin('districts as d', 'd.id', 'rd.district_id')
                                         ->where('rd.collector_id', $user)
                                         ->where('rd.status', 'activo')
