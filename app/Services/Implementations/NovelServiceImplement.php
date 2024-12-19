@@ -271,7 +271,8 @@
                         users ON redcollectors.collector_id = users.id
                     WHERE 
                         lendings.status = 'open'
-                        AND news.status = 'consignado'";
+                    AND news.status = 'consignado'
+                    AND lendings.order <> 0 ";
                         
                 if ($city && $city > 0) {
                     $sql .= " AND zones.id = ".$city;
