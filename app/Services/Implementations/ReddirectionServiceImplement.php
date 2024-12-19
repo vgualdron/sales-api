@@ -61,6 +61,8 @@
             try {
                 $item = $this->reddirection->from('reddirections as rd')
                                         ->select('rd.*')
+                                        ->select('l.*')
+                                        ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
                                         ->where('rd.collector_id', $user)
                                         ->where('rd.status', 'activo')
                                         ->first();
