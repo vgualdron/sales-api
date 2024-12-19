@@ -62,7 +62,8 @@
                 $item = $this->reddirection->from('reddirections as rd')
                                         ->select(
                                             'rd.*',
-                                            'l.*',
+                                            'l.firstDate as lending_first_date',
+                                            'l.endDate as lending_end_date',
                                             'li.name as listing_name',
                                             'd.name as district_name',
                                             'd.order as district_order',
