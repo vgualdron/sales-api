@@ -69,11 +69,13 @@
                                             'd.order as district_order',
                                             'n.observation as new_observation',
                                             'n.name as new_name',
+                                            'y.name as sector_name',
                                         )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
                                         ->leftJoin('news as n', 'n.id', 'l.new_id')
                                         ->leftJoin('listings as li', 'li.id', 'l.listing_id')
                                         ->leftJoin('districts as d', 'd.id', 'rd.district_id')
+                                        ->leftJoin('yards as y', 'y.id', 'd.sector')
                                         ->where('rd.collector_id', $user)
                                         ->where('rd.status', 'activo')
                                         ->first();
