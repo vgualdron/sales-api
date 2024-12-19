@@ -64,7 +64,8 @@
                                             'rd.*',
                                             'l.*',
                                             'li.name as listing_name',
-                                            'd.name as district_name'
+                                            'd.name as district_name',
+                                            'd.order as district_order',
                                         )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
                                         ->leftJoin('listings as li', 'li.id', 'l.listing_id')
