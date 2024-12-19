@@ -64,6 +64,7 @@
                                             'rd.*',
                                             'l.firstDate as lending_first_date',
                                             'l.endDate as lending_end_date',
+                                            'li.id as listing_id',
                                             'li.name as listing_name',
                                             'd.name as district_name',
                                             'd.order as district_order',
