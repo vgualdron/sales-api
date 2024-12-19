@@ -70,12 +70,19 @@
                                             'n.observation as new_observation',
                                             'n.name as new_name',
                                             'y.name as sector_name',
+                                            'f.latitude as address_latitude',
+                                            'f.longitude as address_longitude',
                                         )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
                                         ->leftJoin('news as n', 'n.id', 'l.new_id')
                                         ->leftJoin('listings as li', 'li.id', 'l.listing_id')
                                         ->leftJoin('districts as d', 'd.id', 'rd.district_id')
                                         ->leftJoin('yards as y', 'y.id', 'd.sector')
+                                        ->leftJoin('files as f', function($join) {
+                                            $join->on('f.model_name', '=', 'news')
+                                                 ->on('f.model_id', '=', 'n.id')
+                                                 ->on('f.name', '=', 'PDF_CV');
+                                        })
                                         ->where('rd.collector_id', $user)
                                         ->where('rd.status', 'activo')
                                         ->first();
