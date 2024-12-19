@@ -72,12 +72,15 @@
                                             'y.name as sector_name',
                                             'f.latitude as address_latitude',
                                             'f.longitude as address_longitude',
+                                            'u.latitude as user_latitude',
+                                            'u.longitude as user_longitude',
                                         )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
                                         ->leftJoin('news as n', 'n.id', 'l.new_id')
                                         ->leftJoin('listings as li', 'li.id', 'l.listing_id')
                                         ->leftJoin('districts as d', 'd.id', 'rd.district_id')
                                         ->leftJoin('yards as y', 'y.id', 'd.sector')
+                                        ->leftJoin('users as u', 'u.id', 'rd.collector_id')
                                         ->leftJoin('files as f', function($join) {
                                             $join->where('f.model_name', '=', 'news')
                                                  ->on('f.model_id', '=', 'n.id')
