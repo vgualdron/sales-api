@@ -90,7 +90,7 @@ class LendingController extends Controller
                      ->where('filePdf.name', '=', 'PDF_CV');
             })
             ->with('payments')
-            ->with('redirections')
+            ->with('reddirections')
             ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
                 $query->where(function ($subQuery) use ($idList, $status1) {
                     $subQuery->where('listing_id', $idList)
