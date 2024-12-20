@@ -38,15 +38,13 @@ class Lending extends Authenticatable
         'doubleDate',
     ];
    
-   public function payments()
-   {
+    public function payments() {
        return $this->hasMany(Payment::class, 'lending_id', 'id');
-   }
+    }
    
-   /* public function interests()
-   {
-       return $this->hasMany(Interest::class, 'lending_id', 'id');
-   } */
+    public function reddirections() {
+       return $this->hasMany(Reddirection::class, 'lending_id', 'id');
+    }
 
 
     /**
