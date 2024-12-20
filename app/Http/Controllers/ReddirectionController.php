@@ -32,4 +32,8 @@ class ReddirectionController extends Controller
     function update(int $id){
         return $this->service->update($this->request->all(), $id);
     }
+
+    function getByLending(int $lending){
+        return $this->service->getByLending($lending);
+    }
 }

@@ -150,5 +150,56 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
+
+        function getByLending(int $lending){
+            try {
+                $item = $this->reddirection->from('reddirections as rd')
+                                        ->select(
+                                            'rd.*',
+                                            'l.firstDate as lending_first_date',
+                                            'l.endDate as lending_end_date',
+                                            'li.id as listing_id',
+                                            'li.name as listing_name',
+                                            'd.name as district_name',
+                                            'd.order as district_order',
+                                            'n.observation as new_observation',
+                                            'n.name as new_name',
+                                            'y.name as sector_name',
+                                            'f.latitude as address_latitude',
+                                            'f.longitude as address_longitude',
+                                            'u.latitude as user_latitude',
+                                            'u.longitude as user_longitude',
+                                        )
+                                        ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
+                                        ->leftJoin('news as n', 'n.id', 'l.new_id')
+                                        ->leftJoin('listings as li', 'li.id', 'l.listing_id')
+                                        ->leftJoin('districts as d', 'd.id', 'rd.district_id')
+                                        ->leftJoin('yards as y', 'y.id', 'd.sector')
+                                        ->leftJoin('users as u', 'u.id', 'rd.collector_id')
+                                        ->leftJoin('files as f', function($join) {
+                                            $join->where('f.model_name', '=', 'news')
+                                                 ->on('f.model_id', '=', 'n.id')
+                                                 ->where('f.name', '=', 'PDF_CV');
+                                        })
+                                        ->where('rd.collector_id', $user)
+                                        ->where('rd.status', 'activo')
+                                        ->orderBy('rd.address', 'ASC')
+                                        ->orderBy('rd.registered_date', 'DESC')
+                                        ->get();
+                return response()->json([
+                    'data' => $item
+                ], Response::HTTP_OK);
+                
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al buscar',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 ?>
