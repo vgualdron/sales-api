@@ -159,6 +159,7 @@ class PaymentController extends Controller
                 'date' => $request->date,
                 'amount' => $request->amount,
                 'observation' => $request->observation ?? '',
+                'is_street' => $request->is_street ?? false,
                 'file_id' => $request->file_id,
                 'type' => $request->type,
                 'status' => $request->status,
