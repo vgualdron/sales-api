@@ -114,7 +114,7 @@
                     $sql->approved_date = $reddirection['approved_date'];
                     $sql->start_date = $reddirection['start_date'];
                     $sql->end_date = $reddirection['end_date'];
-                    $sql->file1_id = $reddirection['file1_id'];
+                    $sql->file_id = $reddirection['file_id'];
                     $sql->file2_id = $reddirection['file2_id'];
                     $sql->status = $reddirection['status'];
                     $sql->attended = $reddirection['attended'];
