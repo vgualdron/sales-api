@@ -165,8 +165,12 @@
                                             'n.observation as new_observation',
                                             'n.name as new_name',
                                             'y.name as sector_name',
-                                            'f.latitude as address_latitude',
-                                            'f.longitude as address_longitude',
+                                            'f1.url as file_url',
+                                            'f1.latitude as file_latitude',
+                                            'f1.longitude as file_longitude',
+                                            'f2.url as file2_url',
+                                            'f2.latitude as file2_latitude',
+                                            'f2.longitude as file2_longitude',
                                             'u.name as collector_name',
                                         )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
@@ -175,11 +179,8 @@
                                         ->leftJoin('districts as d', 'd.id', 'rd.district_id')
                                         ->leftJoin('yards as y', 'y.id', 'd.sector')
                                         ->leftJoin('users as u', 'u.id', 'rd.collector_id')
-                                        ->leftJoin('files as f', function($join) {
-                                            $join->where('f.model_name', '=', 'news')
-                                                 ->on('f.model_id', '=', 'n.id')
-                                                 ->where('f.name', '=', 'PDF_CV');
-                                        })
+                                        ->leftJoin('files as f1', 'f1.id', 'rd.file_id')
+                                        ->leftJoin('files as f2', 'f2.id', 'rd.file2_id')
                                         ->where('rd.lending_id', $lending)
                                         ->where('rd.status', 'activo')
                                         ->orderBy('rd.address', 'ASC')
