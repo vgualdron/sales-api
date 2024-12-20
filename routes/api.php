@@ -228,6 +228,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/redcollectors"], functi
 Route::group(['middleware' => 'auth:api' , "prefix" => "/reddirections"], function () {
     Route::post('/', [ReddirectionController::class, 'create'])->name('reddirections.create');
     Route::get('/get-current-by-user/{user}', [ReddirectionController::class, 'getCurrentByUser'])->name('reddirections.getCurrentByUser');
+    Route::put('/{id}', [ReddirectionController::class, 'update'])->name('reddirection.update');
 });
 
 // endpoints de carga da datos

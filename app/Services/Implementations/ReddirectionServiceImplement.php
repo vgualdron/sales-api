@@ -56,7 +56,6 @@
             }
         }
 
-        
         function getCurrentByUser(int $user){
             try {
                 $item = $this->reddirection->from('reddirections as rd')
@@ -100,6 +99,52 @@
                         [
                             'text' => 'Se ha presentado un error al buscar',
                             'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        function update(array $reddirection, int $id){
+            try {
+                $sql = $this->reddirection::find($id);
+                if(!empty($sql)) {
+                    $sql->collector_id = $reddirection['collector_id'];
+                    $sql->approved_by = $reddirection['approved_by'];
+                    $sql->approved_date = $reddirection['approved_date'];
+                    $sql->start_date = $reddirection['start_date'];
+                    $sql->end_date = $reddirection['end_date'];
+                    $sql->file1_id = $reddirection['file1_id'];
+                    $sql->file2_id = $reddirection['file2_id'];
+                    $sql->status = $reddirection['status'];
+                    $sql->attended = $reddirection['attended'];
+                    $sql->solution = $reddirection['solution'];
+                    $sql->observation = $reddirection['observation'];
+                    $sql->save();
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Actualizado con éxito',
+                                'detail' => null
+                            ]
+                        ]
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'Advertencia al actualizar',
+                                'detail' => 'No existe'
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Advertencia al actualizar',
+                            'detail' => $e->getMessage(),
                         ]
                     ]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);

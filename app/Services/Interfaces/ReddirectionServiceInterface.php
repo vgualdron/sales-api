@@ -5,5 +5,6 @@
     {
         function create(array $reddirection);
         function getCurrentByUser(int $user);
+        function update(array $reddirection, int $id);
     }
 ?>
