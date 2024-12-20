@@ -187,6 +187,14 @@
                             ORDER BY registered_date DESC
                             LIMIT 1
                         ) AS is_current,
+                        (SELECT file_id 
+                            FROM reddirections
+                            WHERE address = address_data.address
+                            AND type_ref = address_data.address_type
+                            AND status IN ('creado', 'activo')
+                            ORDER BY registered_date DESC
+                            LIMIT 1
+                        ) AS reddirection_file_id,
                         (SELECT id 
                             FROM reddirections
                             WHERE address = address_data.address
