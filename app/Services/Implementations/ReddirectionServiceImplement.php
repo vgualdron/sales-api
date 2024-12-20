@@ -181,7 +181,7 @@
                                                  ->on('f.model_id', '=', 'n.id')
                                                  ->where('f.name', '=', 'PDF_CV');
                                         })
-                                        ->where('rd.collector_id', $user)
+                                        ->where('rd.lending_id', $lending)
                                         ->where('rd.status', 'activo')
                                         ->orderBy('rd.address', 'ASC')
                                         ->orderBy('rd.registered_date', 'DESC')
