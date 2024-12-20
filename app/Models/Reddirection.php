@@ -29,7 +29,10 @@ class Reddirection extends Model
         'description_ref',
         'value',
         'file_id',
+        'file2_id',
         'status',
+        'attended',
+        'solution',
         'observation',
     ];
 }
