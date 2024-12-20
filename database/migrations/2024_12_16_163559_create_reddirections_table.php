@@ -27,7 +27,10 @@ return new class extends Migration
             $table->string('description_ref', 300)->collation('utf8_general_ci')->required();
             $table->integer('value')->required();
             $table->unsignedBigInteger('file_id')->nullable();
+            $table->unsignedBigInteger('file2_id')->nullable();
             $table->string('status', 50)->collation('utf8_general_ci')->required();
+            $table->string('attended', 300)->collation('utf8_general_ci')->nullable();
+            $table->string('solution', 100)->collation('utf8_general_ci')->nullable();
             $table->string('observation', 300)->collation('utf8_general_ci')->nullable();
             $table->foreign('collector_id')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('registered_by')->references('id')->on('users')->onDelete('restrict');
@@ -35,6 +38,7 @@ return new class extends Migration
             $table->foreign('lending_id')->references('id')->on('lendings')->onDelete('restrict');
             $table->foreign('district_id')->references('id')->on('districts')->onDelete('restrict');
             $table->foreign('file_id')->references('id')->on('files')->onDelete('restrict');
+            $table->foreign('file2_id')->references('id')->on('files')->onDelete('restrict');
             $table->timestamps();
         });
     }
