@@ -277,6 +277,8 @@
                     LEFT JOIN 
                         redcollectors ON redcollectors.sector_id = yards.id
                     LEFT JOIN 
+                        reddirections ON reddirections.sector_id = yards.id
+                    LEFT JOIN 
                         users ON redcollectors.collector_id = users.id
                     WHERE 
                         lendings.status = 'open'
