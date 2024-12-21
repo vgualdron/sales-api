@@ -140,6 +140,7 @@
                         lendings.percentage,
                         lendings.has_double_interest,
                         lendings.status,
+                        lendings.order as lending_order,
                         listings.name as listing_name,
                         listings.id as listing_id,
                         COALESCE(SUM(payments.amount), 0) AS total_paid,
