@@ -72,7 +72,7 @@
                                             'n.name as new_name',
                                             'n.type_cv as new_type_cv',
                                             'y.id as sector_id',
-                                            'y.order as sector_order',
+                                            'y.code as sector_code',
                                             'y.name as sector_name',
                                             'f.latitude as address_latitude',
                                             'f.longitude as address_longitude',
