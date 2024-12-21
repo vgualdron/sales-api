@@ -76,6 +76,7 @@
                                             'f.longitude as address_longitude',
                                             'u.latitude as user_latitude',
                                             'u.longitude as user_longitude',
+                                            'u.name as collector_name',
                                         )
                                         ->leftJoin('lendings as l', 'l.id', 'rd.lending_id')
                                         ->leftJoin('news as n', 'n.id', 'l.new_id')
