@@ -35,7 +35,7 @@ class PaymentController extends Controller
                             })
                             ->whereIn('payments.type', ['nequi', 'adelanto'])
                             // ->whereIn('payments.type', ['nequi'])
-                            ->where('payments.observation', 'adelanto')
+                            ->where('payments.observation', '<>' ,'adelanto')
                             ->distinct()
                             ->orderBy('payments.date', 'asc')->get();
         } catch (Exception $e) {
