@@ -82,9 +82,7 @@ class ListingController extends Controller
             $idUserSesion = $request->user()->id;
             $items = Listing::where('status', '=', 'activa')
                             ->where(function ($query) use ($idUserSesion) {
-                                $query->where('user_id_collector', '=', $idUserSesion)
-                                    ->orWhere('user_id_leader', '=', $idUserSesion)
-                                    ->orWhere('user_id_authorized', '=', $idUserSesion);
+                                $query->where('user_id_collector', '=', $idUserSesion);
                             })
                             ->with('userCollector')
                             ->with('userLeader')
