@@ -281,7 +281,7 @@
                     WHERE 
                         lendings.status = 'open'
                     AND news.status = 'consignado'
-                    AND lendings.order <> 0 ";
+                    AND lendings.order <> 0 "; // el order 0 es cuando se tiene a un cliente ene spera en cobro, y no quiere msotrarse en rojos
                         
                 if ($city && $city > 0) {
                     $sql .= " AND zones.id = ".$city;
