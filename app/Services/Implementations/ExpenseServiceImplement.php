@@ -79,6 +79,7 @@
                         'i.name as item_name',
                         'u.name as user_name',
                         'n.name as new_name',
+                        'n.account_active',
                         'n.account_type',
                         'n.account_number',
                         'n.account_type_third',
