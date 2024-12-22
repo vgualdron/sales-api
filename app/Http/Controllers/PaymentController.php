@@ -33,7 +33,9 @@ class PaymentController extends Controller
                             ->when($status !== 'all', function ($q) use ($explodeStatus) {
                                 return $q->whereIn('payments.status', $explodeStatus);
                             })
-                            ->whereIn('payments.type', ['nequi', 'adelanto'])
+                            // ->whereIn('payments.type', ['nequi', 'adelanto'])
+                            ->whereIn('payments.type', ['nequi'])
+                            ->where('payments.observation', 'adelanto')
                             ->distinct()
                             ->orderBy('payments.date', 'asc')->get();
         } catch (Exception $e) {
