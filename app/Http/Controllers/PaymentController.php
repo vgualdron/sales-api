@@ -158,7 +158,7 @@ class PaymentController extends Controller
             
             $item = Payment::create([
                 'lending_id' => $request->lending_id,
-                'date' => $request->date,
+                'date' => date('Y-m-d H:i:s', strtotime('-1 day')),  // poner $request->date
                 'amount' => $request->amount,
                 'observation' => $request->observation ?? '',
                 'is_valid' => $request->is_valid,
