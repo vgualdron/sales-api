@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
     Route::put('/update/{id}', [UserController::class, 'update'])->middleware('can:user.update')->name('user.update');
     Route::delete('/delete/{id}', [UserController::class, 'delete'])->middleware('can:user.delete')->name('user.delete');
     Route::get('/get/{id}', [UserController::class, 'get'])->name('user.get');
-    Route::put('/updateProfile/{id}', [UserController::class, 'updateProfile'])->middleware('can:user.updateProfile')->name('user.updateProfile');
+    Route::put('/updateProfile/{id}', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::put('/update-push-token', [UserController::class, 'updatePushToken'])->name('user.updatePushToken');
     Route::put('/update-location', [UserController::class, 'updateLocation'])->name('user.updateLocation');
 });
