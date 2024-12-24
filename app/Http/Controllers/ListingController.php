@@ -259,9 +259,6 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
-            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
-            $currentDate = date("Y-m-d H:i:s");
-      
             $itemList = Listing::find($idList);
 
             $itemPayment = Payment::selectRaw('
@@ -283,14 +280,14 @@ class ListingController extends Controller
                 ->first();
 
             $itemRenove = Lending::selectRaw('COUNT(*) as total_count, COALESCE(SUM(amount), 0) as total_amount')
-                        ->whereBetween('created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
+                        ->whereBetween('created_at', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('listing_id', $idList)
                         ->where('status', 'open')
                         ->where('type', 'R')
                         ->first();
 
             $itemNovel = Lending::selectRaw('COUNT(*) as total_count, COALESCE(SUM(amount), 0) as total_amount')
-                        ->whereBetween('created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
+                        ->whereBetween('created_at', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('listing_id', $idList)
                         ->where('status', 'open')
                         ->where('type', 'N')
@@ -299,7 +296,7 @@ class ListingController extends Controller
             $itemExpense = Expense::selectRaw('COUNT(*) as total_count_renovation, COALESCE(SUM(expenses.amount), 0) as total_amount_renovation')
                         ->leftJoin('lendings', 'lendings.expense_id', '=', 'expenses.id')
                         ->join('listings', 'listings.id', '=', 'lendings.listing_id')
-                        ->whereBetween('expenses.created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
+                        ->whereBetween('expenses.created_at', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('expenses.item_id', 1)
                         ->where('listings.id', $idList)
                         ->first();
