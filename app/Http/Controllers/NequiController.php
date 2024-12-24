@@ -15,7 +15,12 @@ class NequiController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            $items = Nequi::where('status', 'activo')->where('listing_id', $idList)->orderBy('order', 'asc')->get();
+            // $items = Nequi::where('status', 'activo')->where('listing_id', $idList)->orderBy('order', 'asc')->get();
+            $items = Nequi::where('status', 'activo')
+                    ->where('listing_id', $idList)
+                    ->orWhere('global', 1)
+                    ->orderBy('order', 'asc')
+                    ->get();
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
