@@ -297,7 +297,8 @@ class ListingController extends Controller
                         ->first();
                         
             $itemExpense = Expense::selectRaw('COUNT(*) as total_count_renovation, COALESCE(SUM(amount), 0) as total_amount_renovation')
-                        ->join('listings', 'listings.user_id_collector', '=', 'expenses.user_id')
+                        ->leftJoin('lendings', 'lendings.expense_id', '=', 'expenses.id')
+                        ->join('listings', 'listings.id', '=', 'lendings.listing_id')
                         ->whereBetween('expenses.created_at', ["{$date} 00:00:00", "{$date} 23:59:59"])
                         ->where('expenses.item_id', 1)
                         ->where('listings.id', $idList)
