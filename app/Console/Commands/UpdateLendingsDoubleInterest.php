@@ -26,8 +26,10 @@ class UpdateLendingsDoubleInterest extends Command
         $lendingsToUpdate = DB::select('
             SELECT 
             lendings.id AS lending_id,
+            lendings.amount AS amount,
+            lendings.firstDate AS date,
             DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_first_date,
-            DATE_ADD(lendings.firstDate, INTERVAL 16 DAY) AS new_date,
+            DATE_ADD(lendings.firstDate, INTERVAL 15 DAY) AS new_date,
             IFNULL(SUM(payments.amount), 0) AS total_paid,
             (lendings.amount * (lendings.percentage / 100)) AS expected_interest
         FROM 
