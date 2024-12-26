@@ -72,9 +72,11 @@ class LendingController extends Controller
                 'filePdf.name as file_pdf_name',
                 'filePdf.url as file_pdf_url',
                 'filePdf.status as file_pdf_status',
+                'expenses.status as expense_status',
             ])
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
+            ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
             ->leftJoin('files', function ($join) {
                 $join->on('files.model_id', '=', 'lendings.expense_id')
                      ->where('files.model_name', '=', 'expenses');
