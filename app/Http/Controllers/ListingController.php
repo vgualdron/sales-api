@@ -296,9 +296,14 @@ class ListingController extends Controller
             $itemExpense = Expense::selectRaw('COUNT(*) as total_count_renovation, COALESCE(SUM(expenses.amount), 0) as total_amount_renovation')
                         ->leftJoin('lendings', 'lendings.expense_id', '=', 'expenses.id')
                         ->join('listings', 'listings.id', '=', 'lendings.listing_id')
+                        ->join('listings', 'listings.id', '=', 'lendings.listing_id')
+                        ->leftJoin('files', function($join) {
+                            $join->on('files.model_id', '=', 'expenses.id')
+                                 ->where('files.model_name', '=', 'expenses');
+                        })
                         ->whereBetween('expenses.created_at', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('expenses.item_id', 1)
-                        ->whereNotNull('lendings.expense_id')
+                        ->whereNotNull('files.id')
                         ->where('listings.id', $idList)
                         ->first();
                         
