@@ -113,7 +113,7 @@ class LendingController extends Controller
             }) */
             ->distinct()
             ->orderBy('lendings.type', 'asc')
-            ->orderBy('news.id', 'asc')
+            ->orderBy('lendings.id', 'asc')
             ->get();
         } catch (Exception $e) {
             return response()->json([
