@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/yard"], function () {
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
-    Route::get('/list/{displayAll}', [UserController::class, 'list'])->middleware('can:user.list')->name('user.list');
+    Route::get('/list/{displayAll}', [UserController::class, 'list'])->name('user.list');
     Route::get('/list-by-role-name/{displayAll}/{name}/{city}', [UserController::class, 'listByRoleName'])->name('user.listByRoleName');
     Route::get('/list-by-area/{area}', [UserController::class, 'listByArea'])->name('user.listByArea');
     Route::post('/create', [UserController::class, 'create'])->middleware('can:user.create')->name('user.create');
