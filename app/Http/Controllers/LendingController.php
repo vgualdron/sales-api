@@ -110,6 +110,7 @@ class LendingController extends Controller
                     });
             })
             ->distinct()
+            ->orderBy('lendings.type', 'asc')
             ->orderBy('lendings.id', 'asc')
             ->get();
         } catch (Exception $e) {
