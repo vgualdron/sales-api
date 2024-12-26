@@ -298,6 +298,7 @@ class ListingController extends Controller
                         ->join('listings', 'listings.id', '=', 'lendings.listing_id')
                         ->whereBetween('expenses.created_at', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('expenses.item_id', 1)
+                        ->whereNotNull('lendings.expense_id')
                         ->where('listings.id', $idList)
                         ->first();
                         
