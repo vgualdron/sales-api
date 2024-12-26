@@ -68,8 +68,9 @@
             }
         }
 
-        function listByItem(int $item) {
+        function listByItem(string $status, int $item) {
             try {
+                $explodeStatus = explode(',', $status);
                 $sql = $this->expense->from('expenses as e')
                     ->select(
                         'e.*',
@@ -92,6 +93,9 @@
                     ->leftJoin('lendings as l', 'l.expense_id', 'e.id')
                     ->leftJoin('news as n', 'n.id', 'l.new_id')
                     ->where('e.item_id', $item)
+                    ->when($status !== 'all', function ($q) use ($explodeStatus) {
+                        return $q->whereIn('e.status', $explodeStatus);
+                    })
                     ->distinct()
                     ->orderBy('e.date', 'ASC')
                     ->get();

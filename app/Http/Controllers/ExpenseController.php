@@ -21,8 +21,8 @@ class ExpenseController extends Controller
         return $this->service->list($status, $items);
     }
 
-    function listByItem(string $item){
-        return $this->service->listByItem($item);
+    function listByItem(string $status, string $item){
+        return $this->service->listByItem($status, $item);
     }
 
     function create(){
