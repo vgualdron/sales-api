@@ -437,8 +437,6 @@ class LendingController extends Controller
                     'item_id' => 1, // id del item de egreso para RENOVACIONES DE NEQUI
                     'user_id' => $idUserExpense,
                     'registered_by' => $idUserSesion,
-                    'model_name' => 'listings',
-                    'model_id' => $idList,
                 ]);
             }
 
