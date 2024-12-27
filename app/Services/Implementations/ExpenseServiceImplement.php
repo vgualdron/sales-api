@@ -98,7 +98,7 @@
                     ->leftJoin('news as n', 'n.id', 'l.new_id')
                     ->leftJoin('listings as ls', 'ls.id', 'l.listing_id')
                     ->leftJoin('files as f', function ($join) {
-                        $join->on('f.model_id', '=', 'news.id')
+                        $join->on('f.model_id', '=', 'n.id')
                              ->where('f.model_name', '=', 'news')
                              ->where('f.name', '=', 'VIDEO_AUTORIZA_CUENTA_TERCERO');
                     })
