@@ -181,7 +181,7 @@ class LendingController extends Controller
                 'news.guarantor_phone',
                 'news.has_letter',
                 'news.score',
-                'news.score_obervation',
+                'news.score_observation',
                 'files.id as file_id_r',
                 'files.name as file_name_r',
                 'files.url as file_url_r',
