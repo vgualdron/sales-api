@@ -302,6 +302,7 @@ class ListingController extends Controller
                         })
                         ->whereBetween('expenses.created_at', [$date." 00:00:00", $date." 23:59:59"])
                         ->where('expenses.item_id', 1)
+                        ->where('expenses.status', 'aprobado')
                         ->whereNotNull('files.id')
                         ->where('listings.id', $idList)
                         ->first();
