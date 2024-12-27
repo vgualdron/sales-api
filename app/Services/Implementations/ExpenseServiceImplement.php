@@ -175,7 +175,7 @@
                         'detail' => null,
                     ]
                 ]
-            ], JsonResponse::HTTP_OK);
+            ], Response::HTTP_OK);
         }
         
         function delete(int $id){   
