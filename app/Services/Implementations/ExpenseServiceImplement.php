@@ -86,12 +86,14 @@
                         'n.account_type_third',
                         'n.account_number_third',
                         'n.account_name_third',
+                        'ls.name as listing_name',
                     )
                     ->leftJoin('items as i', 'e.item_id', 'i.id')
                     ->leftJoin('areas as a', 'i.area_id', 'a.id')
                     ->leftJoin('users as u', 'e.user_id', 'u.id')
                     ->leftJoin('lendings as l', 'l.expense_id', 'e.id')
                     ->leftJoin('news as n', 'n.id', 'l.new_id')
+                    ->leftJoin('listings as ls', 'ls.id', 'l.listing_id')
                     ->where('e.item_id', $item)
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('e.status', $explodeStatus);
