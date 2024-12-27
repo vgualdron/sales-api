@@ -180,6 +180,8 @@ class LendingController extends Controller
                 'news.guarantor_name',
                 'news.guarantor_phone',
                 'news.has_letter',
+                'news.score',
+                'news.score_obervation',
                 'files.id as file_id_r',
                 'files.name as file_name_r',
                 'files.url as file_url_r',
@@ -214,17 +216,6 @@ class LendingController extends Controller
             ->with('payments')
             ->whereIn('lendings.status', [$status3])
             ->where('lendings.listing_id', $idList)
-            /* ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
-                $query->where(function ($subQuery) use ($idList, $status1) {
-                    $subQuery->where('listing_id', $idList)
-                        ->whereIn('lendings.status', [$status1]);
-                })
-                ->orWhere(function ($subQuery) use ($idList, $status2, $status3, $startDate, $endDate) {
-                    $subQuery->where('listing_id', $idList)
-                        ->whereIn('lendings.status', [$status2, $status3])
-                        ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
-                });
-            }) */
             ->distinct()
             ->orderBy('lendings.type', 'asc')
             ->orderBy('lendings.id', 'asc')
