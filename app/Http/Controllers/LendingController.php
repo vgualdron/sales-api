@@ -100,18 +100,12 @@ class LendingController extends Controller
                 })
                 ->orWhere(function ($subQuery) use ($idList, $status2, $status3, $startDate, $endDate) {
                     $subQuery->where('listing_id', $idList)
-                        ->whereIn('lendings.status', [$status2, $status3])
-                        ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
+                        ->whereIn('lendings.status', [$status2, $status3]);
+                        // ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
                 });
             })
-            /* ->where(function ($query) {
-                $query->whereNull('lendings.expense_id') // Si expense_id es null, no se aplica la condición adicional
-                    ->orWhere(function ($subQuery) {
-                        $subQuery->whereNotNull('lendings.expense_id') // Si expense_id no es null, se verifica files.id
-                            ->whereNotNull('files.id');
-                    });
-            }) */
             ->distinct()
+            ->orderBy('lendings.status', 'desc')
             ->orderBy('lendings.type', 'asc')
             ->orderBy('lendings.id', 'asc')
             ->get();
