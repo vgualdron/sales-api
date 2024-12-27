@@ -396,7 +396,7 @@ class LendingController extends Controller
 
             $item->update($newItem);
 
-            $period = $item->period;
+            $period = $request->period;
             $countDays = 1;
             $amountFees = 1;
             
