@@ -213,6 +213,7 @@ class LendingController extends Controller
             })
             ->with('payments')
             ->whereIn('lendings.status', [$status3])
+            ->where('lendings.listing_id', $idList)
             /* ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
                 $query->where(function ($subQuery) use ($idList, $status1) {
                     $subQuery->where('listing_id', $idList)
