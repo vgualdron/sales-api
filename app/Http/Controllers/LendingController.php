@@ -212,8 +212,8 @@ class LendingController extends Controller
                      ->where('filePdf.name', '=', 'PDF_CV');
             })
             ->with('payments')
-            ->with('reddirections')
-            ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
+            ->whereIn('lendings.status', [$status3])
+            /* ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
                 $query->where(function ($subQuery) use ($idList, $status1) {
                     $subQuery->where('listing_id', $idList)
                         ->whereIn('lendings.status', [$status1]);
@@ -223,7 +223,7 @@ class LendingController extends Controller
                         ->whereIn('lendings.status', [$status2, $status3])
                         ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
                 });
-            })
+            }) */
             ->distinct()
             ->orderBy('lendings.type', 'asc')
             ->orderBy('lendings.id', 'asc')
