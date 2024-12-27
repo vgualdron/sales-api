@@ -89,6 +89,7 @@
                         'n.account_number_third',
                         'n.account_name_third',
                         'ls.name as listing_name',
+                        'f.url as file_auth_url',
                     )
                     ->leftJoin('items as i', 'e.item_id', 'i.id')
                     ->leftJoin('areas as a', 'i.area_id', 'a.id')
@@ -96,6 +97,11 @@
                     ->leftJoin('lendings as l', 'l.expense_id', 'e.id')
                     ->leftJoin('news as n', 'n.id', 'l.new_id')
                     ->leftJoin('listings as ls', 'ls.id', 'l.listing_id')
+                    ->leftJoin('files as f', function ($join) {
+                        $join->on('f.model_id', '=', 'news.id')
+                             ->where('f.model_name', '=', 'news')
+                             ->where('f.name', '=', 'VIDEO_AUTORIZA_CUENTA_TERCERO');
+                    })
                     ->where('e.item_id', $item)
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('e.status', $explodeStatus);
