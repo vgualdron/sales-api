@@ -160,6 +160,90 @@ class LendingController extends Controller
             'message' => 'Succeed',
         ], JsonResponse::HTTP_OK);
     }
+
+    public function getLendingsForSale(Request $request, $idList)
+    {
+        try {
+            $status1 = 'open';
+            $status2 = 'renovated';
+            $status3 = 'closed';
+            $startDate = date('Y-m-d'.' 00:00:00');
+            $endDate = date('Y-m-d'.' 23:59:59');
+            $idUserSesion = $request->user()->id;
+           
+			$items = Lending::select([
+                'lendings.*',
+                'news.family_reference_name',
+                'news.family_reference_phone',
+                'news.family2_reference_name',
+                'news.family2_reference_phone',
+                'news.guarantor_name',
+                'news.guarantor_phone',
+                'news.has_letter',
+                'files.id as file_id_r',
+                'files.name as file_name_r',
+                'files.url as file_url_r',
+                'files.status as file_status_r',
+                'f.id as file_id_n',
+                'f.name as file_name_n',
+                'f.url as file_url_n',
+                'f.status as file_status_n',
+                'filePdf.id as file_pdf_id',
+                'filePdf.name as file_pdf_name',
+                'filePdf.url as file_pdf_url',
+                'filePdf.status as file_pdf_status',
+                'expenses.status as expense_status',
+            ])
+            ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
+            ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
+            ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
+            ->leftJoin('files', function ($join) {
+                $join->on('files.model_id', '=', 'lendings.expense_id')
+                     ->where('files.model_name', '=', 'expenses');
+            })
+            ->leftJoin('files as f', function ($join) {
+                $join->on('f.model_id', '=', 'news.id')
+                     ->where('f.model_name', '=', 'news')
+                     ->where('f.name', '=', 'FOTO_VOUCHER');
+            })
+            ->leftJoin('files as filePdf', function ($join) {
+                $join->on('filePdf.model_id', '=', 'news.id')
+                     ->where('filePdf.model_name', '=', 'news')
+                     ->where('filePdf.name', '=', 'PDF_CV');
+            })
+            ->with('payments')
+            ->with('reddirections')
+            ->where(function ($query) use ($idList, $status1, $status2, $status3, $startDate, $endDate) {
+                $query->where(function ($subQuery) use ($idList, $status1) {
+                    $subQuery->where('listing_id', $idList)
+                        ->whereIn('lendings.status', [$status1]);
+                })
+                ->orWhere(function ($subQuery) use ($idList, $status2, $status3, $startDate, $endDate) {
+                    $subQuery->where('listing_id', $idList)
+                        ->whereIn('lendings.status', [$status2, $status3])
+                        ->whereBetween('lendings.updated_at', [$startDate, $endDate]);
+                });
+            })
+            ->distinct()
+            ->orderBy('lendings.type', 'asc')
+            ->orderBy('lendings.id', 'asc')
+            ->get();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $items,
+            'message' => 'Succeed',
+        ], JsonResponse::HTTP_OK);
+    }
   
     public function show(Request $request, $id)
     {
