@@ -158,7 +158,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/lending"], function () 
     Route::get('/list/{idListing}', [LendingController::class, 'index']);
     Route::get('/list/{idListing}/payments/current-date', [LendingController::class, 'getLendingsWithPaymentsCurrentDate']);
     Route::get('/list/{idListing}/current-date', [LendingController::class, 'getLendingsFromListCurrentDate']);
-    Route::get('/list-form-sale/{idListing}', [LendingController::class, 'getLendingsForSale']);
+    Route::get('/list-for-sale/{idListing}', [LendingController::class, 'getLendingsForSale']);
     Route::get('/{id}', [LendingController::class, 'show']);
     Route::post('/', [LendingController::class, 'store']);
     Route::put('/{id}', [LendingController::class, 'update']);
