@@ -165,7 +165,7 @@
                             'detail' => $e->getMessage()
                         ]
                     ]
-                ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
     
             return response()->json([
