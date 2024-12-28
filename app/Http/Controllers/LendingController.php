@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Novel;
 use App\Models\Lending;
 use App\Models\Payment;
 use App\Models\Expense;
@@ -582,7 +583,18 @@ class LendingController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
+            $amount = $request->amount;
+            $period = $request->period;
             
+            $itemNovel = Novel::find($request->new_id);
+            $novelItem = [
+                'status' => 'aprobado',
+                'quantity' => $amount,
+                'period' => $period,
+            ];
+
+            $itemNovel->update($novelItem);
+
             $itemLendingOld = Lending::find($request->lending_id);
             $dateUpdateOld = $itemLendingOld->updated_at;
             $newItem = [
@@ -592,7 +604,6 @@ class LendingController extends Controller
 
             $itemLendingOld->update($newItem);
 
-            $period = $request->period;
             $countDays = 1;
             $amountFees = 1;
             
@@ -614,7 +625,6 @@ class LendingController extends Controller
             $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
 
             $idList = $itemLendingOld->listing_id;
-            $amount = $request->amount;
 
             $idUserExpense = 1;
 
