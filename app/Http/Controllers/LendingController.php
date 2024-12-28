@@ -615,7 +615,6 @@ class LendingController extends Controller
 
             $idList = $itemLendingOld->listing_id;
             $amount = $request->amount;
-            $repayment = $request->repayment;
 
             $idUserExpense = 1;
 
@@ -628,7 +627,7 @@ class LendingController extends Controller
 
             $itemExpense = Expense::create([
                 'date' => $currentDate,
-                'amount' => $repayment,
+                'amount' => $amount,
                 'status' => 'creado',
                 'description' => 'Egreso creado al renovar el credito, y se debe transferir dinero al cliente',
                 'item_id' => 8, // id del item de egreso para NUEVOS
