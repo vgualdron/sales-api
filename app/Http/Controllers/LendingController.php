@@ -194,6 +194,7 @@ class LendingController extends Controller
                 'filePdf.status as file_pdf_status',
                 'expenses.status as expense_status',
                 'listings.name as listing_name',
+                'listings.user_id_collector as listing_user',
             ])
             ->join('listings', 'listings.id', '=', 'lendings.listing_id')
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
