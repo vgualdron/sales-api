@@ -202,7 +202,7 @@ class LendingController extends Controller
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
             ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
             ->leftJoin('questions', function ($join) {
-                $join->on('questions.model_id', '=', 'mews.id')
+                $join->on('questions.model_id', '=', 'news.id')
                      ->where('questions.model_name', '=', 'news')
                      ->where('questions.type', '=', 'nuevo-antiguo');
             })
