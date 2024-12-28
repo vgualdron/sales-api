@@ -639,7 +639,7 @@ class LendingController extends Controller
                 'date' => $currentDate,
                 'amount' => $amount,
                 'status' => 'creado',
-                'description' => 'Egreso creado al renovar el credito, y se debe transferir dinero al cliente',
+                'description' => 'Egreso creado al regresar un nuevo antiguo, y se debe transferir dinero al cliente',
                 'item_id' => 8, // id del item de egreso para NUEVOS
                 'user_id' => $idUserExpense,
                 'registered_by' => $idUserSesion,
