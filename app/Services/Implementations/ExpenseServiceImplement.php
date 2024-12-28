@@ -140,7 +140,7 @@
                         'status' => $expense['status'],
                         'description' => $expense['description'],
                         'item_id' => $expense['item_id'],
-                        'user_id' => $expense['user_id'],
+                        'user_id' => $expense['user_id'] > 0 ? $expense['user_id'] : null,
                     ]);
     
                 });
