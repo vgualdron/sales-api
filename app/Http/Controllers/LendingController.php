@@ -578,6 +578,103 @@ class LendingController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
+    public function renewOld(Request $request)
+    {
+        try {
+            $idUserSesion = $request->user()->id;
+            
+            $itemLendingOld = Lending::find($request->lending_id);
+            $dateUpdateOld = $itemLendingOld->updated_at;
+            $newItem = [
+                'status' => 'off',
+                'updated_at' => $dateUpdateOld,
+            ];
+
+            $itemLendingOld->update($newItem);
+
+            $period = $request->period;
+            $countDays = 1;
+            $amountFees = 1;
+            
+            $date = date("Y-m-d H:i:s");
+            $firstDate = date("Y-m-d H:i:s", (strtotime(date($date))));
+            $currentDate = date("Y-m-d H:i:s");
+           
+            if ($period === 'diario') {
+                $countDays = 21;
+                $amountFees = 22;
+            } else if ($period === 'semanal') {
+                $countDays = 21;
+                $amountFees = 3;
+            } else if ($period === 'quincenal') {
+                $countDays = 14;
+                $amountFees = 1;
+            }
+
+            $endDate = date("Y-m-d H:i:s", (strtotime(date($date)) + (86400 * $countDays) + 86399));
+
+            $idList = $itemLendingOld->listing_id;
+            $amount = $request->amount;
+            $repayment = $request->repayment;
+
+            $idUserExpense = 1;
+
+            $result = Listing::find($idList);
+
+            if (!empty($result)) {
+                $idList = $result->id;
+                $idUserExpense = $result->user_id_collector;
+            }
+
+            $itemExpense = Expense::create([
+                'date' => $currentDate,
+                'amount' => $repayment,
+                'status' => 'creado',
+                'description' => 'Egreso creado al renovar el credito, y se debe transferir dinero al cliente',
+                'item_id' => 8, // id del item de egreso para NUEVOS
+                'user_id' => $idUserExpense,
+                'registered_by' => $idUserSesion,
+            ]);
+
+            $itemLending = Lending::create([
+                'nameDebtor' => $itemLendingOld->nameDebtor,
+                'address' => $itemLendingOld->address,
+                'phone' => $itemLendingOld->phone,
+                'firstDate' => $firstDate,
+                'endDate' => $endDate,
+                'amount' => $amount,
+                'amountFees' => $amountFees,
+                'percentage' => $itemLendingOld->percentage,
+                'period' => $period,
+                'order' => 1,
+                'status' => 'open',
+                'expense_id' => $itemExpense ? $itemExpense->id : null,
+                'listing_id' => $idList,
+                'new_id' => $itemLendingOld->new_id,
+                'type' => 'N',
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => [
+                [
+                    'text' => 'Modificado con éxito.',
+                    'detail' => $item,
+                ]
+            ]
+        ], JsonResponse::HTTP_OK);
+    }
+
     public function history(Request $request, $idNew)
     {
         try {
