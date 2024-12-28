@@ -167,8 +167,6 @@ class LendingController extends Controller
             $status1 = 'open';
             $status2 = 'renovated';
             $status3 = 'closed';
-            $startDate = date('Y-m-d'.' 00:00:00');
-            $endDate = date('Y-m-d'.' 23:59:59');
             $idUserSesion = $request->user()->id;
            
 			$items = Lending::select([
@@ -195,7 +193,9 @@ class LendingController extends Controller
                 'filePdf.url as file_pdf_url',
                 'filePdf.status as file_pdf_status',
                 'expenses.status as expense_status',
+                'listings.name as listing_name',
             ])
+            ->join('listings', 'listings.id', '=', 'lendings.listing_id')
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
             ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
@@ -213,7 +213,6 @@ class LendingController extends Controller
                      ->where('filePdf.model_name', '=', 'news')
                      ->where('filePdf.name', '=', 'PDF_CV');
             })
-            ->with('payments')
             ->whereIn('lendings.status', [$status3])
             ->where('lendings.listing_id', $idList)
             ->distinct()
