@@ -195,11 +195,17 @@ class LendingController extends Controller
                 'expenses.status as expense_status',
                 'listings.name as listing_name',
                 'listings.user_id_collector as listing_user',
+                'questions.status as question_status',
             ])
             ->join('listings', 'listings.id', '=', 'lendings.listing_id')
             ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
             ->leftJoin('news', 'news.id', '=', 'lendings.new_id')
             ->leftJoin('expenses', 'expenses.id', '=', 'lendings.expense_id')
+            ->leftJoin('questions', function ($join) {
+                $join->on('questions.model_id', '=', 'mews.id')
+                     ->where('questions.model_name', '=', 'news')
+                     ->where('questions.type', '=', 'nuevo-antiguo');
+            })
             ->leftJoin('files', function ($join) {
                 $join->on('files.model_id', '=', 'lendings.expense_id')
                      ->where('files.model_name', '=', 'expenses');
