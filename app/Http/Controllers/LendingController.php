@@ -668,7 +668,7 @@ class LendingController extends Controller
             'message' => [
                 [
                     'text' => 'Modificado con éxito.',
-                    'detail' => $item,
+                    'detail' => $itemLending,
                 ]
             ]
         ], JsonResponse::HTTP_OK);
