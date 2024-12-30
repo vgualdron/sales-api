@@ -18,5 +18,8 @@ class Report extends Model
         'name',
         'sql',
         'order',
+        'permission',
+        'background',
+        'color',
     ];
 }
