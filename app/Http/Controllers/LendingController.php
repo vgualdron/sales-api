@@ -113,8 +113,8 @@ class LendingController extends Controller
                     });
             }) */
             ->distinct()
-            ->orderBy('lendings.type', 'asc')
-            ->orderBy('lendings.endDate', 'desc')
+            // ->orderBy('lendings.type', 'asc')
+            ->orderBy('lendings.firstDate', 'asc')
             ->get();
         } catch (Exception $e) {
             return response()->json([
