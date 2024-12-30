@@ -19,7 +19,7 @@
         function list(){
             try {
                 $sql = $this->report->select('id', 'name', 'order', 'permission', 'background', 'color')
-                                ->get()->orderBy('order', 'ASC');
+                            ->orderBy('order', 'ASC')->get();
 
                 if (count($sql) > 0){
                     return response()->json([
