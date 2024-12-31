@@ -386,4 +386,62 @@ class ListingController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
+    public function getInfo(Request $request, $idList)
+    {
+        $data = null;
+        try {
+            $idUserSesion = $request->user()->id;
+
+            $queryYellowDown = DB::table(function ($subquery) {
+                $subquery
+                    ->select(
+                        'lendings.id AS lending_id',
+                        'lendings.nameDebtor AS cliente',
+                        'listings.name AS ruta',
+                        'listings.id AS ruta_id',
+                        DB::raw('((lendings.amount * (1 + 
+                            CASE 
+                                WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
+                                ELSE lendings.percentage / 100
+                            END
+                        )) - COALESCE(SUM(payments.amount), 0)) AS pendiente'),
+                        DB::raw('DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias'),
+                        DB::raw('(lendings.amount * (lendings.percentage / 100)) AS interes'),
+                        DB::raw('COALESCE(SUM(payments.amount), 0) AS pagado')
+                    )
+                    ->from('lendings')
+                    ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
+                    ->leftJoin('listings', 'listings.id', '=', 'lendings.listing_id')
+                    ->where('lendings.status', 'open')
+                    ->where('listings.id', $idList)
+                    ->whereRaw('DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8')
+                    ->whereRaw('DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15')
+                    ->groupBy('lendings.id', 'listings.id')
+                    ->havingRaw('interes >= pagado');
+            })->selectRaw('COUNT(*) AS total')
+                ->orderBy('ruta_id')
+                ->orderBy('lending_id');
+            
+            $totalCountYellowDown = $queryYellowDown->value('total');
+
+            $data = [
+                'totalCountYellowDown' => $totalCountYellowDown,
+            ];
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'Se ha presentado un error',
+                        'detail' => $e->getMessage()
+                    ]
+                ]
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $data,
+        ], JsonResponse::HTTP_OK);
+    }
+
 }
