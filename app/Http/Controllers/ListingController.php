@@ -392,6 +392,38 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
+            $yellow = DB::table(DB::raw('(
+                SELECT 
+                    lendings.id AS lending_id,
+                    lendings.nameDebtor AS cliente,
+                    listings.name AS ruta,
+                    listings.id AS ruta_id,
+                    ((lendings.amount * (1 + 
+                        CASE 
+                            WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
+                            ELSE lendings.percentage / 100
+                        END
+                    )) - COALESCE(SUM(payments.amount), 0)) AS pendiente,
+                    DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
+                    (lendings.amount * (lendings.percentage / 100)) AS interes,
+                    COALESCE(SUM(payments.amount), 0) AS pagado
+                FROM 
+                    lendings
+                LEFT JOIN 
+                    payments ON lendings.id = payments.lending_id
+                LEFT JOIN 
+                    listings ON listings.id = lendings.listing_id
+                WHERE 
+                    lendings.status = "open"
+                    AND listings.id = '. $idList .'
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15
+                GROUP BY 
+                    lendings.id, listings.id
+            ) AS subquery'))
+            ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
+            ->first();
+
             $yellowUp = DB::table(DB::raw('(
                 SELECT 
                     lendings.id AS lending_id,
@@ -551,6 +583,7 @@ class ListingController extends Controller
             ->first();
 
             $data = [
+                'yellow' => $yellow,
                 'yellowUp' => $yellowUp,
                 'yellowDown' => $yellowDown,
                 'blueUp' => $blueUp,
