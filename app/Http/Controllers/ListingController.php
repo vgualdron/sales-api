@@ -392,7 +392,7 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
-            $countYellowUp = DB::table(DB::raw('(
+            $yellowUp = DB::table(DB::raw('(
                 SELECT 
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
@@ -422,9 +422,10 @@ class ListingController extends Controller
                     lendings.id, listings.id
                 HAVING interes >= pagado 
             ) AS subquery'))
-            ->count();
+            ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
+            ->first();
 
-            $countYellowDown = DB::table(DB::raw('(
+            $yellowDown = DB::table(DB::raw('(
                 SELECT 
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
@@ -454,11 +455,12 @@ class ListingController extends Controller
                     lendings.id, listings.id
                 HAVING interes <= pagado 
             ) AS subquery'))
-            ->count();
+            ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
+            ->first();
 
             $data = [
-                'countYellowUp' => $countYellowUp,
-                'countYellowDown' => $countYellowDown,
+                'yellowUp' => $yellowUp,
+                'yellowDown' => $yellowDown,
             ];
 
         } catch (Exception $e) {
