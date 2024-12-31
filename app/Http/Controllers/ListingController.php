@@ -541,9 +541,7 @@ class ListingController extends Controller
                     listings ON listings.id = lendings.listing_id
                 WHERE 
                     lendings.status = "open"
-                    AND listings.id = 1
-                    -- AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8
-                    -- AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15
+                    AND listings.id = '. $idList .'
                 GROUP BY 
                     lendings.id, listings.id
                 HAVING 
