@@ -458,9 +458,77 @@ class ListingController extends Controller
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
+            $blueUp = DB::table(DB::raw('(
+                SELECT 
+                    lendings.id AS lending_id,
+                    lendings.nameDebtor AS cliente,
+                    listings.name AS ruta,
+                    listings.id AS ruta_id,
+                    ((lendings.amount * (1 + 
+                        CASE 
+                            WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
+                            ELSE lendings.percentage / 100
+                        END
+                    )) - COALESCE(SUM(payments.amount), 0)) AS pendiente,
+                    DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
+                    (lendings.amount * (lendings.percentage / 100)) AS interes,
+                    COALESCE(SUM(payments.amount), 0) AS pagado
+                FROM 
+                    lendings
+                LEFT JOIN 
+                    payments ON lendings.id = payments.lending_id
+                LEFT JOIN 
+                    listings ON listings.id = lendings.listing_id
+                WHERE 
+                    lendings.status = "open"
+                    AND listings.id = '. $idList .'
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 16
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 23
+                GROUP BY 
+                    lendings.id, listings.id
+                HAVING interes >= pagado 
+            ) AS subquery'))
+            ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
+            ->first();
+
+            $blueDown = DB::table(DB::raw('(
+                SELECT 
+                    lendings.id AS lending_id,
+                    lendings.nameDebtor AS cliente,
+                    listings.name AS ruta,
+                    listings.id AS ruta_id,
+                    ((lendings.amount * (1 + 
+                        CASE 
+                            WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
+                            ELSE lendings.percentage / 100
+                        END
+                    )) - COALESCE(SUM(payments.amount), 0)) AS pendiente,
+                    DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
+                    (lendings.amount * (lendings.percentage / 100)) AS interes,
+                    COALESCE(SUM(payments.amount), 0) AS pagado
+                FROM 
+                    lendings
+                LEFT JOIN 
+                    payments ON lendings.id = payments.lending_id
+                LEFT JOIN 
+                    listings ON listings.id = lendings.listing_id
+                WHERE 
+                    lendings.status = "open"
+                    AND listings.id = '. $idList .'
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 16
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 23
+                GROUP BY 
+                    lendings.id, listings.id
+                HAVING interes <= pagado 
+            ) AS subquery'))
+            ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
+            ->first();
+
             $data = [
                 'yellowUp' => $yellowUp,
                 'yellowDown' => $yellowDown,
+                'blueUp' => $blueUp,
+                'blueDown' => $blueDown,
             ];
 
         } catch (Exception $e) {
