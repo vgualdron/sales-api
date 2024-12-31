@@ -524,11 +524,40 @@ class ListingController extends Controller
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
+            $renove = DB::table(DB::raw('(
+                SELECT 
+                    lendings.id AS lending_id,
+                    lendings.nameDebtor AS cliente,
+                    listings.name AS ruta,
+                    listings.id AS ruta_id,
+                    DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
+                    (lendings.amount * (lendings.percentage / 100)) AS interes,
+                    COALESCE(SUM(payments.amount), 0) AS pagado
+                FROM 
+                    lendings
+                LEFT JOIN 
+                    payments ON lendings.id = payments.lending_id
+                LEFT JOIN 
+                    listings ON listings.id = lendings.listing_id
+                WHERE 
+                    lendings.status = "open"
+                    AND listings.id = 1
+                    -- AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8
+                    -- AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15
+                GROUP BY 
+                    lendings.id, listings.id
+                HAVING 
+                    interes <= pagado 
+            ) AS subquery'))
+            ->selectRaw('COUNT(*) as total_count')
+            ->first();
+
             $data = [
                 'yellowUp' => $yellowUp,
                 'yellowDown' => $yellowDown,
                 'blueUp' => $blueUp,
                 'blueDown' => $blueDown,
+                'renove' => $renove,
             ];
 
         } catch (Exception $e) {
