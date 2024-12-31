@@ -392,40 +392,40 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
 
-            $queryYellowDown = DB::table(function ($subquery) {
-                $subquery
-                    ->select(
-                        'lendings.id AS lending_id',
-                        'lendings.nameDebtor AS cliente',
-                        'listings.name AS ruta',
-                        'listings.id AS ruta_id',
-                        DB::raw('((lendings.amount * (1 + 
-                            CASE 
-                                WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
-                                ELSE lendings.percentage / 100
-                            END
-                        )) - COALESCE(SUM(payments.amount), 0)) AS pendiente'),
-                        DB::raw('DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias'),
-                        DB::raw('(lendings.amount * (lendings.percentage / 100)) AS interes'),
-                        DB::raw('COALESCE(SUM(payments.amount), 0) AS pagado')
-                    )
-                    ->from('lendings')
-                    ->leftJoin('payments', 'lendings.id', '=', 'payments.lending_id')
-                    ->leftJoin('listings', 'listings.id', '=', 'lendings.listing_id')
-                    ->where('lendings.status', 'open')
-                    ->where('listings.id', $idList)
-                    ->whereRaw('DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8')
-                    ->whereRaw('DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15')
-                    ->groupBy('lendings.id', 'listings.id')
-                    ->havingRaw('interes >= pagado');
-            })->selectRaw('COUNT(*) AS total')
-                ->orderBy('ruta_id')
-                ->orderBy('lending_id');
-            
-            $totalCountYellowDown = $queryYellowDown->value('total');
+            $countYellowDown = DB::table(DB::raw('(
+                SELECT 
+                    lendings.id AS lending_id,
+                    lendings.nameDebtor AS cliente,
+                    listings.name AS ruta,
+                    listings.id AS ruta_id,
+                    ((lendings.amount * (1 + 
+                        CASE 
+                            WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
+                            ELSE lendings.percentage / 100
+                        END
+                    )) - COALESCE(SUM(payments.amount), 0)) AS pendiente,
+                    DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
+                    (lendings.amount * (lendings.percentage / 100)) AS interes,
+                    COALESCE(SUM(payments.amount), 0) AS pagado
+                FROM 
+                    lendings
+                LEFT JOIN 
+                    payments ON lendings.id = payments.lending_id
+                LEFT JOIN 
+                    listings ON listings.id = lendings.listing_id
+                WHERE 
+                    lendings.status = "open"
+                    AND listings.id = '. $idList .'
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8
+                    AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15
+                GROUP BY 
+                    lendings.id, listings.id
+                HAVING interes >= pagado 
+            ) AS subquery'))
+            ->count();
 
             $data = [
-                'totalCountYellowDown' => $totalCountYellowDown,
+                'countYellowDown' => $countYellowDown,
             ];
 
         } catch (Exception $e) {
