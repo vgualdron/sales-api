@@ -616,7 +616,7 @@ class ListingController extends Controller
 
             $capital = DB::selectOne('
                             SELECT
-                                capital
+                                capital as total
                             FROM
                                 capitallistings
                             WHERE
