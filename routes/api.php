@@ -235,6 +235,10 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/reddirections"], functi
     Route::put('/{id}', [ReddirectionController::class, 'update'])->name('reddirection.update');
 });
 
+Route::group(['middleware' => 'auth:api' , "prefix" => "/capitallisting"], function () {
+    Route::post('/', [ListingController::class, 'create']);
+});
+
 // endpoints de carga da datos
 Route::post('/upload-data-payments', [UploadDataController::class, 'uploadPayments']);
 Route::post('/create-new', [UploadDataController::class, 'createNew']);

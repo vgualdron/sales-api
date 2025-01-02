@@ -19,11 +19,11 @@ class ListingController extends Controller
         try {
             $idUserSesion = $request->user()->id;
             $date = date("Y-m-d");
-            
+
             $items = Listing::selectRaw('
-                listings.*, 
-                zones.name as city_name, 
-                files1.url as capture_delivery_file, 
+                listings.*,
+                zones.name as city_name,
+                files1.url as capture_delivery_file,
                 files2.url as capture_route_file
             ')
             ->leftJoin('files as files1', function ($join) use ($date) {
@@ -31,8 +31,8 @@ class ListingController extends Controller
                     ->where('files1.model_name', '=', 'listings')
                     ->where('files1.name', '=', 'CAPTURE_DELIVERY')
                     ->whereRaw('files1.created_at = (
-                        SELECT MAX(created_at) 
-                        FROM files 
+                        SELECT MAX(created_at)
+                        FROM files
                         WHERE files.model_id = listings.id
                         AND files.model_name = "listings"
                         AND files.name = "CAPTURE_DELIVERY"
@@ -44,10 +44,10 @@ class ListingController extends Controller
                     ->where('files2.model_name', '=', 'listings')
                     ->where('files2.name', '=', 'CAPTURE_ROUTE')
                     ->whereRaw('files2.created_at = (
-                        SELECT MAX(created_at) 
-                        FROM files 
-                        WHERE files.model_id = listings.id 
-                        AND files.model_name = "listings" 
+                        SELECT MAX(created_at)
+                        FROM files
+                        WHERE files.model_id = listings.id
+                        AND files.model_name = "listings"
                         AND files.name = "CAPTURE_ROUTE"
                         AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
                     )');
@@ -75,7 +75,7 @@ class ListingController extends Controller
             'message' => 'Succeed',
         ], JsonResponse::HTTP_OK);
     }
-    
+
     public function getMine(Request $request)
     {
         try {
@@ -112,8 +112,8 @@ class ListingController extends Controller
             $date = date("Y-m-d");
 
             $item = Listing::selectRaw('
-                listings.*, 
-                files1.url as capture_delivery_file, 
+                listings.*,
+                files1.url as capture_delivery_file,
                 files2.url as capture_route_file
             ')
             ->leftJoin('files as files1', function ($join) use ($date) {
@@ -121,8 +121,8 @@ class ListingController extends Controller
                     ->where('files1.model_name', '=', 'listings')
                     ->where('files1.name', '=', 'CAPTURE_DELIVERY')
                     ->whereRaw('files1.created_at = (
-                        SELECT MAX(created_at) 
-                        FROM files 
+                        SELECT MAX(created_at)
+                        FROM files
                         WHERE files.model_id = listings.id
                         AND files.model_name = "listings"
                         AND files.name = "CAPTURE_DELIVERY"
@@ -134,10 +134,10 @@ class ListingController extends Controller
                     ->where('files2.model_name', '=', 'listings')
                     ->where('files2.name', '=', 'CAPTURE_ROUTE')
                     ->whereRaw('files2.created_at = (
-                        SELECT MAX(created_at) 
-                        FROM files 
-                        WHERE files.model_id = listings.id 
-                        AND files.model_name = "listings" 
+                        SELECT MAX(created_at)
+                        FROM files
+                        WHERE files.model_id = listings.id
+                        AND files.model_name = "listings"
                         AND files.name = "CAPTURE_ROUTE"
                         AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
                     )');
@@ -148,7 +148,7 @@ class ListingController extends Controller
             ->with('lendings')
             ->where('listings.id', $id)
             ->first();
-            
+
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
@@ -170,7 +170,7 @@ class ListingController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            
+
             $item = Listing::create([
                 'name' => $request->name,
                 'status' => $request->status,
@@ -180,7 +180,7 @@ class ListingController extends Controller
                 'user_id' => $idUserSesion,
                 'city_id' => $request->city_id,
             ]);
-            
+
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
@@ -262,8 +262,8 @@ class ListingController extends Controller
             $itemList = Listing::find($idList);
 
             $itemPayment = Payment::selectRaw('
-                    COUNT(*) as total_count, 
-                    COALESCE(SUM(payments.amount), 0) as total_amount, 
+                    COUNT(*) as total_count,
+                    COALESCE(SUM(payments.amount), 0) as total_amount,
                     COUNT(DISTINCT lendings.id) as total_clients,
                     COALESCE(SUM(CASE WHEN payments.type = "nequi" AND payments.observation <> "adelanto" THEN payments.amount ELSE 0 END), 0) as total_amount_nequi,
                     COALESCE(SUM(CASE WHEN payments.type = "nequi" AND payments.observation = "adelanto" THEN payments.amount ELSE 0 END), 0) as total_amount_repayment,
@@ -292,7 +292,7 @@ class ListingController extends Controller
                         ->where('status', 'open')
                         ->where('type', 'N')
                         ->first();
-                        
+
             $itemExpense = Expense::selectRaw('COUNT(*) as total_count_renovation, COALESCE(SUM(expenses.amount), 0) as total_amount_renovation')
                         ->leftJoin('lendings', 'lendings.expense_id', '=', 'expenses.id')
                         ->join('listings', 'listings.id', '=', 'lendings.listing_id')
@@ -306,7 +306,7 @@ class ListingController extends Controller
                         ->whereNotNull('files.id')
                         ->where('listings.id', $idList)
                         ->first();
-                        
+
             $data = [
                 'itemList' => $itemList,
                 'itemPayment' => $itemPayment,
@@ -339,8 +339,8 @@ class ListingController extends Controller
             $idUserSesion = $request->user()->id;
 
             $items = Listing::selectRaw('
-                listings.*, 
-                files1.url as capture_delivery_file, 
+                listings.*,
+                files1.url as capture_delivery_file,
                 files2.url as capture_route_file
             ')
             ->leftJoin('files as files1', function ($join) use ($date) {
@@ -348,8 +348,8 @@ class ListingController extends Controller
                     ->where('files1.model_name', '=', 'listings')
                     ->where('files1.name', '=', 'CAPTURE_DELIVERY')
                     ->whereRaw('files1.created_at = (
-                        SELECT MAX(created_at) 
-                        FROM files 
+                        SELECT MAX(created_at)
+                        FROM files
                         WHERE files.model_id = listings.id
                         AND files.model_name = "listings"
                         AND files.name = "CAPTURE_DELIVERY"
@@ -361,10 +361,10 @@ class ListingController extends Controller
                     ->where('files2.model_name', '=', 'listings')
                     ->where('files2.name', '=', 'CAPTURE_ROUTE')
                     ->whereRaw('files2.created_at = (
-                        SELECT MAX(created_at) 
-                        FROM files 
-                        WHERE files.model_id = listings.id 
-                        AND files.model_name = "listings" 
+                        SELECT MAX(created_at)
+                        FROM files
+                        WHERE files.model_id = listings.id
+                        AND files.model_name = "listings"
                         AND files.name = "CAPTURE_ROUTE"
                         AND files.created_at BETWEEN "'.$date.' 00:00:00" AND "'.$date.' 23:59:59"
                     )');
@@ -393,13 +393,13 @@ class ListingController extends Controller
             $idUserSesion = $request->user()->id;
 
             $yellow = DB::table(DB::raw('(
-                SELECT 
+                SELECT
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
                     listings.name AS ruta,
                     listings.id AS ruta_id,
-                    ((lendings.amount * (1 + 
-                        CASE 
+                    ((lendings.amount * (1 +
+                        CASE
                             WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                             ELSE lendings.percentage / 100
                         END
@@ -407,31 +407,31 @@ class ListingController extends Controller
                     DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
                     (lendings.amount * (lendings.percentage / 100)) AS interes,
                     COALESCE(SUM(payments.amount), 0) AS pagado
-                FROM 
+                FROM
                     lendings
-                LEFT JOIN 
+                LEFT JOIN
                     payments ON lendings.id = payments.lending_id
-                LEFT JOIN 
+                LEFT JOIN
                     listings ON listings.id = lendings.listing_id
-                WHERE 
+                WHERE
                     lendings.status = "open"
                     AND listings.id = '. $idList .'
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15
-                GROUP BY 
+                GROUP BY
                     lendings.id, listings.id
             ) AS subquery'))
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
             $yellowUp = DB::table(DB::raw('(
-                SELECT 
+                SELECT
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
                     listings.name AS ruta,
                     listings.id AS ruta_id,
-                    ((lendings.amount * (1 + 
-                        CASE 
+                    ((lendings.amount * (1 +
+                        CASE
                             WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                             ELSE lendings.percentage / 100
                         END
@@ -439,32 +439,32 @@ class ListingController extends Controller
                     DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
                     (lendings.amount * (lendings.percentage / 100)) AS interes,
                     COALESCE(SUM(payments.amount), 0) AS pagado
-                FROM 
+                FROM
                     lendings
-                LEFT JOIN 
+                LEFT JOIN
                     payments ON lendings.id = payments.lending_id
-                LEFT JOIN 
+                LEFT JOIN
                     listings ON listings.id = lendings.listing_id
-                WHERE 
+                WHERE
                     lendings.status = "open"
                     AND listings.id = '. $idList .'
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15
-                GROUP BY 
+                GROUP BY
                     lendings.id, listings.id
-                HAVING interes >= pagado 
+                HAVING interes >= pagado
             ) AS subquery'))
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
             $yellowDown = DB::table(DB::raw('(
-                SELECT 
+                SELECT
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
                     listings.name AS ruta,
                     listings.id AS ruta_id,
-                    ((lendings.amount * (1 + 
-                        CASE 
+                    ((lendings.amount * (1 +
+                        CASE
                             WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                             ELSE lendings.percentage / 100
                         END
@@ -472,32 +472,32 @@ class ListingController extends Controller
                     DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
                     (lendings.amount * (lendings.percentage / 100)) AS interes,
                     COALESCE(SUM(payments.amount), 0) AS pagado
-                FROM 
+                FROM
                     lendings
-                LEFT JOIN 
+                LEFT JOIN
                     payments ON lendings.id = payments.lending_id
-                LEFT JOIN 
+                LEFT JOIN
                     listings ON listings.id = lendings.listing_id
-                WHERE 
+                WHERE
                     lendings.status = "open"
                     AND listings.id = '. $idList .'
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 8
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 15
-                GROUP BY 
+                GROUP BY
                     lendings.id, listings.id
-                HAVING interes <= pagado 
+                HAVING interes <= pagado
             ) AS subquery'))
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
             $blue = DB::table(DB::raw('(
-                SELECT 
+                SELECT
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
                     listings.name AS ruta,
                     listings.id AS ruta_id,
-                    ((lendings.amount * (1 + 
-                        CASE 
+                    ((lendings.amount * (1 +
+                        CASE
                             WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                             ELSE lendings.percentage / 100
                         END
@@ -505,32 +505,31 @@ class ListingController extends Controller
                     DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
                     (lendings.amount * (lendings.percentage / 100)) AS interes,
                     COALESCE(SUM(payments.amount), 0) AS pagado
-                FROM 
+                FROM
                     lendings
-                LEFT JOIN 
+                LEFT JOIN
                     payments ON lendings.id = payments.lending_id
-                LEFT JOIN 
+                LEFT JOIN
                     listings ON listings.id = lendings.listing_id
-                WHERE 
+                WHERE
                     lendings.status = "open"
                     AND listings.id = '. $idList .'
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 16
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 23
-                GROUP BY 
+                GROUP BY
                     lendings.id, listings.id
             ) AS subquery'))
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
-
             $blueUp = DB::table(DB::raw('(
-                SELECT 
+                SELECT
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
                     listings.name AS ruta,
                     listings.id AS ruta_id,
-                    ((lendings.amount * (1 + 
-                        CASE 
+                    ((lendings.amount * (1 +
+                        CASE
                             WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                             ELSE lendings.percentage / 100
                         END
@@ -538,32 +537,32 @@ class ListingController extends Controller
                     DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
                     (lendings.amount * (lendings.percentage / 100)) AS interes,
                     COALESCE(SUM(payments.amount), 0) AS pagado
-                FROM 
+                FROM
                     lendings
-                LEFT JOIN 
+                LEFT JOIN
                     payments ON lendings.id = payments.lending_id
-                LEFT JOIN 
+                LEFT JOIN
                     listings ON listings.id = lendings.listing_id
-                WHERE 
+                WHERE
                     lendings.status = "open"
                     AND listings.id = '. $idList .'
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 16
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 23
-                GROUP BY 
+                GROUP BY
                     lendings.id, listings.id
-                HAVING interes >= pagado 
+                HAVING interes >= pagado
             ) AS subquery'))
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
             $blueDown = DB::table(DB::raw('(
-                SELECT 
+                SELECT
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
                     listings.name AS ruta,
                     listings.id AS ruta_id,
-                    ((lendings.amount * (1 + 
-                        CASE 
+                    ((lendings.amount * (1 +
+                        CASE
                             WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
                             ELSE lendings.percentage / 100
                         END
@@ -571,26 +570,26 @@ class ListingController extends Controller
                     DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
                     (lendings.amount * (lendings.percentage / 100)) AS interes,
                     COALESCE(SUM(payments.amount), 0) AS pagado
-                FROM 
+                FROM
                     lendings
-                LEFT JOIN 
+                LEFT JOIN
                     payments ON lendings.id = payments.lending_id
-                LEFT JOIN 
+                LEFT JOIN
                     listings ON listings.id = lendings.listing_id
-                WHERE 
+                WHERE
                     lendings.status = "open"
                     AND listings.id = '. $idList .'
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) >= 16
                     AND DATEDIFF(CURRENT_DATE, lendings.firstDate) <= 23
-                GROUP BY 
+                GROUP BY
                     lendings.id, listings.id
-                HAVING interes <= pagado 
+                HAVING interes <= pagado
             ) AS subquery'))
             ->selectRaw('COUNT(*) as total_count, SUM(pendiente) as total_pendiente')
             ->first();
 
             $renove = DB::table(DB::raw('(
-                SELECT 
+                SELECT
                     lendings.id AS lending_id,
                     lendings.nameDebtor AS cliente,
                     listings.name AS ruta,
@@ -598,19 +597,19 @@ class ListingController extends Controller
                     DATEDIFF(CURRENT_DATE, lendings.firstDate) AS dias,
                     (lendings.amount * (lendings.percentage / 100)) AS interes,
                     COALESCE(SUM(payments.amount), 0) AS pagado
-                FROM 
+                FROM
                     lendings
-                LEFT JOIN 
+                LEFT JOIN
                     payments ON lendings.id = payments.lending_id
-                LEFT JOIN 
+                LEFT JOIN
                     listings ON listings.id = lendings.listing_id
-                WHERE 
+                WHERE
                     lendings.status = "open"
                     AND listings.id = '. $idList .'
-                GROUP BY 
+                GROUP BY
                     lendings.id, listings.id
-                HAVING 
-                    interes <= pagado 
+                HAVING
+                    interes <= pagado
             ) AS subquery'))
             ->selectRaw('COUNT(*) as total_count')
             ->first();
