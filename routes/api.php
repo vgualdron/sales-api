@@ -27,6 +27,7 @@ use App\Http\Controllers\{
                         UploadDataController,
                         RedcollectorController,
                         ReddirectionController,
+                        CapitallistingController,
                     };
 
 /*
@@ -236,7 +237,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/reddirections"], functi
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/capitallisting"], function () {
-    Route::post('/', [ListingController::class, 'create']);
+    Route::post('/', [CapitallistingController::class, 'create']);
 });
 
 // endpoints de carga da datos
