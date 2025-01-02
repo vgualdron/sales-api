@@ -655,6 +655,17 @@ class ListingController extends Controller
                                 listings.id;
                         ');
 
+            $days = DB::selectOne('
+                            SELECT
+                            COUNT(DISTINCT DATE(created_at)) AS days_work
+                        FROM
+                            capitallistings
+                        WHERE
+                            MONTH(created_at) = MONTH(CURRENT_DATE)
+                            AND YEAR(created_at) = YEAR(CURRENT_DATE)
+                            AND created_at <= CURRENT_DATE();
+                        ');
+
             $data = [
                 'yellow' => $yellow,
                 'yellowUp' => $yellowUp,
@@ -665,6 +676,7 @@ class ListingController extends Controller
                 'renove' => $renove,
                 'capital' => $capital,
                 'payments' => $payments,
+                'days' => $days,
             ];
 
         } catch (Exception $e) {
