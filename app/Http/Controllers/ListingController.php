@@ -620,14 +620,14 @@ class ListingController extends Controller
                             FROM
                                 capitallistings
                             WHERE
-                                listing_id = 1
+                                listing_id = '. $idList .'
                                 AND DATE(created_at) = (
                                     SELECT
                                         MAX(DATE(created_at))
                                     FROM
                                         capitallistings
                                     WHERE
-                                        listing_id = 1
+                                        listing_id = '. $idList .'
                                         AND MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
                                         AND YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
                                 )
