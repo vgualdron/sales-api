@@ -632,7 +632,7 @@ class ListingController extends Controller
                                         AND YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
                                 )
                             LIMIT 1
-                        ');
+                        ')->first();
 
             $data = [
                 'yellow' => $yellow,
