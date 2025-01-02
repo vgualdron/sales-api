@@ -634,6 +634,27 @@ class ListingController extends Controller
                             LIMIT 1
                         ');
 
+            $payments = DB::selectOne('
+                            SELECT
+                                listings.id AS listing_id,
+                                MONTH(CURRENT_DATE) AS month,
+                                YEAR(CURRENT_DATE) AS year,
+                                COALESCE(SUM(p.amount), 0) AS total_payments
+                            FROM
+                                listings
+                            INNER JOIN
+                                lendings ON lendings.listing_id = listings.id
+                            LEFT JOIN
+                                payments p ON lendings.id = p.lending_id
+                                AND MONTH(p.date) = MONTH(CURRENT_DATE)
+                                AND YEAR(p.date) = YEAR(CURRENT_DATE)
+                                AND p.is_valid = 1
+                            WHERE
+                                lendings.listing_id = '. $idList .'
+                            GROUP BY
+                                listings.id;
+                        ');
+
             $data = [
                 'yellow' => $yellow,
                 'yellowUp' => $yellowUp,
@@ -643,6 +664,7 @@ class ListingController extends Controller
                 'blueDown' => $blueDown,
                 'renove' => $renove,
                 'capital' => $capital,
+                'payments' => $payments,
             ];
 
         } catch (Exception $e) {
