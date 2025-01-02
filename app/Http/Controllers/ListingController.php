@@ -657,7 +657,7 @@ class ListingController extends Controller
 
             $days = DB::selectOne('
                             SELECT
-                            COUNT(DISTINCT DATE(created_at)) AS days_work
+                            IF(COUNT(DISTINCT DATE(created_at)) = 0, 1, COUNT(DISTINCT DATE(created_at))) AS days_work
                         FROM
                             capitallistings
                         WHERE
