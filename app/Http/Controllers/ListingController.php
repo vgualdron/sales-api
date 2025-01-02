@@ -614,23 +614,25 @@ class ListingController extends Controller
             ->selectRaw('COUNT(*) as total_count')
             ->first();
 
-            $capital = DB::table(DB::raw('SELECT
-                                            capital
-                                        FROM
-                                            capitallistings
-                                        WHERE
-                                            listing_id = 1
-                                            AND DATE(created_at) = (
-                                                SELECT
-                                                    MAX(DATE(created_at))
-                                                FROM
-                                                    capitallistings
-                                                WHERE
-                                                    listing_id = 1
-                                                    AND MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
-                                                    AND YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
-                                            )
-                                        LIMIT 1;'))->first();
+            $capital = DB::select('
+                            SELECT
+                                capital
+                            FROM
+                                capitallistings
+                            WHERE
+                                listing_id = 1
+                                AND DATE(created_at) = (
+                                    SELECT
+                                        MAX(DATE(created_at))
+                                    FROM
+                                        capitallistings
+                                    WHERE
+                                        listing_id = 1
+                                        AND MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+                                        AND YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+                                )
+                            LIMIT 1
+                        ');
 
             $data = [
                 'yellow' => $yellow,
