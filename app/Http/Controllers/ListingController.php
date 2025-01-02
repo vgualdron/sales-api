@@ -614,7 +614,7 @@ class ListingController extends Controller
             ->selectRaw('COUNT(*) as total_count')
             ->first();
 
-            $capital = DB::select('
+            $capital = DB::selectOne('
                             SELECT
                                 capital
                             FROM
@@ -632,7 +632,7 @@ class ListingController extends Controller
                                         AND YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
                                 )
                             LIMIT 1
-                        ')->first();
+                        ');
 
             $data = [
                 'yellow' => $yellow,
