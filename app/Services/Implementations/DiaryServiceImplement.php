@@ -8,7 +8,7 @@
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\DB;
-    
+
     class DiaryServiceImplement implements DiaryServiceInterface {
 
         use Commons;
@@ -20,12 +20,12 @@
             $this->diary = new Diary;
             $this->novel = new Novel;
             $this->validator = $validator;
-        }    
+        }
 
         function list(string $date, int $user, string $moment) {
             try {
                 $dates = $this->getDatesOfWeek($date, $moment);
-                 
+
                 $sql = $this->diary->from('diaries as d')
                     ->select(
                         'd.id',
@@ -63,7 +63,7 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
-        
+
         function listDayByDay(string $date, int $user, string $moment) {
             try {
                 $dates = $this->getDatesOfWeek($date, $moment);
@@ -104,7 +104,7 @@
                         ->where('date', "$valueDate $valueDay")
                         ->orderBy('date', 'ASC')
                         ->first();
-                        
+
                         if ($sql) {
                             $data[$i]["date"] = $valueDate;
                             if ($j == 0) {
@@ -116,11 +116,11 @@
                         }
                     }
                 }
-                 
+
                 return response()->json([
                     'data' => $data
                 ], Response::HTTP_OK);
-                
+
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [
@@ -160,11 +160,11 @@
                 ->join('news as n', 'd.new_id', 'n.id')
                 ->leftJoin('yards as s', 'n.sector', 's.id')
                 ->leftJoin('districts as b', 'n.district', 'b.id')
-                ->where('date', ">=", "$date 00:00:00")
+                ->where('date', "<=", "$date 23:59:59")
                 // ->whereDate('date', "<=", DB::raw("DATE_ADD($date, INTERVAL 2 DAY)"))
                 ->orderBy('date', 'ASC')
                 ->get();
-                
+
                 if (count($sql) > 0){
                     return response()->json([
                         'data' => $sql
@@ -212,13 +212,13 @@
                 $data['CASA CLIENTE']['TIPO TRABAJAO'] = $sql->type_work ? true : false;
                 $data['CASA CLIENTE']['CANTIDAD'] = $sql->quantity ? true : false;
                 $data['CASA CLIENTE']['PERIODO'] = $sql->period ? true : false;
-                
+
                 $nameFile = "FOTO_CASA_CLIENTE";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-                
+
                 $nameFile = "VIDEO_TOCANDO_CASA_CLIENTE";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
@@ -236,37 +236,37 @@
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-              
+
                 $nameFile = "FOTO_CEDULA_CLIENTE_POSTERIOR";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-               
+
                 $nameFile = "FOTO_LETRA_CLIENTE";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-               
+
                 $nameFile = "FOTO_FIRMANDO_LETRA_CLIENTE";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-               
+
                 $nameFile = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-               
+
                 $nameFile = "FOTO_RECIBO_CASA_CLIENTE";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
                 });
                 $data['CASA CLIENTE'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-                
+
                 $nameFile = "FOTO_CERTIFICADO_TRABAJO_CLIENTE";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
@@ -315,7 +315,7 @@
                 });
                 $data['REFERENCIA 2'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
 
-                
+
                 $data['FIADOR']['DOCUMENTO'] = $sql->guarantor_document_number ? true : false;
                 $data['FIADOR']['OCUPACION'] = $sql->guarantor_occupation ? true : false;
                 $data['FIADOR']['NOMBRE'] = $sql->guarantor_name ? true : false;
@@ -364,7 +364,7 @@
                     return $file["name"] == $nameFile;
                 });
                 $data['FIADOR'][$nameFile] = $file && $file->status === "aprobado" ? true : false;
-                
+
                 $nameFile = "FOTO_RECIBO_CASA_FIADOR";
                 $file = $files->first(function($file) use ($nameFile) {
                     return $file["name"] == $nameFile;
@@ -446,7 +446,7 @@
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
                 }
-                
+
                 DB::transaction(function () use ($diary) {
                     $dates = $this->getDatesOfWeek($diary['date'], $diary['moment']);
                     $hours = $this->getHoursOfDay();
@@ -459,7 +459,7 @@
                         }
                     }
                 });
-                
+
                 return response()->json([
                     'message' => [
                         [
@@ -524,7 +524,7 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
-        
+
         function updateStatus(array $novel, int $id) {
             try {
                 $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
@@ -579,7 +579,7 @@
             }
         }
 
-        function delete(int $id){   
+        function delete(int $id){
             try {
                 $sql = $this->novel::find($id);
                 if(!empty($sql)) {
@@ -592,7 +592,7 @@
                             ]
                         ]
                     ], Response::HTTP_OK);
-                    
+
                 } else {
                     return response()->json([
                         'message' => [
@@ -668,7 +668,7 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
-        
+
         function getDatesOfWeek($date, $moment = 'current') {
             $fecha = strtotime($date);
             $weekNumber = date("W", $fecha);
@@ -676,20 +676,20 @@
                 $weekNumber += 1;
             }
             $year = date("Y", $fecha);
-            
+
             $dates = [];
-        
+
             // Crear una fecha para el primer día de la semana específica
             $firstDayOfWeek = strtotime($year . "W" . str_pad($weekNumber, 2, '0', STR_PAD_LEFT));
-        
+
             // Obtener las fechas de la semana
             for ($i = 0; $i < 6; $i++) {
                 $dates[] = date('Y-m-d', strtotime("+$i day", $firstDayOfWeek));
             }
-        
+
             return $dates;
         }
-        
+
         function getHoursOfDay() {
             $dates[0] = "08:00:00";
             $dates[1] = "08:30:00";
