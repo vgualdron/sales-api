@@ -646,8 +646,8 @@ class ListingController extends Controller
                                 lendings ON lendings.listing_id = listings.id
                             LEFT JOIN
                                 payments p ON lendings.id = p.lending_id
-                                AND MONTH(p.date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
-                                AND YEAR(p.date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+                                AND MONTH(p.date) = MONTH(CURRENT_DATE)
+                                AND YEAR(p.date) = YEAR(CURRENT_DATE)
                                 AND p.is_valid = 1
                             WHERE
                                 lendings.listing_id = '. $idList .'
@@ -661,8 +661,8 @@ class ListingController extends Controller
                         FROM
                             capitallistings
                         WHERE
-                            MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
-                            AND YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+                            MONTH(created_at) = MONTH(CURRENT_DATE)
+                            AND YEAR(created_at) = YEAR(CURRENT_DATE)
                             AND created_at <= CURRENT_DATE();
                         ');
 
