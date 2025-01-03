@@ -18,12 +18,12 @@
         private $user;
         private $yard;
 
-        function __construct(){            
+        function __construct(){
             $this->oauthClient = new OauthClient;
             $this->user = new User;
             $this->yard = new Yard;
             $this->oauthAccessToken = new OauthAccessToken;
-        }    
+        }
 
         function getActiveToken(){
             try {
@@ -31,7 +31,7 @@
                             ->where('password_client', 1)
                             ->where('revoked', 0)
                             ->first();
-                  
+
                 $oauthClient = !empty($sql) ? $sql->key : null;
 
                 if (!empty($oauthClient)){
@@ -45,7 +45,7 @@
                 }
             } catch (\Throwable $e) {
                 return response()->json([
-                    'message' => ['Se ha presentado un error al preparar el inicio de sesión, por favor contacte con un administrador']
+                    'message' => ['Se ha presentado un error al preparar el inicio de sesión, por favor contacte con un administrador', $e->getMessage()]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
@@ -98,7 +98,7 @@
                                 $roles = $user->getRoleNames();
                                 $dataPermissions = [];
                                 $menu = [];
-                                
+
                                 foreach ($permissions as $permission) {
                                     $menu[$permission->group_id]['name'] = $permission->group_name;
                                     $menu[$permission->group_id]['label'] = $permission->group_label;
