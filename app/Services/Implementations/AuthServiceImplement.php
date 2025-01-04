@@ -129,11 +129,8 @@
 
                         $userData = array(
                             'name' => $user->name,
-                            'document' => $user->document_number,
-                            'yard' => $user->change_yard.'-'.$user->yard,
-                            'currentYard' => $user->yard,
-                            'city' => $yard->zone,
-                            'user' => $user->id,
+                            'email' => $user->email,
+                            'id' => $user->id,
                         );
 
                         $rolesArray = User::from('users as u')
