@@ -98,17 +98,11 @@
                             'p.group as group',
                             'p.route as route',
                             'p.menu as menu',
-                            'g.name as group_name',
-                            'g.icon as group_icon',
-                            'g.label as group_label',
-                            'g.id as group_id',
                         )
                         ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
                         ->join('role_has_permissions as rhp', 'mhr.role_id', 'rhp.role_id')
                         ->join('permissions as p', 'rhp.permission_id', 'p.id')
-                        ->join('groups as g', 'p.group_id', 'g.id')
                         ->where('u.id', $user->id)
-                        ->orderBy('g.order_number', 'ASC')
                         ->orderBy('p.order', 'ASC')
                         ->get();
 
