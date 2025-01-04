@@ -75,7 +75,7 @@
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
                 Artisan::call('optimize:clear');
-                $user = $this->user::where('document_number', $documentNumber)->first();
+                $user = $this->user::where('email', $documentNumber)->first();
                 $yard = $this->yard::where('id', $user->yard)->first();
                 if (!empty($user)) {
                     if ($user->active === 1) {
