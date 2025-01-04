@@ -87,7 +87,7 @@
                 if ($user && Hash::check($password, $user->password)) {
                     if(Auth::attempt(['email' => $email, 'password' => $password])){
 
-                        $token = $user->createToken('Mobile App')->plainTextToken;
+                        $token = $user->createToken('Mobile App')->accessToken;
                         // $permissions = $user->getPermissionsViaRoles();
                         $permissions = User::from('users as u')
                         ->select(
