@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     private $service;
-    private $request;   
+    private $request;
 
     public function __construct(Request $request, AuthServiceImplement $service){
         $this->service = $service;
@@ -18,11 +18,11 @@ class AuthController extends Controller
     function getActiveToken(){
         return $this->service->getActiveToken();
     }
-    
+
     function login(){
-        $documentNumber = $this->request->documentNumber;
+        $email = $this->request->email;
         $password = $this->request->password;
-        return $this->service->login($documentNumber, $password);
+        return $this->service->login($email, $password);
     }
 
     function logout(){

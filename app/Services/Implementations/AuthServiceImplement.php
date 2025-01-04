@@ -76,16 +76,16 @@
             }
         }
 
-        function login(string $documentNumber, string $password){
+        function login(string $email, string $password){
             try {
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
                 Artisan::call('config:cache');
                 Artisan::call('optimize:clear');
-                $user = $this->user::where('email', $documentNumber)->first();
+                $user = $this->user::where('email', $email)->first();
                 // $yard = $this->yard::where('id', $user->yard)->first();
                 if ($user && Hash::check($password, $user->password)) {
-                    if(Auth::attempt(['email' => $documentNumber, 'password' => $password])){
+                    if(Auth::attempt(['email' => $email, 'password' => $password])){
 
                         $token = $user->createToken('Mobile App')->plainTextToken;
                         // $permissions = $user->getPermissionsViaRoles();
