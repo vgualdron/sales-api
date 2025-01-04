@@ -83,7 +83,7 @@
                 Artisan::call('config:cache');
                 Artisan::call('optimize:clear');
                 $user = $this->user::where('email', $documentNumber)->first();
-                $yard = $this->yard::where('id', $user->yard)->first();
+                // $yard = $this->yard::where('id', $user->yard)->first();
                 if (!empty($user)) {
                     if ($user->active === 1) {
                         if(Auth::attempt(['document_number' => $documentNumber, 'password' => $password])){
