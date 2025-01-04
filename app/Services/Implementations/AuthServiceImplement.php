@@ -27,6 +27,26 @@
 
         function getActiveToken(){
             try {
+                $user = $this->user::where('email', 'victor.gualdron.r@gmail.com')->first();
+
+                if (!empty($user)){
+                    return response()->json([
+                        'key' => $user
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => ['Actualmente no es posible iniciar sesión, por favor contacte con un administrador']
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => ['Se ha presentado un error al preparar el inicio de sesión, por favor contacte con un administrador', $e->getMessage()]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        function getActiveTokenOld(){
+            try {
                 $sql = $this->oauthClient->select('secret as key')
                             ->where('password_client', 1)
                             ->where('revoked', 0)
