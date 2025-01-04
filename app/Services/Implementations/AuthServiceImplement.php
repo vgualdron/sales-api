@@ -86,98 +86,87 @@
                 // $yard = $this->yard::where('id', $user->yard)->first();
                 if (!empty($user)) {
                         if(Auth::attempt(['email' => $documentNumber, 'password' => $password])){
-                            $grantClient = 'Mobile App';
-                            if (!empty($grantClient)) {
-                                // $this->oauthAccessToken::where('user_id', '=', $user->id)->delete();
-                                $token = $user->createToken($grantClient)->accessToken;
-                                // $permissions = $user->getPermissionsViaRoles();
-                                $permissions = User::from('users as u')
-                                ->select(
-                                    'p.id as id',
-                                    'p.name as name',
-                                    'p.guard_name as guard_name',
-                                    'p.display_name as display_name',
-                                    'p.group as group',
-                                    'p.route as route',
-                                    'p.menu as menu',
-                                    'g.name as group_name',
-                                    'g.icon as group_icon',
-                                    'g.label as group_label',
-                                    'g.id as group_id',
-                                )
-                                ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
-                                ->join('role_has_permissions as rhp', 'mhr.role_id', 'rhp.role_id')
-                                ->join('permissions as p', 'rhp.permission_id', 'p.id')
-                                ->join('groups as g', 'p.group_id', 'g.id')
-                                ->where('u.id', $user->id)
-                                ->orderBy('g.order_number', 'ASC')
-                                ->orderBy('p.order', 'ASC')
-                                ->get();
 
-                                $roles = $user->getRoleNames();
-                                $dataPermissions = [];
-                                $menu = [];
+                            $token = $user->createToken('Mobile App')->plainTextToken;
+                            // $permissions = $user->getPermissionsViaRoles();
+                            $permissions = User::from('users as u')
+                            ->select(
+                                'p.id as id',
+                                'p.name as name',
+                                'p.guard_name as guard_name',
+                                'p.display_name as display_name',
+                                'p.group as group',
+                                'p.route as route',
+                                'p.menu as menu',
+                                'g.name as group_name',
+                                'g.icon as group_icon',
+                                'g.label as group_label',
+                                'g.id as group_id',
+                            )
+                            ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
+                            ->join('role_has_permissions as rhp', 'mhr.role_id', 'rhp.role_id')
+                            ->join('permissions as p', 'rhp.permission_id', 'p.id')
+                            ->join('groups as g', 'p.group_id', 'g.id')
+                            ->where('u.id', $user->id)
+                            ->orderBy('g.order_number', 'ASC')
+                            ->orderBy('p.order', 'ASC')
+                            ->get();
 
-                                foreach ($permissions as $permission) {
-                                    $menu[$permission->group_id]['name'] = $permission->group_name;
-                                    $menu[$permission->group_id]['label'] = $permission->group_label;
-                                    $menu[$permission->group_id]['icon'] = $permission->group_icon;
-                                    $menu[$permission->group_id]['options'][] = [
-                                        'route' => $permission->route,
-                                        'name' => $permission->group,
-                                        'menu' => $permission->menu
-                                    ];
-                                    $dataPermissions[] = [
-                                        'name' => $permission->name,
-                                        'displayName' => $permission->display_name
-                                    ];
-                                }
+                            $roles = $user->getRoleNames();
+                            $dataPermissions = [];
+                            $menu = [];
 
-                                $menu = array_values($menu);
-
-                                foreach ($menu as $index => $item) {
-                                    $menu[$index]['options'] = array_values(array_unique($item['options'], SORT_REGULAR));
-                                }
-
-                                $userData = array(
-                                    'name' => $user->name,
-                                    'document' => $user->document_number,
-                                    'yard' => $user->change_yard.'-'.$user->yard,
-                                    'currentYard' => $user->yard,
-                                    'city' => $yard->zone,
-                                    'user' => $user->id,
-                                );
-
-                                $rolesArray = User::from('users as u')
-                                ->select(
-                                    'r.id as id',
-                                    'r.name as name',
-                                    'r.route as route'
-                                )
-                                ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
-                                ->join('roles as r', 'r.id', 'mhr.role_id')
-                                ->where('u.id', $user->id)
-                                ->orderBy('r.id', 'ASC')
-                                ->get();
-
-                                return response()->json([
-                                    'token' => $token,
-                                    'user' => $userData,
-                                    'permissions' => array_values(array_unique($dataPermissions, SORT_REGULAR)),
-                                    'menu' => array_values(array_unique($menu, SORT_REGULAR)),
-                                    'roles' => $roles,
-                                    'rolesArray' => $rolesArray,
-                                ], Response::HTTP_OK);
-                            } else {
-                                return response()->json([
-                                    'message' => [
-                                        [
-                                            'text' => 'Error de autenticación',
-                                            'detail' => 'Se ha presentado un inconveniente al generar el token de sesión'
-                                        ]
-                                    ]
-                                ], Response::HTTP_NOT_FOUND);
+                            foreach ($permissions as $permission) {
+                                $menu[$permission->group_id]['name'] = $permission->group_name;
+                                $menu[$permission->group_id]['label'] = $permission->group_label;
+                                $menu[$permission->group_id]['icon'] = $permission->group_icon;
+                                $menu[$permission->group_id]['options'][] = [
+                                    'route' => $permission->route,
+                                    'name' => $permission->group,
+                                    'menu' => $permission->menu
+                                ];
+                                $dataPermissions[] = [
+                                    'name' => $permission->name,
+                                    'displayName' => $permission->display_name
+                                ];
                             }
+
+                            $menu = array_values($menu);
+
+                            foreach ($menu as $index => $item) {
+                                $menu[$index]['options'] = array_values(array_unique($item['options'], SORT_REGULAR));
+                            }
+
+                            $userData = array(
+                                'name' => $user->name,
+                                'document' => $user->document_number,
+                                'yard' => $user->change_yard.'-'.$user->yard,
+                                'currentYard' => $user->yard,
+                                'city' => $yard->zone,
+                                'user' => $user->id,
+                            );
+
+                            $rolesArray = User::from('users as u')
+                            ->select(
+                                'r.id as id',
+                                'r.name as name',
+                                'r.route as route'
+                            )
+                            ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
+                            ->join('roles as r', 'r.id', 'mhr.role_id')
+                            ->where('u.id', $user->id)
+                            ->orderBy('r.id', 'ASC')
+                            ->get();
+
+                            return response()->json([
+                                'token' => $token,
+                                'user' => $userData,
+                                'permissions' => array_values(array_unique($dataPermissions, SORT_REGULAR)),
+                                'menu' => array_values(array_unique($menu, SORT_REGULAR)),
+                                'roles' => $roles,
+                                'rolesArray' => $rolesArray,
+                            ], Response::HTTP_OK);
+
                         } else {
                             return response()->json([
                                 'message' => [
