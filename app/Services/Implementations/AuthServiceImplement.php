@@ -27,7 +27,13 @@
 
         function getActiveToken(){
             try {
-                $user = $this->user::where('email', 'victor.gualdron.r@gmail.com')->first();
+                // $user = $this->user::where('email', 'victor.gualdron.r@gmail.com')->first();
+                $user = [
+                    'DB_HOST' => env('DB_HOST'),
+                    'DB_DATABASE' => env('DB_DATABASE'),
+                    'DB_USERNAME' => env('DB_USERNAME'),
+                    'DB_PASSWORD' => env('DB_PASSWORD'),
+                ];
 
                 if (!empty($user)){
                     return response()->json([
