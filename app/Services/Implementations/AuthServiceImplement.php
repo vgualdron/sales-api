@@ -94,10 +94,6 @@
                             'p.id as id',
                             'p.name as name',
                             'p.guard_name as guard_name',
-                            'p.display_name as display_name',
-                            'p.group as group',
-                            'p.route as route',
-                            'p.menu as menu',
                         )
                         ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
                         ->join('role_has_permissions as rhp', 'mhr.role_id', 'rhp.role_id')
