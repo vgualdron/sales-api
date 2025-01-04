@@ -74,6 +74,7 @@
             try {
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
+                Artisan::call('config:cache');
                 Artisan::call('optimize:clear');
                 $user = $this->user::where('email', $documentNumber)->first();
                 $yard = $this->yard::where('id', $user->yard)->first();
