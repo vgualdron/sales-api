@@ -117,7 +117,7 @@
                             ];
                             $dataPermissions[] = [
                                 'name' => $permission->name,
-                                'displayName' => $permission->display_name
+                                'id' => $permission->id
                             ];
                         }
 
