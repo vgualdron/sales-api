@@ -99,7 +99,7 @@
                         ->join('role_has_permissions as rhp', 'mhr.role_id', 'rhp.role_id')
                         ->join('permissions as p', 'rhp.permission_id', 'p.id')
                         ->where('u.id', $user->id)
-                        ->orderBy('p.order', 'ASC')
+                        ->orderBy('p.id', 'ASC')
                         ->get();
 
                         $roles = $user->getRoleNames();
