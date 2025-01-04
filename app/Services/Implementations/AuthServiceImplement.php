@@ -136,8 +136,7 @@
                         $rolesArray = User::from('users as u')
                         ->select(
                             'r.id as id',
-                            'r.name as name',
-                            'r.route as route'
+                            'r.name as name'
                         )
                         ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
                         ->join('roles as r', 'r.id', 'mhr.role_id')
