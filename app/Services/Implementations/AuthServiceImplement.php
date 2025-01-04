@@ -168,7 +168,7 @@
                         'message' => [
                             [
                                 'text' => 'Error de autenticación',
-                                'detail' => 'El usuario con el número de documento "'.$documentNumber.'" no se encuentra registrado'
+                                'detail' => 'El usuario con el correo: "'.$email.'" no se encuentra registrado'
                             ]
                         ]
                     ], Response::HTTP_NOT_FOUND);
