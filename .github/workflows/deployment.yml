@@ -25,6 +25,5 @@ jobs:
           local-dir: ./
           exclude: |
             **/vendor/**
-            **/.env*
             **/.git*
             **/.git*/**
