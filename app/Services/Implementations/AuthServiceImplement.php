@@ -85,14 +85,7 @@
                 $user = $this->user::where('email', $documentNumber)->first();
                 // $yard = $this->yard::where('id', $user->yard)->first();
                 if (!empty($user)) {
-                    if ($user->active === 1) {
-                        if(Auth::attempt(['document_number' => $documentNumber, 'password' => $password])){
-                            $grantClient = $this->oauthClient->select('secret as key')
-                                ->where('password_client', 1)
-                                ->where('revoked', 0)
-                                ->first();
-
-                            $grantClient = !empty($grantClient) ? $grantClient->key : null;
+                        if(Auth::attempt(['email' => $documentNumber, 'password' => $password])){
 
                             if (!empty($grantClient)) {
                                 $this->oauthAccessToken::where('user_id', '=', $user->id)
@@ -196,16 +189,6 @@
                                 ]
                             ], Response::HTTP_NOT_FOUND);
                         }
-                    } else {
-                        return response()->json([
-                            'message' => [
-                                [
-                                    'text' => 'Error de autenticación',
-                                    'detail' => 'El usuario con el número de documento "'.$documentNumber.'" se encuentra inactivo'
-                                ]
-                            ]
-                        ], Response::HTTP_NOT_FOUND);
-                    }
                 } else {
                     return response()->json([
                         'message' => [
