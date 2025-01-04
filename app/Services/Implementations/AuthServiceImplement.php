@@ -86,10 +86,9 @@
                 // $yard = $this->yard::where('id', $user->yard)->first();
                 if (!empty($user)) {
                         if(Auth::attempt(['email' => $documentNumber, 'password' => $password])){
-
+                            $grantClient = 'Mobile App';
                             if (!empty($grantClient)) {
-                                $this->oauthAccessToken::where('user_id', '=', $user->id)
-                                    ->delete();
+                                // $this->oauthAccessToken::where('user_id', '=', $user->id)->delete();
                                 $token = $user->createToken($grantClient)->accessToken;
                                 // $permissions = $user->getPermissionsViaRoles();
                                 $permissions = User::from('users as u')
