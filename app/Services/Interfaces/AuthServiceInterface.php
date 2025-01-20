@@ -4,7 +4,7 @@
     interface AuthServiceInterface
     {
         function getActiveToken();
-        function login(string $email, string $password);
+        function login(string $documentNumber, string $password);
         function logout();
     }
 ?>
