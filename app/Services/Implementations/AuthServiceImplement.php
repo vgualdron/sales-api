@@ -6,7 +6,6 @@
     use App\Models\{
         OauthClient,
         User,
-        Yard,
         OauthAccessToken,
     };
     use Illuminate\Support\Facades\Artisan;
@@ -16,12 +15,10 @@
         private $oauthClient;
         private $oauthAccessToken;
         private $user;
-        private $yard;
 
         function __construct(){
             $this->oauthClient = new OauthClient;
             $this->user = new User;
-            $this->yard = new Yard;
             $this->oauthAccessToken = new OauthAccessToken;
         }
 
@@ -57,7 +54,6 @@
                 Artisan::call('optimize:clear');
                 $user = $this->user::where('document_number', $documentNumber)->where('active', 1)->first();
                 if (!empty($user)) {
-                    $yard = $this->yard::where('id', $user->yard)->first();
                     if ($user->active === 1) {
                         if(Auth::attempt(['document_number' => $documentNumber, 'password' => $password])){
                             $grantClient = $this->oauthClient->select('secret as key')
@@ -123,9 +119,6 @@
                                 $userData = array(
                                     'name' => $user->name,
                                     'document' => $user->document_number,
-                                    'yard' => $user->change_yard.'-'.$user->yard,
-                                    'currentYard' => $user->yard,
-                                    'city' => $yard->zone,
                                     'user' => $user->id,
                                 );
 
