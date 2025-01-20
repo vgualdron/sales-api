@@ -63,6 +63,20 @@ return [
             ]) : [],
         ],
 
+        'mysql_secondary' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_SECONDARY', '127.0.0.1'),
+            'port' => env('DB_PORT_SECONDARY', '3306'),
+            'database' => env('DB_DATABASE_SECONDARY', 'database_two'),
+            'username' => env('DB_USERNAME_SECONDARY', 'root'),
+            'password' => env('DB_PASSWORD_SECONDARY', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OauthClient extends Model
 {
+    protected $connection = 'mysql';
     public $table = "oauth_clients";
     /**
      * The attributes that are mass assignable.

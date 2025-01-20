@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, HasRoles;
 
+    protected $connection = 'mysql';
     public $table = "users";
 
     protected $guard_name = 'api';
@@ -25,11 +26,9 @@ class User extends Authenticatable
         'name',
         'phone',
         'password',
-        'yard',
         'editable',
         'active',
         'push_token',
-        'area',
         'latitude',
         'longitude',
         'date_location',

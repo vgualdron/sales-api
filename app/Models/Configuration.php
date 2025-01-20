@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Configuration extends Model
 {
+    protected $connection = 'mysql';
     public $table = "configurations";
 
     /**

@@ -9,6 +9,7 @@ class Role extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql';
     public $table = "roles";
 
     /**

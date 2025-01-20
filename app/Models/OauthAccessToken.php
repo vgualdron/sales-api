@@ -9,6 +9,7 @@ class OauthAccessToken extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql';
     public $table = "oauth_access_tokens";
     /**
      * The attributes that are mass assignable.
