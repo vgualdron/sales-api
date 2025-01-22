@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
                         AuthController,
+                        DepartmentController,
                         RoleController,
                         PermissionController,
                         UserController,
@@ -41,6 +42,10 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/session"], function () 
     Route::get('/status', function (Request $request) {
         return 'OK';
     });
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/department"], function () {
+    Route::get('/list', [DepartmentController::class, 'list'])->name('department.list');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/role"], function () {
