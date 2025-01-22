@@ -129,7 +129,7 @@
 
         function create(array $novel){
             try {
-                $validation = $this->validate($this->validator, $novel, null, 'registrar', '', null);
+                $validation = $this->validate($this->validator, $novel, null, 'registrar', 'asociado', null);
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
