@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:9000', 'http://localhost:8080', 'https://www.micomercio.com.co', 'https://app-prestamos.micomercio.com.co'],
+    'allowed_origins' => ['http://localhost:9000', 'http://localhost:8080', 'https://saac.com.co', 'https://saac.com.co/api/public/api'],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +29,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];
