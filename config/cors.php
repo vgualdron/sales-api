@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:9000', 'http://localhost:8080', 'https://saac.com.co', 'https://saac.com.co/api/public/api'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
