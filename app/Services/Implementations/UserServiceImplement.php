@@ -7,7 +7,7 @@
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\DB;
-    
+
     class UserServiceImplement implements UserServiceInterface {
 
         use Commons;
@@ -20,7 +20,7 @@
             $this->user = new User;
             $this->validator = $validator;
             $this->profileValidator = $profileValidator;
-        }    
+        }
 
         function list(int $displayAll){
             try {
@@ -73,7 +73,7 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
-        
+
         function listByRoleName(int $displayAll, string $name, int $city){
             try {
                 $sql = $this->user->from('users as u')
@@ -153,7 +153,7 @@
                             ->leftJoin('areas as a', 'u.area', 'a.id')
                             ->where('a.id', $area)
                             ->where('u.active', 1)
-                           
+
                             ->get();
 
                 if (count($sql) > 0){
@@ -191,12 +191,9 @@
                         'name' => $user['name'],
                         'phone' => $user['phone'],
                         'active' => $user['active'],
-                        'area' => $user['area'],
-                        'password' => empty($user['password']) ? Hash::make($user['documentNumber']) : Hash::make($user['password']),
-                        'yard' => $user['yard'],
-                        'change_yard' => $user['changeYard']
+                        'password' => empty($user['password']) ? Hash::make($user['documentNumber']) : Hash::make($user['password'])
                     ]);
-    
+
                     $sql->assignRole($user['roles']);
                 });
                 return response()->json([
@@ -272,7 +269,7 @@
             }
         }
 
-        function delete(int $id){   
+        function delete(int $id){
             try {
                 $sql = $this->user::find($id);
                 if(!empty($sql)) {

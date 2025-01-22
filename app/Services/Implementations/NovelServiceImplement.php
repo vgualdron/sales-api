@@ -3,6 +3,7 @@
     use App\Services\Interfaces\NovelServiceInterface;
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\Novel;
+    use App\Models\User;
     use App\Models\Question;
     use App\Validator\{NovelValidator, ProfileValidator};
     use App\Traits\Commons;
@@ -135,8 +136,18 @@
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                $sql = $this->novel::create($novel);
+                DB::transaction(function () use ($novel) {
+                    $sql = $this->novel::create($novel);
 
+                    $sql = User::create([
+                        'document_number' => $novel['document_number'],
+                        'name' => $novel['name'],
+                        'phone' => $novel['phone'],
+                        'active' => $novel['active'],
+                        'password' => empty($novel['password']) ? Hash::make($novel['documentNumber']) : Hash::make($novel['password'])
+                    ]);
+
+                });
                 return response()->json([
                     'message' => [
                         [
