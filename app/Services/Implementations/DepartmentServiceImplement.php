@@ -26,7 +26,7 @@
                     ->select(
                         'd.*',
                     )
-                    ->orderBy('d.name', 'ASC')
+                    ->orderBy('d.nombre', 'ASC')
                     ->get();
 
                 if (count($sql) > 0){
