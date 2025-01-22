@@ -144,7 +144,7 @@
                         'name' => $novel['name'],
                         'phone' => $novel['phone'],
                         'active' => $novel['active'],
-                        'password' => empty($novel['password']) ? Hash::make($novel['documentNumber']) : Hash::make($novel['password'])
+                        'password' => empty($novel['password']) ? Hash::make($novel['document_number']) : Hash::make($novel['password'])
                     ]);
 
                 });
