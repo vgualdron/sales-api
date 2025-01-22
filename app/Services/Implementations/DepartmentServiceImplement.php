@@ -24,7 +24,8 @@
             try {
                 $sql = $this->department->from('departamentos as d')
                     ->select(
-                        'd.*',
+                        'd.id',
+                        'd.nombre as name',
                     )
                     ->orderBy('d.nombre', 'ASC')
                     ->get();
