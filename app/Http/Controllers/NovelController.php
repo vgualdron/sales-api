@@ -22,11 +22,7 @@ class NovelController extends Controller
     }
 
     function create(){
-        $item = $this->request->all();
-        $userSesion = $this->request->user();
-        $idUserSesion = $userSesion->id;
-        $item["user_sesion"] = $idUserSesion;
-        return $this->service->create($item);
+        return $this->service->create($this->request->all());
     }
 
     function update(int $id){
