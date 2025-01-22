@@ -129,7 +129,7 @@
 
         function create(array $novel){
             try {
-                $validation = $this->validate($this->validator, $novel, null, 'registrar', 'nuevo', null);
+                $validation = $this->validate($this->validator, $novel, null, 'registrar', '', null);
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
@@ -155,7 +155,7 @@
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Reistrado con exito',
+                            'text' => 'Registrado con exito',
                             'detail' => null
                         ]
                     ]
