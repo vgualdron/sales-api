@@ -38,7 +38,7 @@ Route::group(["prefix" => "/auth"], function () {
     Route::middleware(['middleware' => 'auth:api'])->post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
-Route::get('/department/list', [DepartmentController::class, 'list'])->name('department.list');
+Route::get('/department', [DepartmentController::class, 'list'])->name('department.list');
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/session"], function () {
     Route::get('/status', function (Request $request) {
