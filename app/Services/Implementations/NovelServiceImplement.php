@@ -137,6 +137,10 @@
                 }
 
                 DB::transaction(function () use ($novel) {
+                    unset($novel['department_house']);
+                    unset($novel['department_id']);
+                    unset($novel['department_issue']);
+
                     $sql = $this->novel::create($novel);
 
                     $sql = User::create([
