@@ -16,6 +16,7 @@ class Novel extends Model
      */
     protected $fillable = [
         'id',
+        'status',
         'document_number',
         'first_lastname',
         'second_lastname',
