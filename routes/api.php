@@ -33,6 +33,7 @@ Route::get('/download-image-from-url', [FileController::class, 'downloadImageFro
 Route::group(["prefix" => "/auth"], function () {
     Route::get('/get-active-token', [AuthController::class, 'getActiveToken'])->name('auth.getActiveToken');
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/create', [NovelController::class, 'create'])->name('new.create');
     Route::middleware(['middleware' => 'auth:api'])->post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
@@ -69,7 +70,6 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/new"], function () {
     Route::get('/list/{status}', [NovelController::class, 'list'])->name('new.list');
-    Route::post('/create', [NovelController::class, 'create'])->name('new.create');
     Route::put('/update/{id}', [NovelController::class, 'update'])->name('new.update');
     Route::put('/update-status/{id}', [NovelController::class, 'updateStatus'])->name('new.changeStatus');
     Route::put('/complete-data/{id}', [NovelController::class, 'completeData'])->name('review.completeData');
