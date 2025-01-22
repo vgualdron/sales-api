@@ -8,7 +8,7 @@
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\DB;
-    
+
     class NovelServiceImplement implements NovelServiceInterface {
 
         use Commons;
@@ -21,7 +21,7 @@
             $this->novel = new Novel;
             $this->validator = $validator;
             $this->profileValidator = $profileValidator;
-        }    
+        }
 
         function list(string $status) {
             try {
@@ -126,248 +126,21 @@
             }
         }
 
-        function listReds(int $city, int $user) {
-            try {
-              
-                $sql = "SELECT 
-                        ROW_NUMBER() OVER (ORDER BY 
-                            CAST(SUBSTRING_INDEX(districts.order, ' ', 1) AS UNSIGNED) ASC, 
-                            SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
-                            lendings.id ASC
-                        ) AS 'order',
-                        lendings.id AS lending_id,
-                        lendings.amount,
-                        lendings.percentage,
-                        lendings.has_double_interest,
-                        lendings.status,
-                        lendings.order as lending_order,
-                        listings.name as listing_name,
-                        listings.id as listing_id,
-                        COALESCE(SUM(payments.amount), 0) AS total_paid,
-                        news.id AS news_id,
-                        news.name AS news_name,
-                        news.status AS news_status,
-                        news.observation AS news_observation,
-                        news.type_cv AS news_type_cv,
-                        lendings.firstDate,
-                        lendings.endDate,
-                        districts.name AS district_name,
-                        yards.name AS sector_name,
-                        yards.id AS sector_id,
-                        yards.code AS sector_code,
-                        zones.name AS city_name,
-                        zones.id AS city_id,
-                        DATEDIFF(CURRENT_DATE, lendings.firstDate) AS days_since_creation,
-                        (lendings.amount * (1 + lendings.percentage / 100)) AS total_value, 
-                        (lendings.amount * (1 + 
-                            CASE 
-                                WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
-                                ELSE lendings.percentage / 100
-                            END
-                        )) AS total_due, 
-                        (lendings.amount * (1 + 
-                            CASE 
-                                WHEN lendings.has_double_interest = 1 THEN lendings.percentage * 2 / 100
-                                ELSE lendings.percentage / 100
-                            END
-                        ) - COALESCE(SUM(payments.amount), 0)) AS remaining_balance,
-                        address_data.address_type,
-                        address_data.address_name,
-                        address_data.address,
-                        address_data.district,
-                        address_data.address_latitude,
-                        address_data.address_longitude,
-                        districts.order AS district_order,
-                        redcollectors.collector_id AS collector_id,
-                        users.name AS collector_name,
-                        (SELECT id 
-                            FROM reddirections
-                            WHERE address = address_data.address
-                            AND type_ref = address_data.address_type
-                            AND status IN ('creado', 'activo')
-                            ORDER BY registered_date DESC
-                            LIMIT 1
-                        ) AS is_current,
-                        (SELECT start_date 
-                            FROM reddirections
-                            WHERE address = address_data.address
-                            AND type_ref = address_data.address_type
-                            AND status IN ('creado', 'activo')
-                            ORDER BY registered_date DESC
-                            LIMIT 1
-                        ) AS reddirection_start_date,
-                        (SELECT id 
-                            FROM reddirections
-                            WHERE address = address_data.address
-                            AND type_ref = address_data.address_type
-                            AND status IN ('aprobado', 'rechazado')
-                            ORDER BY registered_date DESC
-                            LIMIT 1
-                        ) AS has_visited
-                    FROM 
-                        lendings
-                    LEFT JOIN 
-                        listings ON lendings.listing_id = listings.id
-                    LEFT JOIN 
-                        payments ON lendings.id = payments.lending_id
-                    LEFT JOIN 
-                        news ON lendings.new_id = news.id
-                    LEFT JOIN (
-                        SELECT 
-                            news.id as new_id,
-                            'CASA' AS address_type,
-                            'CASA' AS address_name,
-                            address_house AS address,
-                            address_house_district AS district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
-                        FROM news
-                        WHERE address_house IS NOT NULL AND address_house_district IS NOT NULL
-                        UNION ALL
-                        SELECT 
-                            news.id as new_id,
-                            'TRABAJO' AS address_type,
-                            'TRABAJO' AS address_name,
-                            address_work,
-                            address_work_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
-                        FROM news
-                        WHERE address_work IS NOT NULL AND address_work_district IS NOT NULL
-                        UNION ALL
-                        SELECT 
-                            news.id as new_id,
-                            'REF 1' AS address_type,
-                            CONCAT(family_reference_name, ' | ', family_reference_relationship) AS address_name,
-                            family_reference_address,
-                            family_reference_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
-                        FROM news
-                        WHERE family_reference_address IS NOT NULL AND family_reference_district IS NOT NULL
-                        UNION ALL
-                        SELECT 
-                            news.id as new_id,
-                            'REF 2' AS address_type,
-                            CONCAT(family2_reference_name, ' | ', family2_reference_relationship) AS address_name,
-                            family2_reference_address,
-                            family2_reference_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
-                        FROM news
-                        WHERE family2_reference_address IS NOT NULL AND family2_reference_district IS NOT NULL
-                        UNION ALL
-                        SELECT 
-                            news.id as new_id,
-                            'FIADOR' AS address_type,
-                            CONCAT(guarantor_name, ' | ', guarantor_relationship) AS address_name,
-                            guarantor_address,
-                            guarantor_district,
-                        	(SELECT latitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_latitude,
-                        	(SELECT longitude FROM files WHERE model_name = 'news' AND model_id = news.id AND name = 'PDF_CV') AS address_longitude
-                        FROM news
-                        WHERE guarantor_address IS NOT NULL AND guarantor_district IS NOT NULL
-                    ) AS address_data ON news.id = address_data.new_id
-                    LEFT JOIN 
-                        districts ON address_data.district = districts.id
-                    LEFT JOIN 
-                        yards ON districts.sector = yards.id
-                    LEFT JOIN 
-                        zones ON zones.id = yards.zone
-                    LEFT JOIN 
-                        redcollectors ON redcollectors.sector_id = yards.id
-                    LEFT JOIN 
-                        users ON redcollectors.collector_id = users.id
-                    WHERE 
-                        lendings.status = 'open'
-                    AND news.status = 'consignado'
-                    AND lendings.order <> 0 "; // el order 0 es cuando se tiene a un cliente ene spera en cobro, y no quiere msotrarse en rojos
-                        
-                if ($city && $city > 0) {
-                    $sql .= " AND zones.id = ".$city;
-                }
-
-                if ($user && $user > 0) {
-                    $sql .= " AND redcollectors.collector_id = ".$user;
-                }
-
-                $sql .= " GROUP BY 
-                        lendings.id, news.id, districts.id, address_data.address_type, address_data.address, address_data.district
-                    HAVING 
-                        days_since_creation > 19
-                    ORDER BY 
-                        CAST(SUBSTRING_INDEX(districts.order, ' ', 1) AS UNSIGNED) ASC, 
-                        SUBSTRING_INDEX(districts.order, ' ', -1) ASC, 
-                        lendings.id ASC;";
-
-                $results = DB::select($sql);
-
-                if (count($results) > 0){
-                    return response()->json([
-                        'data' => $results
-                    ], Response::HTTP_OK);
-                } else {
-                    return response()->json([
-                        'data' => []
-                    ], Response::HTTP_OK);
-                }
-            } catch (\Throwable $e) {
-                return response()->json([
-                    'message' => [
-                        [
-                            'text' => 'Se ha presentado un error al cargar los registros',
-                            'detail' => $e->getMessage()
-                        ]
-                    ]
-                ], Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-        }
-
         function create(array $novel){
             try {
-                /* $validation = $this->validate($this->validator, $novel, null, 'registrar', 'nuevo', null);
+                $validation = $this->validate($this->validator, $novel, null, 'registrar', 'nuevo', null);
                 if ($validation['success'] === false) {
                     return response()->json([
                         'message' => $validation['message']
                     ], Response::HTTP_BAD_REQUEST);
-                } */
-                $message = 'Nuevo registrado con éxito';
-                $new = $this->novel->from('news as n')->select('n.*')->where('n.phone', $novel['phone'])->first();
+                }
 
-                DB::transaction(function () use ($novel, $new, &$message) {
-                    $sql = $this->novel::create([
-                        'document_number' => null,
-                        'name' => $novel['name'],
-                        'phone' => $novel['phone'],
-                        'address' => $novel['address'],
-                        'sector' => $novel['sector'],
-                        'district' => $novel['district'],
-                        'occupation' => $novel['occupation'],
-                        'observation' => $novel['observation'],
-                        'user_send' => $novel['userSend'],
-                        'status' => $new ? 'analizando' : $novel['status'],
-                        'account_type' => 'nequi',
-                        'account_number' => $novel['phone'],
-                    ]);
+                $sql = $this->novel::create($novel);
 
-                    if ($new) {
-                        $message = 'Ya existe un registro de cliente con el número de telefono ingresado.';
-                        $question = Question::create([
-                            'model_id' => $sql->id,
-                            'model_name' => 'news',
-                            'type' => 'nuevo',
-                            'status' => 'pendiente',
-                            'observation' => 'El numero de telefono '.$novel['phone'].' ya está registrado para otro cliente llamado: '.$new['name'].', con numero de documento: '.$new['document_number'],
-                            'area_id' => 3,
-                            'registered_by' => $novel['registered_by'],
-                        ]);
-                    }
-    
-                });
                 return response()->json([
                     'message' => [
                         [
-                            'text' => $message,
+                            'text' => 'Reistrado con exito',
                             'detail' => null
                         ]
                     ]
@@ -376,7 +149,7 @@
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Advertencia al registrar nuevo',
+                            'text' => 'Advertencia al registrar',
                             'detail' => $e->getMessage()
                         ]
                     ]
@@ -436,7 +209,7 @@
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
-        
+
         function updateStatus(array $novel, int $id){
             try {
                 /* $validation = $this->validate($this->validator, $novel, $id, 'actualizar', 'nuevo', null);
@@ -491,7 +264,7 @@
             }
         }
 
-        function delete(int $id){   
+        function delete(int $id){
             try {
                 $sql = $this->novel::find($id);
                 if(!empty($sql)) {
@@ -504,7 +277,7 @@
                             ]
                         ]
                     ], Response::HTTP_OK);
-                    
+
                 } else {
                     return response()->json([
                         'message' => [
@@ -688,7 +461,7 @@
                 return response()->json([
                     'data' => $new
                 ], Response::HTTP_OK);
-                
+
             } catch (\Throwable $e) {
                 return response()->json([
                     'message' => [

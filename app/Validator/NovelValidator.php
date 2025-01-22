@@ -9,14 +9,14 @@
         public function validate($data, $id){
             $this->data = $data;
             $this->data['id'] = $id;
-            return Validator::make($this->data, $this->rules(), $this->messages());            
+            return Validator::make($this->data, $this->rules(), $this->messages());
         }
 
         private function rules(){
-            return[                             
+            return[
                 'documentNumber' => 'unique:news,document_number,'.$this->data['id'],
                 'name' => 'required|min:5|max:50',
-                'phone' => 'required|min:5|max:15',
+                'phone' => 'required|min:5|max:15|unique:news,phone,'.$this->data['id'],
             ];
         }
 
@@ -31,6 +31,7 @@
                 'phone.required' => 'El número de teléfono es requerido',
                 'phone.min' => 'El número de teléfono debe tener un mínimo de 5 caracteres',
                 'phone.max' => 'El número de teléfono debe tener un máximo de 15 caracteres',
+                'phone.unique' => 'El número de telefono "'.$this->data['phone'].'" ya se encuentra registrado',
             ];
         }
     }
