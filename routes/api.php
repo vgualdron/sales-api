@@ -12,6 +12,7 @@ use App\Http\Controllers\{
                         FileController,
                         ConfigurationController,
                         ReportController,
+                        CompanyController,
                     };
 
 /*
@@ -38,6 +39,7 @@ Route::group(["prefix" => "/auth"], function () {
     Route::middleware(['middleware' => 'auth:api'])->post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
+Route::get('/company', [CompanyController::class, 'list'])->name('company.list');
 Route::get('/department', [DepartmentController::class, 'list'])->name('department.list');
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/session"], function () {
