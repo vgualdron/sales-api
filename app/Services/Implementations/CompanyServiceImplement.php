@@ -22,7 +22,7 @@
 
         function list() {
             try {
-                $sql = $this->department->from('empresas as e')
+                $sql = $this->company->from('empresas as e')
                     ->select(
                         'e.id',
                         'e.nit',
