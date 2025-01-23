@@ -49,6 +49,7 @@ class Novel extends Model
         'tiktok',
         'approved_by',
         'approved_date',
+        'company_id',
         'updated_at',
         'created_at',
     ];
