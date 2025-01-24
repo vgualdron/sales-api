@@ -3,6 +3,6 @@
 
     interface CityServiceInterface
     {
-        function list(int $department);
+        function list();
     }
 ?>

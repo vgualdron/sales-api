@@ -17,7 +17,7 @@ class CityController extends Controller
         $this->service = $service;
     }
 
-    function list(int $department){
-        return $this->service->list($department);
+    function list(){
+        return $this->service->list();
     }
 }

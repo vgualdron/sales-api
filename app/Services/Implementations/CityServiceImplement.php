@@ -20,7 +20,7 @@
             $this->profileValidator = $profileValidator;
         }
 
-        function list(int $department) {
+        function list() {
             try {
                 $sql = $this->city->from('municipios as m')
                     ->select(
@@ -29,7 +29,6 @@
                         'm.estado as status',
                         'm.departamento_id as department_id',
                     )
-                    ->where('m.departamento_id', $department)
                     ->orderBy('m.nombre', 'ASC')
                     ->get();
 
