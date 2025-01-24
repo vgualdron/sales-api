@@ -151,6 +151,8 @@
                         'password' => empty($novel['password']) ? Hash::make($novel['document_number']) : Hash::make($novel['password'])
                     ]);
 
+                    $sql->assignRole(['Asociado']);
+
                 });
                 return response()->json([
                     'message' => [
