@@ -41,6 +41,7 @@ Route::group(["prefix" => "/auth"], function () {
 
 Route::get('/company', [CompanyController::class, 'list'])->name('company.list');
 Route::get('/department', [DepartmentController::class, 'list'])->name('department.list');
+Route::get('/city', [CityController::class, 'list'])->name('city.list');
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/session"], function () {
     Route::get('/status', function (Request $request) {
