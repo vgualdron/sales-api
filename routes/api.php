@@ -13,6 +13,7 @@ use App\Http\Controllers\{
                         ConfigurationController,
                         ReportController,
                         CompanyController,
+                        CityController,
                     };
 
 /*
