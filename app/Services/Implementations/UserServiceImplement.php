@@ -34,15 +34,8 @@
                                 'u.latitude',
                                 'u.longitude',
                                 'u.date_location',
-                                'u.area as area',
-                                'a.name as areaName',
                                 DB::Raw('IF(u.active = 1, "ACTIVO", "NO ACTIVO") as status'),
-                                DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin sector asignado") as yard'),
-                                DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad asignada") as zone')
                             )
-                            ->leftJoin('yards as y', 'u.yard', 'y.id')
-                            ->leftJoin('zones as z', 'y.zone', 'z.id')
-                            ->leftJoin('areas as a', 'u.area', 'a.id')
                             ->when($displayAll === 0, function ($q) {
                                 return $q->where('u.active', 1);
                             })
