@@ -80,25 +80,12 @@
                                 'u.latitude',
                                 'u.longitude',
                                 'u.date_location',
-                                'u.area as area',
-                                'a.name as areaName',
-                                'yrc.name as sector_name_collector',
                                 DB::Raw('IF(u.active = 1, "ACTIVO", "NO ACTIVO") as status'),
-                                DB::Raw('IF(u.yard IS NOT NULL, y.name, "Sin sector asignado") as yard'),
-                                DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad asignada") as zone')
                             )
-                            ->leftJoin('yards as y', 'u.yard', 'y.id')
-                            ->leftJoin('zones as z', 'y.zone', 'z.id')
-                            ->leftJoin('areas as a', 'u.area', 'a.id')
                             ->join('model_has_roles as mhr', 'u.id', 'mhr.model_id')
                             ->join('roles as r', 'mhr.role_id', 'r.id')
-                            ->leftJoin('redcollectors as rc', 'u.id', 'rc.collector_id')
-                            ->leftJoin('yards as yrc', 'yrc.id', 'rc.sector_id')
                             ->where('r.name', $name)
                             ->where('u.active', $displayAll)
-                            ->when($city > 0, function ($q) use ($city) {
-                                return $q->where('z.id', $city);
-                            })
                             ->distinct()
                             ->get();
 
@@ -223,11 +210,8 @@
                         $sql->document_number = $user['documentNumber'];
                         $sql->name = $user['name'];
                         $sql->phone = $user['phone'];
-                        $sql->yard = $user['yard'];
                         $sql->active = $user['active'];
-                        $sql->area = $user['area'];
                         $sql->password = empty($user['password']) ? $sql->password : Hash::make($user['password']);
-                        $sql->change_yard = $user['changeYard'];
                         $sql->save();
                         $sql->roles()->detach();
                         $sql->assignRole($user['roles']);
@@ -326,7 +310,6 @@
                     'id',
                     'document_number as documentNumber',
                     'name',
-                    'yard',
                     'phone',
                     'active',
                     'editable',
@@ -335,7 +318,6 @@
                     'latitude',
                     'longitude',
                     'date_location',
-                    'area',
                 )
                     ->where('id', $id)
                     ->first();
