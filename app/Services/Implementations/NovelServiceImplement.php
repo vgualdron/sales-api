@@ -36,27 +36,16 @@
                         'n.address as address',
                         'n.address_house',
                         'n.address_house_district',
-                        'dh.name as districtHouseName',
                         'n.address_work',
                         'n.address_work_district',
-                        'dw.name as districtWorkName',
                         'n.site_visit',
                         'n.district as district',
-                        'd.name as districtName',
-                        'd.group as districtGroup',
-                        'd.order as districtOrder',
                         'n.occupation as occupation',
                         'n.attempts as attempts',
                         'n.observation as observation',
                         'n.status as status',
                         'n.created_at as date',
                         'n.visit_start_date',
-                        DB::Raw('IF(y.zone IS NOT NULL, z.name, "Sin ciudad") as cityName'),
-                        DB::Raw('IF(y.zone IS NOT NULL, z.id, null) as city'),
-                        DB::Raw('IF(n.sector IS NOT NULL, y.name, "Sin sector") as sectorName'),
-                        DB::Raw('IF(n.sector IS NOT NULL, y.id, null) as sector'),
-                        DB::Raw('IF(n.user_send IS NOT NULL, u.name, "Ninguno") as userSendName'),
-                        DB::Raw('IF(n.user_send IS NOT NULL, u.id, null) as userSend'),
                         'n.family_reference_district',
                         'n.family_reference_name',
                         'n.family_reference_address',
@@ -93,17 +82,10 @@
                         'n.score_observation',
                         'n.account_active',
                     )
-                    ->leftJoin('yards as y', 'n.sector', 'y.id')
-                    ->leftJoin('zones as z', 'y.zone', 'z.id')
-                    ->leftJoin('users as u', 'n.user_send', 'u.id')
-                    ->leftJoin('districts as d', 'n.district', 'd.id')
-                    ->leftJoin('districts as dh', 'n.address_house_district', 'dh.id')
-                    ->leftJoin('districts as dw', 'n.address_work_district', 'dw.id')
                     ->when($status !== 'all', function ($q) use ($explodeStatus) {
                         return $q->whereIn('n.status', $explodeStatus);
                     })
-                    ->orderBy('d.group', 'ASC')
-                    ->orderBy('d.order', 'ASC')
+                    ->orderBy('n.name', 'ASC')
                     ->get();
 
                 if (count($sql) > 0){
