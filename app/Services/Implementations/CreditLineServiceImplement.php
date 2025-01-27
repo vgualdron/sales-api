@@ -34,7 +34,7 @@
                         'lc.seguro_deudor as credit_insurance',
                         'lc.estado as status',
                     )
-                    ->orderBy('lc.id', 'DESC')
+                    ->orderBy('lc.id', 'ASC')
                     ->get();
 
                 if (count($sql) > 0) {
