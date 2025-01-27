@@ -20,7 +20,7 @@
             $this->profileValidator = $profileValidator;
         }
 
-        function list() {
+        function list(String $document) {
             try {
                 $sql = $this->collection->from('recaudos as r')
                     ->select(
@@ -28,6 +28,7 @@
                         'r.fecha_recaudo as date',
                         'r.valor_recaudo as amount',
                     )
+                    ->leftJoin('asociados')
                     ->orderBy('r.fecha_recaudo', 'DESC')
                     ->get();
 

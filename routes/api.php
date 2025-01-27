@@ -14,6 +14,7 @@ use App\Http\Controllers\{
                         ReportController,
                         CompanyController,
                         CityController,
+                        CollectionController,
                     };
 
 /*
