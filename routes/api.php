@@ -104,3 +104,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/report"], function () {
     Route::get('/', [ReportController::class, 'list'])->name('report.list');
     Route::get('/{id}', [ReportController::class, 'execute'])->name('report.execute');
 });
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/collection"], function () {
+    Route::get('/{document}', [CollectionController::class, 'list'])->name('collection.list');
+});
