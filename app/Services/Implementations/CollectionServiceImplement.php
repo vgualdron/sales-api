@@ -28,7 +28,7 @@
                         'r.fecha_recaudo as date',
                         'r.valor_recaudo as amount',
                     )
-                    ->leftJoin('asociados')
+                    ->leftJoin('asociados as a', 'a.id', 'r.asociado_id')
                     ->orderBy('r.fecha_recaudo', 'DESC')
                     ->get();
 
