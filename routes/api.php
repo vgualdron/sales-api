@@ -112,5 +112,5 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/collection"], function 
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/credit-line"], function () {
-    Route::get('/{document}', [CreditLineController::class, 'list'])->name('creditLine.list');
+    Route::get('/', [CreditLineController::class, 'list'])->name('creditLine.list');
 });
