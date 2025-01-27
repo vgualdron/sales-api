@@ -30,6 +30,7 @@
                     )
                     ->leftJoin('asociados as a', 'a.id', 'r.asociado_id')
                     ->orderBy('r.fecha_recaudo', 'DESC')
+                    ->where('a.cedula', $document)
                     ->get();
 
                 if (count($sql) > 0){
