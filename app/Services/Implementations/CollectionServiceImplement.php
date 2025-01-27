@@ -27,8 +27,10 @@
                         'r.id',
                         'r.fecha_recaudo as date',
                         'r.valor_recaudo as amount',
+                        'p.nombre as period_name',
                     )
-                    ->leftJoin('asociados as a', 'a.id', 'r.asociado_id')
+                    ->join('asociados as a', 'a.id', 'r.asociado_id')
+                    ->join('periodos as p', 'p.id', 'r.periodo_id')
                     ->orderBy('r.fecha_recaudo', 'DESC')
                     ->where('a.cedula', $document)
                     ->get();
