@@ -20,7 +20,7 @@
             $this->profileValidator = $profileValidator;
         }
 
-        function list(String $document) {
+        function list() {
             try {
                 $sql = $this->creditline->from('lineacreditos as lc')
                     ->select(
