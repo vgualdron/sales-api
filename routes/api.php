@@ -15,6 +15,7 @@ use App\Http\Controllers\{
                         CompanyController,
                         CityController,
                         CollectionController,
+                        CreditLineController,
                     };
 
 /*
@@ -108,4 +109,8 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/report"], function () {
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/collection"], function () {
     Route::get('/{document}', [CollectionController::class, 'list'])->name('collection.list');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/credit-line"], function () {
+    Route::get('/{document}', [CreditLineController::class, 'list'])->name('creditLine.list');
 });
