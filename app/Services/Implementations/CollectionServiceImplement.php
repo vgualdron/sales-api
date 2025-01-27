@@ -33,14 +33,13 @@
                     ->where('a.cedula', $document)
                     ->get();
 
-                $indexedResults = $sql->map(function ($item, $index) {
-                    $item->index = $index + 1;
-                    return $item;
-                });
-
-                if (count($sql) > 0){
+                if (count($sql) > 0) {
+                    $indexedResults = $sql->map(function ($item, $index) {
+                        $item->index = $index + 1;
+                        return $item;
+                    });
                     return response()->json([
-                        'data' => indexedResults
+                        'data' => $indexedResults
                     ], Response::HTTP_OK);
                 } else {
                     return response()->json([
