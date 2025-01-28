@@ -31,7 +31,7 @@
                         'lc.interes_anual as annual_interest',
                         'lc.interes as interest',
                         'lc.seguro_deudor as debtor_insurance',
-                        'lc.seguro_deudor as credit_insurance',
+                        'lc.seguro_credito as credit_insurance',
                         'lc.estado as status',
                     )
                     ->orderBy('lc.id', 'ASC')
