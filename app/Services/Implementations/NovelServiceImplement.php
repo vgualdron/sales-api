@@ -75,6 +75,7 @@
                     $sql = $this->novel::create($novel);
 
                     $sql = User::create([
+                        'type_document' => $novel['type_document'],
                         'document_number' => $novel['document_number'],
                         'name' => $novel['name'] . ' ' . $novel['first_lastname'] . ' ' . $novel['second_lastname'],
                         'phone' => $novel['phone'],

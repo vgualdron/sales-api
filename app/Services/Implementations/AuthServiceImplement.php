@@ -118,6 +118,7 @@
 
                                 $userData = array(
                                     'name' => $user->name,
+                                    'type_document' => $user->type_document,
                                     'document' => $user->document_number,
                                     'user' => $user->id,
                                 );
