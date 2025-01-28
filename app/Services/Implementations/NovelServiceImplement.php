@@ -76,7 +76,7 @@
 
                     $sql = User::create([
                         'document_number' => $novel['document_number'],
-                        'name' => $novel['name'],
+                        'name' => $novel['name'] . ' ' . $novel['first_lastname'] . ' ' . $novel['second_lastname'],
                         'phone' => $novel['phone'],
                         'active' => $novel['active'],
                         'password' => empty($novel['password']) ? Hash::make($novel['document_number']) : Hash::make($novel['password'])
