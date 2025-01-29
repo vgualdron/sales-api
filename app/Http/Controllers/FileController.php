@@ -76,7 +76,7 @@ class FileController extends Controller
         return response()->json([
             'message' => [
                 [
-                    'text' => $url,
+                    'text' => 'OK',
                     'detail' => 'Guardado con éxito.'
                 ]
             ],
