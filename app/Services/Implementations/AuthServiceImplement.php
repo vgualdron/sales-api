@@ -128,7 +128,7 @@
                                             ->where('f.name', '=', 'FOTO_PROFILE');
                                     })
                                     ->where('u.id', $user->id)
-                                    ->orderBy('r.id', 'ASC')
+                                    ->orderBy('u.id', 'ASC')
                                     ->first();
 
                                 if($userObject) {
