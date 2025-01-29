@@ -116,11 +116,31 @@
                                     $menu[$index]['options'] = array_values(array_unique($item['options'], SORT_REGULAR));
                                 }
 
+                                $url_photo_profile = null;
+                                $userObject = User::from('users as u')
+                                    ->select(
+                                        'u.*',
+                                        'f.url as url_photo_profile',
+                                    )
+                                    ->leftJoin('files as f', function($join) {
+                                        $join->where('f.model_name', '=', 'users')
+                                            ->on('f.model_id', '=', 'u.id')
+                                            ->where('f.name', '=', 'FOTO_PROFILE');
+                                    })
+                                    ->where('u.id', $user->id)
+                                    ->orderBy('r.id', 'ASC')
+                                    ->first();
+
+                                if($userObject) {
+                                    $url_photo_profile = $userObject->url_photo_profile;
+                                }
+
                                 $userData = array(
                                     'name' => $user->name,
                                     'type_document' => $user->type_document,
                                     'document' => $user->document_number,
                                     'user_id' => $user->id,
+                                    'user_url_photo_proile' => $url_photo_profile,
                                 );
 
                                 $rolesArray = User::from('users as u')
