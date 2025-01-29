@@ -31,7 +31,7 @@ class FileController extends Controller
             $maintainFile = $request->maintain;
             $item = null;
             $f = base64_decode($file);
-          
+
             // Crear un nombre aleatorio para la imagen
             $time = strtotime("now");
             $nameComplete = $name."-".$time.".".$extension;
@@ -47,7 +47,7 @@ class FileController extends Controller
                     ->where('model_name', $modelName)
                     ->delete();
             }
-         
+
             $item = File::create([
                 'name' => $name,
                 'model_name' => $modelName,
@@ -77,7 +77,7 @@ class FileController extends Controller
             'message' => [
                 [
                     'text' => $url,
-                    'detail' => $status
+                    'detail' => 'Guardado con éxito.'
                 ]
             ],
             'data' => $item,
