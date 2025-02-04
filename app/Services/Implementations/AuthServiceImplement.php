@@ -56,7 +56,7 @@
                     'mensaje' => 'Este es un mensaje de prueba desde Laravel.'
                 ];
 
-                Mail::to('destinatario@example.com')->send(new PqrEmail($data));
+                // Mail::to('destinatario@example.com')->send(new PqrEmail($data));
 
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
