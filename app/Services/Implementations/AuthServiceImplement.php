@@ -9,8 +9,8 @@
         OauthAccessToken,
     };
     use Illuminate\Support\Facades\Artisan;
-    // use App\Mail\PqrEmail;
-    // use Illuminate\Support\Facades\Mail;
+    use App\Mail\PqrEmail;
+    use Illuminate\Support\Facades\Mail;
 
     class AuthServiceImplement implements AuthServiceInterface{
 
@@ -56,7 +56,7 @@
                     'mensaje' => 'Este es un mensaje de prueba desde Laravel.'
                 ];
 
-                // Mail::to('destinatario@example.com')->send(new PqrEmail($data));
+                Mail::to('destinatario@example.com')->send(new PqrEmail($data));
 
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
