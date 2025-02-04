@@ -5,9 +5,9 @@
     <title>Notificación</title>
 </head>
 <body>
-    <h1>PQR de: {{ $data['name'] }}</h1>
-    <h1># doc: {{ $data['document'] }}</h1>
-    <p>{{ $data['message'] }}</p>
+    <h5>PQR de: {{ $data['name'] }}</h5>
+    <h5># doc: {{ $data['document'] }}</h5>
+    <h6>{{ $data['message'] }}</h6>
     <!-- <p>Gracias por usar nuestro servicio.</p> -->
 </body>
 </html>
