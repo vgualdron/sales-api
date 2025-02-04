@@ -28,6 +28,15 @@ class PqrController extends Controller
 
             Mail::to('cooperativacoopserprog@gmail.com')->send(new PqrEmail($data));
 
+            return response()->json([
+                'message' => [
+                    [
+                        'text' => 'OK',
+                        'detail' => 'PQR enviado con exito'
+                    ]
+                ]
+            ], Response::HTTP_OK);
+
         } catch (Exception $e) {
             return response()->json([
                 'message' => [
