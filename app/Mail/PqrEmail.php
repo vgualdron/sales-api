@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -13,12 +11,14 @@ class PqrEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;  // Variable pública para que esté disponible en la vista
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;  // Asigna los datos al atributo $data
     }
 
     /**
@@ -38,6 +38,7 @@ class PqrEmail extends Mailable
     {
         return new Content(
             view: 'pqr',
+            with: ['data' => $this->data],  // Pasa los datos a la vista
         );
     }
 
