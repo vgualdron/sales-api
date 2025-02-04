@@ -23,7 +23,8 @@ class PqrController extends Controller
 
             $data = [
                 'name' => $name,
-                'message' => $message
+                'document' => $document,
+                'message' => $message,
             ];
 
             Mail::to('cooperativacoopserprog@gmail.com')->send(new PqrEmail($data));

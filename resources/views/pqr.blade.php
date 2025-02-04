@@ -6,6 +6,7 @@
 </head>
 <body>
     <h1>PQR de:, {{ $data['name'] }}</h1>
+    <h1># doc:, {{ $data['document'] }}</h1>
     <p>{{ $data['message'] }}</p>
     <p>Gracias por usar nuestro servicio.</p>
 </body>
