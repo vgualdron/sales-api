@@ -117,5 +117,5 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/credit-line"], function
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {
-    Route::get('/', [PqrController::class, 'create'])->name('pqr.create');
+    Route::post('/', [PqrController::class, 'create'])->name('pqr.create');
 });
