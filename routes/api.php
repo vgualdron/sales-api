@@ -16,6 +16,7 @@ use App\Http\Controllers\{
                         CityController,
                         CollectionController,
                         CreditLineController,
+                        PqrController,
                     };
 
 /*
@@ -113,4 +114,8 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/collection"], function 
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/credit-line"], function () {
     Route::get('/', [CreditLineController::class, 'list'])->name('creditLine.list');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {
+    Route::get('/', [PqrController::class, 'create'])->name('pqr.create');
 });
