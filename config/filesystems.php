@@ -41,6 +41,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'resources' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/resources'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
         'news' => [
             'driver' => 'local',
             'root' => storage_path('app/public/news'),
