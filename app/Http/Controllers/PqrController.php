@@ -19,10 +19,12 @@ class PqrController extends Controller
             $userSesion = $request->user();
             $idUserSesion = $userSesion->id;
             $name = $request->name;
+            $subject = $request->subject;
             $message = $request->message;
             $document = $request->document;
 
             $data = [
+                'subject' => $subject,
                 'name' => $name,
                 'document' => $document,
                 'message' => $message,

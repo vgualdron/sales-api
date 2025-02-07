@@ -27,7 +27,7 @@ class PqrEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'PQR Progress APP',
+            subject: $this->data['subject'],
         );
     }
 
