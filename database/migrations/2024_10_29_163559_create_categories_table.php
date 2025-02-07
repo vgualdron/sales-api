@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zones', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->string('code', 10)->collation('utf8_general_ci')->required()->unique();
-            $table->string('name', 30)->collation('utf8_general_ci')->required()->unique();
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 200)->collation('utf8_general_ci')->required();
+            $table->unsignedBigInteger('order');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zones');
+        Schema::dropIfExists('categories');
     }
 };
