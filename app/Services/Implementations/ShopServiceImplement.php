@@ -26,8 +26,14 @@
                     ->select(
                         's.*',
                         'c.name as category_name',
+                        'fa.url as url_logo',
                     )
                     ->join('categories as c', 'c.id', 's.category_id')
+                    ->leftJoin('files as fa', function($join) {
+                        $join->where('fa.model_name', '=', 'shops')
+                             ->on('fa.model_id', '=', 's.id')
+                             ->where('fa.name', '=', 'LOGO_SHOP');
+                    })
                     ->orderBy('s.order', 'ASC')
                     ->get();
 
