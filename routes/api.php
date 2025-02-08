@@ -18,6 +18,7 @@ use App\Http\Controllers\{
                         CreditLineController,
                         PqrController,
                         CategoryController,
+                        ShopController,
                     };
 
 /*
@@ -119,6 +120,10 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/credit-line"], function
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/categories"], function () {
     Route::get('/', [CategoryController::class, 'list'])->name('category.list');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/shops"], function () {
+    Route::get('/', [ShopController::class, 'list'])->name('shop.list');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {
