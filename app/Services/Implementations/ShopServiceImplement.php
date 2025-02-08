@@ -27,7 +27,7 @@
                         's.*',
                         'c.name as category_name',
                     )
-                    ->join('categories c', 'c.id', 's.category_id')
+                    ->join('categories as c', 'c.id', 's.category_id')
                     ->orderBy('s.order', 'ASC')
                     ->get();
 
