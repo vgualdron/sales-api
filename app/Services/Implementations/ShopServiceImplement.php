@@ -25,7 +25,9 @@
                 $sql = $this->shop->from('shops as s')
                     ->select(
                         's.*',
+                        'c.name as category_name',
                     )
+                    ->join('categories c', 'c.id', 's.category_id')
                     ->orderBy('s.order', 'ASC')
                     ->get();
 
