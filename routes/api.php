@@ -118,11 +118,11 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/credit-line"], function
     Route::get('/', [CreditLineController::class, 'list'])->name('creditLine.list');
 });
 
-Route::group(['middleware' => 'auth:api' , "prefix" => "/categories"], function () {
+Route::group(['middleware' => 'auth:api' , "prefix" => "/category"], function () {
     Route::get('/', [CategoryController::class, 'list'])->name('category.list');
 });
 
-Route::group(['middleware' => 'auth:api' , "prefix" => "/shops"], function () {
+Route::group(['middleware' => 'auth:api' , "prefix" => "/shop"], function () {
     Route::get('/', [ShopController::class, 'list'])->name('shop.list');
 });
 
