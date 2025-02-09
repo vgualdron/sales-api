@@ -308,13 +308,13 @@
             try {
                 $sql = $this->user::select(
                     'id',
+                    'type_document as documentType',
                     'document_number as documentNumber',
                     'name',
                     'phone',
                     'active',
                     'editable',
                     'push_token as pushToken',
-                    'change_yard as changeYard',
                     'latitude',
                     'longitude',
                     'date_location',
