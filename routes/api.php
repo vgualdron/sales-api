@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/permission"], function 
     Route::get('/list', [PermissionController::class, 'list'])->name('permission.list');
 });
 
+Route::get('/user/get/{id}', [UserController::class, 'get'])->name('user.get');
 Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
     Route::get('/list/{displayAll}', [UserController::class, 'list'])->name('user.list');
     Route::get('/list-by-role-name/{displayAll}/{name}/{city}', [UserController::class, 'listByRoleName'])->name('user.listByRoleName');
@@ -74,7 +75,6 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
     Route::post('/create', [UserController::class, 'create'])->middleware('can:user.create')->name('user.create');
     Route::put('/update/{id}', [UserController::class, 'update'])->middleware('can:user.update')->name('user.update');
     Route::delete('/delete/{id}', [UserController::class, 'delete'])->middleware('can:user.delete')->name('user.delete');
-    Route::get('/get/{id}', [UserController::class, 'get'])->name('user.get');
     Route::put('/updateProfile/{id}', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::put('/update-push-token', [UserController::class, 'updatePushToken'])->name('user.updatePushToken');
     Route::put('/update-location', [UserController::class, 'updateLocation'])->name('user.updateLocation');
