@@ -19,6 +19,7 @@ use App\Http\Controllers\{
                         PqrController,
                         CategoryController,
                         ShopController,
+                        PointController,
                     };
 
 /*
@@ -128,4 +129,12 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/shop"], function () {
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {
     Route::post('/', [PqrController::class, 'create'])->name('pqr.create');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/point"], function () {
+    Route::get('/', [PointController::class, 'list'])->name('point.list');
+    Route::post('/', [PointController::class, 'create'])->name('point.create');
+    Route::put('/{id}', [PointController::class, 'update'])->name('point.update');
+    Route::delete('/{id}', [PointController::class, 'delete'])->name('point.delete');
+    Route::get('/{id}', [PointController::class, 'get'])->name('point.get');
 });
