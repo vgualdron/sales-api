@@ -150,6 +150,7 @@
                                     'document' => $user->document_number,
                                     'user_id' => $user->id,
                                     'user_url_photo_proile' => $url_photo_profile,
+                                    'points' => $points,
                                 );
 
                                 $rolesArray = User::from('users as u')
