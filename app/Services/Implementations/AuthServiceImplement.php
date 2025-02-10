@@ -148,6 +148,8 @@
                                     'name' => $user->name,
                                     'type_document' => $user->type_document,
                                     'document' => $user->document_number,
+                                    'created_at' => $user->created_at,
+                                    'updated_at' => $user->updated_at,
                                     'user_id' => $user->id,
                                     'user_url_photo_proile' => $url_photo_profile,
                                     'points' => $points,
