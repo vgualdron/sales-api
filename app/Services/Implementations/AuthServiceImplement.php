@@ -135,7 +135,7 @@
                                             ->where('f.name', '=', 'FOTO_PROFILE');
                                     })
                                     ->where('u.id', $user->id)
-                                    ->groupBy('u.id', 'f.url') // Necesario para el uso de SUM()
+                                    ->groupBy('u.id', 'f.url')
                                     ->orderBy('u.id', 'ASC')
                                     ->first();
 
