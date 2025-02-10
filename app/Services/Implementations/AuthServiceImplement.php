@@ -121,7 +121,12 @@
                                     ->select(
                                         'u.*',
                                         'f.url as url_photo_profile',
+                                        'SUM(p.amount) as points',
                                     )
+                                    ->leftJoin('points as p', function($join) {
+                                        $join->where('p.user_id', '=', 'u.id')
+                                            ->where('p.status', '=', 'aprobado');
+                                    })
                                     ->leftJoin('files as f', function($join) {
                                         $join->where('f.model_name', '=', 'users')
                                             ->on('f.model_id', '=', 'u.id')
