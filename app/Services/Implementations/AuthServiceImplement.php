@@ -118,11 +118,12 @@
                                 }
 
                                 $url_photo_profile = null;
+                                $points = 0;
                                 $userObject = User::from('users as u')
                                     ->select(
                                         'u.*',
                                         'f.url as url_photo_profile',
-                                        DB::raw('SUM(p.amount) as total_points')
+                                        DB::raw('COALESCE(SUM(p.amount), 0) as total_points')
                                     )
                                     ->leftJoin('points as p', function ($join) {
                                         $join->on('p.user_id', '=', 'u.id')
@@ -137,8 +138,10 @@
                                     ->groupBy('u.id', 'f.url') // Necesario para el uso de SUM()
                                     ->orderBy('u.id', 'ASC')
                                     ->first();
+
                                 if($userObject) {
                                     $url_photo_profile = $userObject->url_photo_profile;
+                                    $points = $userObject->total_points;
                                 }
 
                                 $userData = array(
