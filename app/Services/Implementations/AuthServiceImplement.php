@@ -121,7 +121,7 @@
                                     ->select(
                                         'u.*',
                                         'f.url as url_photo_profile',
-                                        'SUM(p.amount) as points',
+                                        'SUM(p.amount) as total_points',
                                     )
                                     ->leftJoin('points as p', function($join) {
                                         $join->where('p.user_id', '=', 'u.id')
