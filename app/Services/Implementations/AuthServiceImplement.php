@@ -121,21 +121,21 @@
                                     ->select(
                                         'u.*',
                                         'f.url as url_photo_profile',
-                                        'SUM(p.amount) as total_points',
+                                        DB::raw('SUM(p.amount) as total_points')
                                     )
-                                    ->leftJoin('points as p', function($join) {
-                                        $join->where('p.user_id', '=', 'u.id')
+                                    ->leftJoin('points as p', function ($join) {
+                                        $join->on('p.user_id', '=', 'u.id')
                                             ->where('p.status', '=', 'aprobado');
                                     })
-                                    ->leftJoin('files as f', function($join) {
-                                        $join->where('f.model_name', '=', 'users')
-                                            ->on('f.model_id', '=', 'u.id')
+                                    ->leftJoin('files as f', function ($join) {
+                                        $join->on('f.model_id', '=', 'u.id')
+                                            ->where('f.model_name', '=', 'users')
                                             ->where('f.name', '=', 'FOTO_PROFILE');
                                     })
                                     ->where('u.id', $user->id)
+                                    ->groupBy('u.id', 'f.url') // Necesario para el uso de SUM()
                                     ->orderBy('u.id', 'ASC')
                                     ->first();
-
                                 if($userObject) {
                                     $url_photo_profile = $userObject->url_photo_profile;
                                 }
