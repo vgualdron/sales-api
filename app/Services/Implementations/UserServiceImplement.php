@@ -352,12 +352,6 @@
 
         function updateProfile(array $user, int $id){
             try {
-                $validation = $this->validate($this->profileValidator, $user, $id, 'actualizar', 'perfil', null);
-                if ($validation['success'] === false) {
-                    return response()->json([
-                        'message' => $validation['message']
-                    ], Response::HTTP_BAD_REQUEST);
-                }
                 $sql = $this->user::find($id);
                 if(!empty($sql)) {
                     $sql->password = Hash::make($user['password']);
