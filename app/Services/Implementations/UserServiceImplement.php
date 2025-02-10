@@ -359,7 +359,7 @@
                     return response()->json([
                         'message' => [
                             [
-                                'text' => 'Perfil actualizado con éxito',
+                                'text' => 'Contraseña actualizada con éxito',
                                 'detail' => null
                             ]
                         ]
@@ -368,7 +368,7 @@
                     return response()->json([
                         'message' => [
                             [
-                                'text' => 'Advertencia al actualizar el perfil',
+                                'text' => 'Advertencia al actualizar contraseña',
                                 'detail' => 'El usuario no existe'
                             ]
                         ]
