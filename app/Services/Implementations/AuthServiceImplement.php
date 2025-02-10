@@ -9,6 +9,7 @@
         OauthAccessToken,
     };
     use Illuminate\Support\Facades\Artisan;
+    use Illuminate\Support\Facades\DB;
 
     class AuthServiceImplement implements AuthServiceInterface{
 
