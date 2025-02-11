@@ -133,7 +133,7 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/point"], function () {
     Route::get('/', [PointController::class, 'list'])->name('point.list');
-    Route::get('/by-user-session', [PointController::class, 'listByUserSession'])->name('point.listByUserSession');
+    Route::get('/by-user-session/{status}', [PointController::class, 'listByUserSession'])->name('point.listByUserSession');
     Route::post('/', [PointController::class, 'create'])->name('point.create');
     Route::put('/{id}', [PointController::class, 'update'])->name('point.update');
     Route::delete('/{id}', [PointController::class, 'delete'])->name('point.delete');
