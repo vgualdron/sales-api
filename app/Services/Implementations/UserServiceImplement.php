@@ -3,6 +3,7 @@
     use App\Services\Interfaces\UserServiceInterface;
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\User;
+    use App\Models\Point;
     use App\Validator\{UserValidator, ProfileValidator};
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
@@ -353,6 +354,15 @@
         function updateProfile(array $user, int $id){
             try {
                 $sql = $this->user::find($id);
+                if ($sql->created_at == $sql->updated_at) {
+                    Point::create([
+                        'amount' => 100,
+                        'status' => 'aprobado',
+                        'description' => 'Realizar cambio de contraseña',
+                        'observation' => '',
+                        'user_id' => $id,
+                    ]);
+                }
                 if(!empty($sql)) {
                     $sql->password = Hash::make($user['password']);
                     $sql->save();
