@@ -19,6 +19,11 @@ class PointController extends Controller
         return $this->service->list($status);
     }
 
+    function listByUserSession(string $status){
+        $idUserSesion = $this->request->user()->id;
+        return $this->service->listByUserSession($status, $idUserSesion);
+    }
+
     function create(){
         return $this->service->create($this->request->all());
     }

@@ -61,6 +61,47 @@
             }
         }
 
+        function listByUserSession(string $status, int $id) {
+            try {
+                $explodeStatus = explode(',', $status);
+                $sql = $this->point->from('points as p')
+                            ->select(
+                                'p.*',
+                                'u.*',
+                            )
+                            ->join('users as u', 'u.id', 'p.user_id')
+                            ->where('p.user_id', $id)
+                            ->when($status !== 'all', function ($q) use ($explodeStatus) {
+                                return $q->whereIn('n.status', $explodeStatus);
+                            })
+                            ->get();
+
+                if (count($sql) > 0){
+                    return response()->json([
+                        'data' => $sql
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'message' => [
+                            [
+                                'text' => 'No hay usuarios para mostrar',
+                                'detail' => 'Aun no ha registrado ningun registro'
+                            ]
+                        ]
+                    ], Response::HTTP_NOT_FOUND);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => [
+                        [
+                            'text' => 'Se ha presentado un error al cargar los usuarios',
+                            'detail' => $e->getMessage()
+                        ]
+                    ]
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
         function create(array $point){
             try {
                 DB::transaction(function () use ($point) {
