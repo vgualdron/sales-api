@@ -84,7 +84,7 @@
                     return response()->json([
                         'message' => [
                             [
-                                'text' => 'No hay usuarios para mostrar',
+                                'text' => 'No hay puntos para mostrar',
                                 'detail' => 'Aun no ha registrado ningun registro'
                             ]
                         ]
@@ -94,7 +94,7 @@
                 return response()->json([
                     'message' => [
                         [
-                            'text' => 'Se ha presentado un error al cargar los usuarios',
+                            'text' => 'Se ha presentado un error al cargar los puntos',
                             'detail' => $e->getMessage()
                         ]
                     ]
