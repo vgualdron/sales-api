@@ -21,5 +21,7 @@ class Point extends Model
         'description',
         'observation',
         'user_id',
+        'shop_id',
+        'invoice_number',
     ];
 }
