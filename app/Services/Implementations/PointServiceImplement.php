@@ -67,7 +67,6 @@
                 $sql = $this->point->from('points as p')
                             ->select(
                                 'p.*',
-                                'u.*',
                             )
                             ->join('users as u', 'u.id', 'p.user_id')
                             ->where('p.user_id', $id)
