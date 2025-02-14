@@ -157,7 +157,7 @@
             } catch (\Throwable $e) {
                 $d = $e->getMessage();
                 if (strpos($e->getMessage(), 'SQLSTATE[23000]') !== false) {
-                    $d = 'Ya se encuentra registrado ese numero de factura para ese mismo convenio, revisa la información por favor.';
+                    $d = 'Ya se encuentra registrado ese número de factura para ese mismo convenio, revisa la información por favor.';
                 }
                 return response()->json([
                     'message' => [
