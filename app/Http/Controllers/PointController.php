@@ -26,8 +26,9 @@ class PointController extends Controller
 
     function create(){
         $data = $this->request->all();
-        $idUserSesion = $this->request->user()->id;
-        $data["idUserSesion"] = $idUserSesion;
+        $userSesion = $this->request->user();
+        $idUserSesion = $userSesion->id;
+        $data["registered_by"] = $idUserSesion;
         return $this->service->create($data);
     }
 

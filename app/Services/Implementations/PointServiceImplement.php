@@ -108,12 +108,12 @@
                 DB::transaction(function () use ($point) {
                     $sql = $this->point::create($point);
 
-                    $idUserSesion = $point->idUserSesion;
+                    $idUserSesion = $point["registered_by"];
                     $name = 'FOTO_PUNTOS';
                     $modelName = 'points';
                     $modelId = $sql->id;
                     $type = 'image';
-                    $file = base64_decode($point->photo);;
+                    $file = base64_decode($point["photo"]);
                     $extension = 'jpg';
                     $storage = 'points';
                     $state = 'aprobado';
