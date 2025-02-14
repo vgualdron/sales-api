@@ -25,7 +25,10 @@ class PointController extends Controller
     }
 
     function create(){
-        return $this->service->create($this->request->all());
+        $data = $this->request->all();
+        $idUserSesion = $this->request->user()->id;
+        $data["idUserSesion"] = $idUserSesion;
+        return $this->service->create($data);
     }
 
     function update(int $id){

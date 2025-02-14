@@ -3,10 +3,12 @@
     use App\Services\Interfaces\PointServiceInterface;
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\Point;
+    use App\Models\File;
     use App\Validator\{UserValidator, ProfileValidator};
     use App\Traits\Commons;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\Storage;
 
     class PointServiceImplement implements PointServiceInterface {
 
@@ -105,12 +107,49 @@
             try {
                 DB::transaction(function () use ($point) {
                     $sql = $this->point::create($point);
+
+                    $idUserSesion = $point->idUserSesion;
+                    $name = 'FOTO_PUNTOS';
+                    $modelName = 'points';
+                    $modelId = $sql->id;
+                    $type = 'image';
+                    $file = base64_decode($point->photo);;
+                    $extension = 'jpg';
+                    $storage = 'points';
+                    $state = 'aprobado';
+                    $latitude = null;
+                    $longitude = null;
+                    $item = null;
+
+                    // Crear un nombre aleatorio para la imagen
+                    $time = strtotime("now");
+                    $nameComplete = $name."-".$time.".".$extension;
+                    $path = "$modelId/$nameComplete";
+                    $url = "/storage/app/public/$storage/$path";
+
+                    Storage::disk($storage)->makeDirectory($modelId);
+                    $status = Storage::disk($storage)->put($path, $f);
+
+                    $item = File::create([
+                        'name' => $name,
+                        'model_name' => $modelName,
+                        'model_id' => $modelId,
+                        'type' => $type,
+                        'extension' => $extension,
+                        'url' => $url,
+                        'registered_by' => $idUserSesion,
+                        'registered_date' => date('Y-m-d H:i:s'),
+                        'status' => $state,
+                        'latitude' => $latitude,
+                        'longitude' => $longitude,
+                    ]);
+
                 });
                 return response()->json([
                     'message' => [
                         [
                             'text' => 'Registrado con éxito',
-                            'detail' => null
+                            'detail' => $item
                         ]
                     ]
                 ], Response::HTTP_OK);
