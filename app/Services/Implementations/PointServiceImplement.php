@@ -120,6 +120,7 @@
                     $latitude = null;
                     $longitude = null;
                     $item = null;
+                    $f = base64_decode($file);
 
                     // Crear un nombre aleatorio para la imagen
                     $time = strtotime("now");
