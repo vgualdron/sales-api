@@ -155,11 +155,15 @@
                     ]
                 ], Response::HTTP_OK);
             } catch (\Throwable $e) {
+                $d = $e->getMessage();
+                if (strpos($e->getMessage(), 'SQLSTATE[23000]') !== false) {
+                    $d = 'Ya se ha registrado ese numero de factura para ese mismo convenio, revisa la información por favor.';
+                }
                 return response()->json([
                     'message' => [
                         [
                             'text' => 'Advertencia al registrar',
-                            'detail' => $e->getMessage()
+                            'detail' => $d,
                         ]
                     ]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
