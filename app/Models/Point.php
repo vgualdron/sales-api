@@ -23,5 +23,7 @@ class Point extends Model
         'user_id',
         'shop_id',
         'invoice_number',
+        'price',
+        'type',
     ];
 }
