@@ -150,7 +150,7 @@
                     'message' => [
                         [
                             'text' => 'Registrado con éxito',
-                            'detail' => $item
+                            'detail' => null
                         ]
                     ]
                 ], Response::HTTP_OK);
