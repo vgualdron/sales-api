@@ -105,14 +105,7 @@
         function create(array $point){
             try {
                 DB::transaction(function () use ($point) {
-                    $sql = $this->point::create([
-                        'amount' => $point['amount'],
-                        'status' => $point['status'],
-                        'description' => $point['description'],
-                        'observation' => $point['observation'],
-                        'user_id' => $point['user_id'],
-                    ]);
-
+                    $sql = $this->point::create($point);
                 });
                 return response()->json([
                     'message' => [
