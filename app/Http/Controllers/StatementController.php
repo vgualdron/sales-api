@@ -21,6 +21,7 @@ class StatementController extends Controller
     {
         $asociadoId = null;
         $asociado = Asociado::where('cedula', $document);
+        dd($asociado);
         if ($asociado) {
             $asociadoId = $asociado->id;
         }
