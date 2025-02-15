@@ -117,8 +117,6 @@
                                     $menu[$index]['options'] = array_values(array_unique($item['options'], SORT_REGULAR));
                                 }
 
-                                $url_photo_profile = null;
-                                $points = 0;
                                 $userObject = User::from('users as u')
                                     ->select(
                                         'u.*',
@@ -139,11 +137,6 @@
                                     ->orderBy('u.id', 'ASC')
                                     ->first();
 
-                                if($userObject) {
-                                    $url_photo_profile = $userObject->url_photo_profile;
-                                    $points = $userObject->total_points;
-                                }
-
                                 $userData = array(
                                     'name' => $user->name,
                                     'type_document' => $user->type_document,
@@ -151,9 +144,15 @@
                                     'created_at' => $user->created_at,
                                     'updated_at' => $user->updated_at,
                                     'user_id' => $userObject->id,
-                                    'user_url_photo_proile' => $url_photo_profile,
-                                    'points' => $points,
                                 );
+
+                                if($userObject) {
+                                    $userData["user_url_photo_proile"] = $userObject->url_photo_profile;
+                                    $userData["points"] = $userObject->url_photo_profile;
+                                    $userData["update_photo"] = $userObject->updatePhoto;
+                                    $userData["update_password"] = $userObject->updatePassword;
+                                    $userData["completed_fields"] = $userObject->completedFields;
+                                }
 
                                 $rolesArray = User::from('users as u')
                                 ->select(
