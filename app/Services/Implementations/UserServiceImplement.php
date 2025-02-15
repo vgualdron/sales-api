@@ -360,12 +360,12 @@
                         'status' => 'aprobado',
                         'description' => 'Realizar cambio de contraseña',
                         'observation' => '',
-                        'updatePassword' => true,
                         'user_id' => $id,
                     ]);
                 }
                 if(!empty($sql)) {
                     $sql->password = Hash::make($user['password']);
+                    $sql->updatePassword = true;
                     $sql->save();
                     return response()->json([
                         'message' => [
