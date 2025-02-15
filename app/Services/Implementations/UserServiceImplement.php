@@ -360,6 +360,7 @@
                         'status' => 'aprobado',
                         'description' => 'Realizar cambio de contraseña',
                         'observation' => '',
+                        'updatePassword' => true,
                         'user_id' => $id,
                     ]);
                 }
