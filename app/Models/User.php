@@ -34,7 +34,10 @@ class User extends Authenticatable
         'longitude',
         'date_location',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'changePaswword',
+        'changePhoto',
+        'completedFields',
     ];
 
     /**
