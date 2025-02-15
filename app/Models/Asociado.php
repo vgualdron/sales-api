@@ -13,6 +13,7 @@ class Asociado extends Model
     protected $table = 'asociados';
 
     protected $fillable = [
+        'id',
         'fecha_afiliacion',
         'nombre',
         'primer_apellido',
@@ -56,6 +57,7 @@ class Asociado extends Model
         'estado',
     ];
 
+    /*
     // Relación uno a uno con el modelo Economica
     public function economicas()
     {
@@ -120,5 +122,5 @@ class Asociado extends Model
     public function departamento_nacimiento()
     {
         return $this->belongsTo(Departamento::class, 'dpto_nacimiento', 'id'); // 'dpto_nacimiento' es la clave foránea en asociados, y 'id' es la clave primaria en departamentos
-    }
+    } */
 }
