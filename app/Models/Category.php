@@ -19,4 +19,9 @@ class Category extends Model
         'name',
         'order',
     ];
+
+    public function shops()
+    {
+        return $this->hasMany(Shop::class, 'category_id', 'id');
+    }
 }

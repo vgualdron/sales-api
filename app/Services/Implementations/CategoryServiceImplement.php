@@ -26,6 +26,7 @@
                     ->select(
                         'c.*',
                     )
+                    ->with('shops')
                     ->orderBy('c.order', 'ASC')
                     ->get();
 
