@@ -19,8 +19,8 @@ class StatementController extends Controller
      */
     public function get(string $document)
     {
-        $asociadoId = 1;
-        $asociado = Asociado::where('cedula', '1093760344');
+        $asociadoId = null;
+        $asociado = Asociado::where('cedula', $document)->first();
         // dd($asociado);
         if ($asociado) {
             $asociadoId = $asociado->id;
