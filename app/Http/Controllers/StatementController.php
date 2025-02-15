@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Asociado;
 use App\Models\MovimientoCobro;
 use App\Models\MovimientoRecaudo;
 
@@ -16,9 +17,13 @@ class StatementController extends Controller
     /**
      * Obtiene cobros y recaudos pendientes y realizados de un asociado específico.
      */
-    public function get(int $id)
+    public function get(string $document)
     {
-        $asociadoId = $id;
+        $asociadoId = null;
+        $asociado = Asociado::where('cedula', $document);
+        if ($asociado) {
+            $asociadoId = $asociado->id;
+        }
         //dd($asociadoId);
 
         // Obtener aportes realizados donde lineaaporte_id no sea nula
