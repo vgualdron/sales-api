@@ -20,6 +20,7 @@ use App\Http\Controllers\{
                         CategoryController,
                         ShopController,
                         PointController,
+                        StatementController,
                     };
 
 /*
@@ -129,6 +130,10 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/shop"], function () {
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {
     Route::post('/', [PqrController::class, 'create'])->name('pqr.create');
+});
+
+Route::group(['middleware' => 'auth:api' , "prefix" => "/statement"], function () {
+    Route::get('/{id}', [StatementController::class, 'get'])->name('statement.get');
 });
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/point"], function () {
