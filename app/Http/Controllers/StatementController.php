@@ -19,11 +19,11 @@ class StatementController extends Controller
      */
     public function get(string $document)
     {
-        $asociadoId = null;
+        $asociadoId = 1;
         $asociado = Asociado::where('cedula', $document);
-        dd($asociado);
+        // dd($asociado);
         if ($asociado) {
-            $asociadoId = $asociado->id;
+            // $asociadoId = $asociado->id;
         }
         //dd($asociadoId);
 
