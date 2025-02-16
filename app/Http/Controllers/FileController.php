@@ -64,7 +64,7 @@ class FileController extends Controller
             ]);
 
             if ($name == 'FOTO_PROFILE') {
-                $sql = User::find($idUserSesion)->first();
+                $sql = User::where('id', $idUserSesion)->first();
                 if(!empty($sql)) {
                     $sql->updatePhoto = true;
                     $sql->save();
