@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -61,6 +62,14 @@ class FileController extends Controller
                 'latitude' => $latitude,
                 'longitude' => $longitude,
             ]);
+
+            if ($name == 'FOTO_PROFILE') {
+                $sql = User::find($modelId)->first();
+                if(!empty($sql)) {
+                    $sql->updatePhoto = true;
+                    $sql->save();
+                }
+            }
 
         } catch (Exception $e) {
             return response()->json([
