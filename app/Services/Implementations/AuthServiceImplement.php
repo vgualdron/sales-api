@@ -148,7 +148,7 @@
 
                                 if($userObject) {
                                     $userData["user_url_photo_proile"] = $userObject->url_photo_profile;
-                                    $userData["points"] = $userObject->url_photo_profile;
+                                    $userData["points"] = $userObject->total_points;
                                     $userData["update_photo"] = $userObject->updatePhoto;
                                     $userData["update_password"] = $userObject->updatePassword;
                                     $userData["completed_fields"] = $userObject->completedFields;
