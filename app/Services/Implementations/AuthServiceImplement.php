@@ -120,13 +120,8 @@
                                 $userObject = User::from('users as u')
                                     ->select(
                                         'u.*',
-                                        'f.url as url_photo_profile',
-                                        DB::raw('COALESCE(SUM(p.amount), 0) as total_points')
+                                        'f.url as url_photo_profile'
                                     )
-                                    ->leftJoin('points as p', function ($join) {
-                                        $join->on('p.user_id', '=', 'u.id')
-                                            ->where('p.status', '=', 'aprobado');
-                                    })
                                     ->leftJoin('files as f', function ($join) {
                                         $join->on('f.model_id', '=', 'u.id')
                                             ->where('f.model_name', '=', 'users')
@@ -148,7 +143,6 @@
 
                                 if($userObject) {
                                     $userData["user_url_photo_proile"] = $userObject->url_photo_profile;
-                                    $userData["points"] = $userObject->total_points;
                                     $userData["update_photo"] = $userObject->updatePhoto;
                                     $userData["update_password"] = $userObject->updatePassword;
                                     $userData["completed_fields"] = $userObject->completedFields;

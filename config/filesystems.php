@@ -48,13 +48,6 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-        'news' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/news'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
         'users' => [
             'driver' => 'local',
             'root' => storage_path('app/public/users'),
@@ -62,16 +55,9 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-        'shops' => [
+        'products' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/shops'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-        'points' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/points'),
+            'root' => storage_path('app/public/products'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
