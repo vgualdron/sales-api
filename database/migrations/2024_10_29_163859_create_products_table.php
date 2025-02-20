@@ -11,20 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shops', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('nit', 50)->collation('utf8_general_ci')->nullable();
-            $table->string('name', 200)->collation('utf8_general_ci')->required();
-            $table->string('agreement', 300)->collation('utf8_general_ci')->required();
-            $table->string('address', 150)->collation('utf8_general_ci')->nullable();
-            $table->string('phone', 25)->collation('utf8_general_ci')->nullable();
-            $table->string('email', 100)->collation('utf8_general_ci')->nullable();
-            $table->string('status', 100)->collation('utf8_general_ci')->default('activo');
-            $table->string('observation', 100)->collation('utf8_general_ci')->nullable();
-            $table->unsignedBigInteger('order');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('restrict');
+            $table->string('name');
+            $table->string('reference');
+            $table->string('brand');
+            $table->string('description')->nullable();
+            $table->integer('price');
+            $table->integer('priority');
+            $table->unsignedBigInteger('categorie_id');
             $table->timestamps();
+            $table->foreign('categorie_id')
+              ->references('id')->on('categories')->onDelete('restrict');
         });
     }
 
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shops');
+        Schema::dropIfExists('products');
     }
 };

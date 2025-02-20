@@ -6,6 +6,7 @@ use App\Http\Controllers\{
                         AuthController,
                         CategoryController,
                         ProductController,
+                        ImageController,
                         RoleController,
                         PermissionController,
                         UserController,
