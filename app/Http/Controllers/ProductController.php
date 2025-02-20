@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Product;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     public function index(Request $request)
     {
         try {
-            // $idUserSesion = $request->user()->id;
-            $items = Category::where('id', '>', 0)->get();
+            $idUserSesion = $request->user()->id;
+            $items = Product::where('id', '>', 0)
+                                ->with('images')
+                                ->orderBy('updated_at', 'desc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
-                'message'=> $e->getMessage(),
+                'message'=>$e->getMessage(),
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
@@ -31,17 +33,17 @@ class CategoryController extends Controller
     public function show(Request $request, $id)
     {
         try {
-            $items = Category::find($id);
+            $items = Product::find($id);
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
-                'message'=>$e->getMessage()
+                'message'=>$e->getMessage(),
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
             'data' => $items,
-            'message' => 'Succeed'
+            'message' => 'Succeed show'
         ], JsonResponse::HTTP_OK);
     }
 
@@ -49,10 +51,7 @@ class CategoryController extends Controller
     {
         try {
             $idUserSesion = $request->user()->id;
-            $item = Category::create([
-                'name' => $request->name,
-                'description' => $request->description
-            ]);
+            $item = Product::create($request->all());
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
@@ -69,7 +68,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $items = Category::find($id)
+            $items = Product::find($id)
                         ->update($request->all());
         } catch (Exception $e) {
             return response()->json([
@@ -87,7 +86,7 @@ class CategoryController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            $items = Category::destroy($id);
+            $items = Product::destroy($id);
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
@@ -98,6 +97,26 @@ class CategoryController extends Controller
         return response()->json([
             'data' => $items,
             'message' => 'Succeed'
+        ], JsonResponse::HTTP_OK);
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            $items = Product::where('id', '>', 0)
+                                ->with('images')
+                                ->with('categorie')
+                                ->orderBy('updated_at', 'desc')->get();
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => [],
+                'message'=>$e->getMessage(),
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'data' => $items,
+            'message' => 'Succeed',
         ], JsonResponse::HTTP_OK);
     }
 }

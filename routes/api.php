@@ -4,23 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
                         AuthController,
-                        DepartmentController,
+                        CategoryController,
                         RoleController,
                         PermissionController,
                         UserController,
-                        NovelController,
                         FileController,
                         ConfigurationController,
                         ReportController,
-                        CompanyController,
-                        CityController,
-                        CollectionController,
-                        CreditLineController,
-                        PqrController,
-                        CategoryController,
-                        ShopController,
-                        PointController,
-                        StatementController,
                     };
 
 /*
@@ -46,10 +36,6 @@ Route::group(["prefix" => "/auth"], function () {
     Route::post('/create', [NovelController::class, 'create'])->name('new.create');
     Route::middleware(['middleware' => 'auth:api'])->post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
-
-Route::get('/company', [CompanyController::class, 'list'])->name('company.list');
-Route::get('/department', [DepartmentController::class, 'list'])->name('department.list');
-Route::get('/city', [CityController::class, 'list'])->name('city.list');
 
 Route::group(['middleware' => 'auth:api' , "prefix" => "/session"], function () {
     Route::get('/status', function (Request $request) {
@@ -82,16 +68,6 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/user"], function () {
     Route::put('/update-location', [UserController::class, 'updateLocation'])->name('user.updateLocation');
 });
 
-Route::group(['middleware' => 'auth:api' , "prefix" => "/new"], function () {
-    Route::get('/list/{status}', [NovelController::class, 'list'])->name('new.list');
-    Route::put('/update/{id}', [NovelController::class, 'update'])->name('new.update');
-    Route::put('/update-status/{id}', [NovelController::class, 'updateStatus'])->name('new.changeStatus');
-    Route::put('/complete-data/{id}', [NovelController::class, 'completeData'])->name('review.completeData');
-    Route::delete('/delete/{id}', [NovelController::class, 'delete'])->middleware('can:new.delete')->name('new.delete');
-    Route::get('/get/{id}', [NovelController::class, 'get'])->name('new.get');
-    Route::get('/get-by-phone/{phone}', [NovelController::class, 'getByPhone'])->name('new.getByPhone');
-});
-
 Route::group(['middleware' => 'auth:api' , "prefix" => "/file"], function () {
     Route::post('/create', [FileController::class, 'create'])->name('file.create');
     Route::delete('/delete/{id}', [FileController::class, 'delete'])->name('file.delete');
@@ -107,40 +83,30 @@ Route::group(['middleware' => 'auth:api' , "prefix" => "/configuration"], functi
     Route::delete('/{id}', [ConfigurationController::class, 'destroy'])->middleware('can:parameter.list')->name('parameter.delete');
 });
 
-Route::group(['middleware' => 'auth:api' , "prefix" => "/report"], function () {
+Route::group(['middleware' => 'auth:api', "prefix" => "/report"], function () {
     Route::get('/', [ReportController::class, 'list'])->name('report.list');
     Route::get('/{id}', [ReportController::class, 'execute'])->name('report.execute');
 });
 
-Route::group(['middleware' => 'auth:api' , "prefix" => "/collection"], function () {
-    Route::get('/{document}', [CollectionController::class, 'list'])->name('collection.list');
+Route::group(['middleware' => 'auth:api', 'prefix'=>'/category'], function () {
+    Route::get('/{id}', [CategoryController::class, 'show']);
+    Route::post('/', [CategoryController::class, 'store']);
+    Route::put('/{id}', [CategoryController::class, 'update']);
+    Route::delete('/{id}', [CategoryController::class, 'destroy']);
 });
 
-Route::group(['middleware' => 'auth:api' , "prefix" => "/credit-line"], function () {
-    Route::get('/', [CreditLineController::class, 'list'])->name('creditLine.list');
+Route::group(['middleware' => 'auth:api', 'prefix'=>'/product'], function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/{id}', [ProductController::class, 'show']);
+    Route::post('/', [ProductController::class, 'store']);
+    Route::put('/{id}', [ProductController::class, 'update']);
+    Route::delete('/{id}', [ProductController::class, 'destroy']);
 });
 
-Route::group(['middleware' => 'auth:api' , "prefix" => "/category"], function () {
-    Route::get('/', [CategoryController::class, 'list'])->name('category.list');
-});
-
-Route::group(['middleware' => 'auth:api' , "prefix" => "/shop"], function () {
-    Route::get('/', [ShopController::class, 'list'])->name('shop.list');
-});
-
-Route::group(['middleware' => 'auth:api' , "prefix" => "/pqr"], function () {
-    Route::post('/', [PqrController::class, 'create'])->name('pqr.create');
-});
-
-Route::group(['middleware' => 'auth:api' , "prefix" => "/statement"], function () {
-    Route::get('/{id}', [StatementController::class, 'get'])->name('statement.get');
-});
-
-Route::group(['middleware' => 'auth:api' , "prefix" => "/point"], function () {
-    Route::get('/', [PointController::class, 'list'])->name('point.list');
-    Route::get('/by-user-session/{status}', [PointController::class, 'listByUserSession'])->name('point.listByUserSession');
-    Route::post('/', [PointController::class, 'create'])->name('point.create');
-    Route::put('/{id}', [PointController::class, 'update'])->name('point.update');
-    Route::delete('/{id}', [PointController::class, 'delete'])->name('point.delete');
-    Route::get('/{id}', [PointController::class, 'get'])->name('point.get');
+Route::group(['middleware' => 'auth:api', 'prefix'=>'/image'], function () {
+    Route::get('/product/{id}', [ImageController::class, 'index']);
+    Route::get('/{id}', [ImageController::class, 'show']);
+    Route::post('/', [ImageController::class, 'store']);
+    Route::put('/{id}', [ImageController::class, 'update']);
+    Route::delete('/{id}', [ImageController::class, 'destroy']);
 });
