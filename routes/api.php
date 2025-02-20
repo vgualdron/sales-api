@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
                         AuthController,
                         CategoryController,
+                        ProductController,
                         RoleController,
                         PermissionController,
                         UserController,
