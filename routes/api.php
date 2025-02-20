@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth:api', "prefix" => "/report"], function () {
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix'=>'/category'], function () {
+    Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{id}', [CategoryController::class, 'show']);
     Route::post('/', [CategoryController::class, 'store']);
     Route::put('/{id}', [CategoryController::class, 'update']);
