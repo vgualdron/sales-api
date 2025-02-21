@@ -16,7 +16,7 @@ class ProductController extends Controller
             $idUserSesion = $request->user()->id;
             $items = Product::where('id', '>', 0)
                                 ->with('images')
-                                ->orderBy('updated_at', 'desc')->get();
+                                ->orderBy('name', 'desc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
