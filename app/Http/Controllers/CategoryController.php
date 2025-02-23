@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         try {
             // $idUserSesion = $request->user()->id;
-            $items = Category::where('id', '>', 0)->get();
+            $items = Category::where('id', '>', 0)->orderBy('order', 'desc')->get();
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
