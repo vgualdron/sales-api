@@ -20,6 +20,7 @@ class Product extends Authenticatable
     protected $fillable = [
         'name',
         'reference',
+        'type',
         'brand',
         'price',
         'amount',
